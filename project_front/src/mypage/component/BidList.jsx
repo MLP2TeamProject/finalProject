@@ -1,65 +1,67 @@
-import { useCallback, useState, useEffect } from "react"
-import { useNavigate } from 'react-router'
+import { useState, useEffect, useContext, useCallback } from "react"
+// import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import UserContext from "../../userContext"
 
 const BidList = () => {
+    // context에 공개된 전역 상태,함수를 이용하겠다면 useContext를 이용
+    const context = useContext(UserContext)
+
     // 회원정보 get
-    const userEmail = 'lee@aaa.com' // contextAPI로 로그인정보를 전역상태로 유지해서 가져오기 
+    const userEmail = context.state.userData.email
     const imgUrl = 'http://localhost:8000/static/'
+
+
     // 구매등록 상품 상태
     const [data, setData] = useState([{}])
-
     // 구매등록 상품정보 get
     const showInfo = useCallback(async ()=>{
         const resp = await axios.get('http://localhost:8000/product/' + userEmail)
-        console.log('구매등록상품', resp.data.data)
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
+            console.log('구매등록상품', resp.data.data)
             const result = resp.data.data.map((item) => {
                 let auctionArr = []
                 if (item.auction_info) {
                     auctionArr = item.auction_info.split(';')
-                    // console.log('입찰배열', auctionArr)
                     item.auction_info = auctionArr
                 }               
                 return item
             })
-            console.log('결과', result)
             setData(result)
         }        
-    }, [])
+    }, [userEmail])  
 
     // 입찰 정보 
     const [bidList, setBidList] = useState([])
     // 내가 입찰한 상품정보 get
     const showBidd = useCallback(async ()=>{
         const resp = await axios.get('http://localhost:8000/auction/' + userEmail)
-        console.log('입찰한데이터', resp.data.data)
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
+            console.log('나의 입찰정보', resp.data.data)
             setBidList(resp.data.data)
         }        
-    }, [])    
+    }, [userEmail])   
 
     // 입찰 선택 상태 
-    const [selectedData, setselectedData] = useState({selectedAucId: 0, selectedAucEmail: '', selectedAucPrice: 0})
+    const [selectedData, setSelectedData] = useState({selectedAucId: 0, selectedAucEmail: '', selectedAucPrice: 0})
     // 라디오버튼 선택 시 연결된 label 가져와서 해당하는 auction_id를 set
     const handleRadioChange = (e) => {
         const labelFor = e.target.id
-        const labelElement = document.querySelector(`label[for=${labelFor}]`)
-        const selectedAucId = labelElement ? labelElement.textContent.split(',')[0] : 0
-        const selectedAucEmail = labelElement ? labelElement.textContent.split(',')[1] : ''
-        const selectedAucPrice = labelElement ? labelElement.textContent.split(',')[2] : 0
-        setselectedData({selectedAucId: selectedAucId, selectedAucEmail: selectedAucEmail, selectedAucPrice: selectedAucPrice})
+        const label = document.querySelector(`label[for=${labelFor}]`)
+        const aucId = label ? label.textContent.split(',')[0] : 0
+        const aucEmail = label ? label.textContent.split(',')[1] : ''
+        const aucPrice = label ? label.textContent.split(',')[2] : 0
+        setSelectedData({selectedAucId: aucId, selectedAucEmail: aucEmail, selectedAucPrice: aucPrice})
     }
     // selectedLabel 상태 변경되었을 때, log 찍기
     // useEffect(() => { 
     //     console.log(selectedAucId)
     // }, [selectedAucId])
 
-    // 낙찰 요청
-    const navigate = useNavigate() 
+    // 낙찰 요청 
     const selectBiddWrite = async (product_id) => {
         console.log('선택요소', product_id, selectedData.selectedAucId)
         const confirmOK = window.confirm(`${selectedData.selectedAucEmail}님 ${selectedData.selectedAucPrice}으로 낙찰하시겠습니까?`)
@@ -68,7 +70,7 @@ const BidList = () => {
             if(resp.data.status === 500) window.alert(resp.data.message)
             else {
                 // 성공시 페이지 리로드 
-                navigate('/mypage/') 
+                location.reload(true)
                 // 리랜더링의 다른방법 
                 // 상품1개 - 입찰정보 - 단일 컴포넌트로 만들고, 낙찰시 서버연동후 서버에서 성공정보를 넘기면 그 데이터로 상태를 변경해서.. 
                 // 화면이 자동으로 리랜더링되게.. 처리..
@@ -76,11 +78,14 @@ const BidList = () => {
         }
     }
 
-    // 페이지 진입 시 데이터 얻어오기 위해 최초 실행 
+    // 페이지 진입 시, useEmail이 변경될 때 실행  
     useEffect(()=>{
-        showInfo()
-        showBidd()
-    }, [navigate])
+        if(userEmail) {
+            console.log('login user:', userEmail)
+            showInfo()
+            showBidd()
+        }
+    }, [userEmail, showInfo, showBidd])     
     
     return (
         <>
@@ -94,7 +99,7 @@ const BidList = () => {
                 <table className="table">
                     <thead className="table-light">
                     <tr>
-                        <th scope="col"><strong>구매희망상품</strong></th>
+                        <th scope="col"><strong>구매희망도서</strong></th>
                         <th scope="col"><strong>입찰현황</strong></th>
                         <th scope="col"><strong>낙찰</strong></th>
                     </tr>

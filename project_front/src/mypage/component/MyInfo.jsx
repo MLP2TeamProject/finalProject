@@ -1,22 +1,29 @@
-import { useCallback, useState, useEffect } from "react"
+import { useCallback, useState, useContext } from "react"
 import { useNavigate } from 'react-router'
 import axios from 'axios'
+import UserContext from "../../userContext"
 
 const MyInfo = () => {
 
-    // 회원정보 get
-    const userEmail = 'ddochi@aaa.com' 
-    const [userName, setUserName] = useState('')
-    const showInfo = useCallback(async ()=>{
-        const resp = await axios.get('http://localhost:8000/users/' + userEmail)
-        console.log(resp.data)
-        if(resp.data.status === 500) window.alert(resp.data.message)
-        else setUserName(resp.data.name)
-    }, [])
+    // context에 공개된 상태,함수를 이용하겠다면 useContext를 이용
+    const context = useContext(UserContext)
 
-    useEffect(()=>{
-        showInfo()
-    }, [])
+    // 회원정보 get
+    const userEmail = context.state.userData.email 
+    const userName = context.state.userData.user_name
+
+    // contextAPI를 안쓰면 사용 
+    // const [userName, setUserName] = useState('')
+    // const showInfo = useCallback(async ()=>{
+    //     const resp = await axios.get('http://localhost:8000/users/' + userEmail)
+    //     console.log(resp.data)
+    //     if(resp.data.status === 500) window.alert(resp.data.message)
+    //     else setUserName(resp.data.name)
+    // }, [])
+
+    // useEffect(()=>{
+    //     //showInfo()
+    // }, [])
 
     // 비밀번호 변경
     const navigate = useNavigate()
@@ -27,13 +34,13 @@ const MyInfo = () => {
 
     const changePassword = useCallback(async (e) => {
         e.preventDefault()
-        console.log(data)
+        // console.log(data)
         if (data.changePw === data.changePwConfirm) {
             const resp = await axios.post('http://localhost:8000/users/changePw/', {email: data.email, originPw:data.originPw, changePw:data.changePw})
             if(resp.data.status === 500) window.alert(resp.data.message)
             else {
                 window.alert(resp.data.message)
-                navigate('/') // 로그인페이지 생성되면 로그인화면으로 
+                navigate('/login') 
             }
         } else {
             alert("변경 비밀번호가 맞지않습니다.")
@@ -48,7 +55,12 @@ const MyInfo = () => {
             if(resp.data.status === 500) window.alert(resp.data.message)
             else {
                 window.alert(resp.data.message)
-                navigate('/')
+                if (resp.data.data !== 'impossible') {
+                    context.action.loginUser({email:'', user_name:''})
+                    sessionStorage.removeItem("email")
+                    sessionStorage.removeItem("user_name")
+                    navigate('/')
+                }
             }
         }
     }, [userEmail, navigate])
@@ -77,17 +89,17 @@ const MyInfo = () => {
                         <form className="row contact_form">
                             <div className="col-md-12 form-group p_star">
                                 <label htmlFor="orignPw" className="form-label">기존 비밀번호</label>
-                                <input type="text" className="form-control" id="originPw" name="originPw" 
+                                <input type="password" className="form-control" id="originPw" name="originPw" 
                                 value={data.originPw} onChange={changeData} placeholder="기존 비밀번호" />
                             </div>
                             <div className="col-md-12 form-group p_star">
                                 <label htmlFor="orignPw" className="form-label">변경 비밀번호</label>
-                                <input type="text" className="form-control" id="changePw" name="changePw" 
+                                <input type="password" className="form-control" id="changePw" name="changePw" 
                                 value={data.changePw} onChange={changeData} placeholder="변경 비밀번호" />
                             </div>
                             <div className="col-md-12 form-group p_star">
                                 <label htmlFor="orignPw" className="form-label">변경 비밀번호 확인</label>
-                                <input type="text" className="form-control" id="changePwConfirm" name="changePwConfirm" 
+                                <input type="password" className="form-control" id="changePwConfirm" name="changePwConfirm" 
                                 value={data.changePwConfirm} onChange={changeData} placeholder="변경 비밀번호 확인" />
                             </div>
                             <div className="col-md-12 form-group">
