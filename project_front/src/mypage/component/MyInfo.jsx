@@ -63,7 +63,7 @@ const MyInfo = () => {
                 }
             }
         }
-    }, [userEmail, navigate])
+    }, [userEmail, navigate, context.action]) //context.action
     
     return (
         <>
