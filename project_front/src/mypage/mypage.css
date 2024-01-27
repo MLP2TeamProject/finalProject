@@ -1,0 +1,26 @@
+.mypage_breadcrumb {
+    background-image: url('../img/cta_bg.png') !important;
+}
+
+.mypage_breadcrumb > .container > .row.justify-content-center > .col-lg-8 > .breadcrumb_iner {
+    height: 330px;
+}
+
+.img_size {
+    width: 100px;
+    border:1px solid #ddd;
+}
+
+.text_select_auc {
+    color:#ff3368;
+    font-weight: 600;
+}
+
+.list > li {
+    padding:5px 0;
+    border-bottom:1px dotted #ddd;
+}
+
+.list > li:last-child {
+    border-bottom:0;
+}
