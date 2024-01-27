@@ -1,177 +1,170 @@
-/* eslint-disable */
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-import React, { useState } from 'react';
-=======
-import React from 'react';
->>>>>>> 19e2b7e (중간점검)
-=======
-import React, { useState } from 'react';
->>>>>>> 8913c86 (1/31점검)
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from '../../userContext';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Header = () => {
-	console.log('33');
-<<<<<<< HEAD
-<<<<<<< HEAD
+	const [searchClassName, setSearchClassName] = useState('search_input d-none');
+
+	const navigate = useNavigate();
+	const context = useContext(UserContext);
 
 	const [isShowSearch, setShowSearch] = useState(false);
 
-=======
->>>>>>> 19e2b7e (중간점검)
-=======
+	// 로그아웃
+	const logout = async (e) => {
+		e.preventDefault();
+		const resp = await axios.get('http://localhost:8000/users/logout', {
+			withCredentials: true,
+		});
+		if (resp.data.status === 500) window.alert(resp.data.message);
+		else {
+			// console.log(resp.data.message)
+			context.action.loginUser({ email: '', user_name: '' });
+			sessionStorage.removeItem('email');
+			sessionStorage.removeItem('user_name');
+			navigate('/');
+		}
+	};
 
-	const [isShowSearch, setShowSearch] = useState(false);
-
->>>>>>> 8913c86 (1/31점검)
 	return (
-		<div>
-			{/*
-        - html 주석..
-        - html 은 single tag 를 허용하지만.. jsx 는 xml 문법이다. single tag  허용하지 않는다..
-        - a => Link
-        - class => className
-        - style : inline style, jsx - javascript 표현식으로..
-        - 이미지 경로 public 의 images 로 변경..
-         */}
-			{/* <!--::header part start::--> */}
-			<header className="main_menu home_menu">
-				<div className="container">
-					<div className="row align-items-center">
-						<div className="col-lg-12">
-							<nav className="navbar navbar-expand-lg navbar-light">
-								<Link className="navbar-brand" to="/">
-									<img src="img/logo01.png" alt="logo" />
-								</Link>
-								<div
-									className="collapse navbar-collapse main-menu-item"
-									id="navbarSupportedContent">
-									<ul className="navbar-nav">
-										<li className="nav-item">
-											<Link className="nav-link" to="/user/signin">
-												상품
-											</Link>
-										</li>
-										<li className="nav-item">
-											<Link className="nav-link" to="/user/signin">
-												구매신청
-											</Link>
-										</li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8913c86 (1/31점검)
-										<li
-											className="nav-item"
-											onClick={(e) => {
-												e.preventDefault();
-												setShowSearch(true);
-											}}>
-<<<<<<< HEAD
-=======
-										<li className="nav-item">
->>>>>>> 19e2b7e (중간점검)
-=======
->>>>>>> 8913c86 (1/31점검)
-											<Link className="nav-link" id="search_1">
-												<i className="ti-search"></i>
-											</Link>
-										</li>
-									</ul>
-								</div>
-								<div className="dddd d-flex">
-									<Link id="nav123" to="/user/signin">
-										고객센터
-									</Link>
-									<Link id="nav123" to="/user/signin">
-										마이페이지
-									</Link>
-									<Link id="nav123" to="/user/signin">
-										로그인
-									</Link>
-								</div>
-							</nav>
-						</div>
-					</div>
-				</div>
-<<<<<<< HEAD
-				<div className="search_input" id="search_input_box">
-					<div className="container">
-						<form className="d-flex justify-content-between search-inner">
-							<input
-								type="text"
-								className="form-control"
-								id="search_input"
-								placeholder=""
-							/>
-							<button type="submit" className="btn"></button>
-							<span
-								className="ti-close"
-								id="close_search"
-								title="Close Search"
-								onClick={(e) => {
-									e.preventDefault();
-									setShowSearch(false);
-								}}></span>
-						</form>
-=======
-				{isShowSearch ? (
-					<div className="search_input" id="search_input_box">
-						<div className="container">
-							<form className="d-flex justify-content-between search-inner">
-								<input
-									type="text"
-									className="form-control"
-									id="search_input"
-									placeholder=""
-								/>
-								<button type="submit" className="btn"></button>
-								<span
-									className="ti-close"
-									id="close_search"
-									title="Close Search"
-									onClick={(e) => {
-										e.preventDefault();
-										setShowSearch(false);
-									}}></span>
-							</form>
-						</div>
->>>>>>> 8913c86 (1/31점검)
-					</div>
-				) : (
-					''
-				)}
-			</header>
-			{/* <!-- Header part end--> */}
-<<<<<<< HEAD
-=======
-			{/* <!--::banner_part start::--> */}
-			<section className="banner_part">
-				<div className="container">
-					<div className="row align-items-center">
-						<div className="col-lg-12">
-							<div className="single_banner_slider">
-								<div className="row">
-									<div className="col-lg-5 col-md-8">
-										<div className="banner_text">
-											<div className="banner_text_iner">
-												<img src="img/b-mic.png" alt="banner0" />
-											</div>
-										</div>
-									</div>
-									<div className="banner_img d-none d-lg-block">
-										<img src="img/banner_img1.png" alt="banner1" />
-									</div>
-								</div>
+		<header className="main_menu home_menu">
+			<div className="container">
+				<div className="row align-items-center">
+					<div className="col-lg-12">
+						<nav className="navbar navbar-expand-lg navbar-light">
+							<Link className="navbar-brand" to={'/'}>
+								{' '}
+								<img src="img/logo01.png" alt="logo" />{' '}
+							</Link>
+							<button
+								className="navbar-toggler"
+								type="button"
+								data-toggle="collapse"
+								data-target="#navbarSupportedContent"
+								aria-controls="navbarSupportedContent"
+								aria-expanded="false"
+								aria-label="Toggle navigation">
+								<span className="menu_icon">
+									<i className="fas fa-bars"></i>
+								</span>
+							</button>
+
+							<div
+								className="collapse navbar-collapse main-menu-item"
+								id="navbarSupportedContent">
+								<ul className="navbar-nav">
+									<li className="nav-item dropdown">
+										<Link className="nav-link" to={'/products/list'}>
+											<strong>상품</strong>
+										</Link>
+									</li>
+									<li className="nav-item dropdown">
+										<Link className="nav-link" to={'/products/buy'}>
+											<strong>구매신청</strong>
+										</Link>
+									</li>
+									<li className="nav-item">
+										<a
+											className="nav-link"
+											id="search_1"
+											onClick={() =>
+												setSearchClassName('search_input d-block')
+											}>
+											<i className="ti-search"></i>
+										</a>
+									</li>
+									{/* <li
+                                        className="nav-item"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setShowSearch(true);
+                                        }}>
+                                        <Link className="nav-link" id="search_1">
+                                            <i className="ti-search"></i>
+                                        </Link>
+									</li> */}
+								</ul>
 							</div>
-						</div>
+							<div className="hearer_icon d-flex">
+								<ul className="navbar-nav">
+									<li className="nav-item">
+										<Link className="nav-link" to={'/board/noticelist'}>
+											고객센터
+										</Link>
+									</li>
+									{/* <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
+                                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Notice
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                            <Link className="dropdown-item" to={"/board/noticelist"}>Notice</Link>
+                                            <Link className="dropdown-item" to={"/board/faqlist"}>FAQ</Link>
+                                        </div>
+                                    </li> */}
+									{context.state.userData.email ? (
+										<li className="nav-item">
+											<Link className="nav-link" to={'/mypage'}>
+												마이페이지
+											</Link>
+										</li>
+									) : (
+										''
+									)}
+									<li className="nav-item dropdown">
+										{context.state.userData.email ? (
+											<span className="nav-link">
+												<strong>{context.state.userData.user_name}</strong>님
+												환영합니다.{' '}
+												<button
+													type="button"
+													className="genric-btn primary small circle"
+													onClick={logout}>
+													로그아웃
+												</button>
+											</span>
+										) : (
+											<Link className="nav-link" to={'/user/signin'}>
+												로그인
+											</Link>
+										)}
+									</li>
+									{context.state.userData.email ? (
+										''
+									) : (
+										<li className="nav-item dropdown">
+											<Link className="nav-link" to={'/user/signup'}>
+												회원가입
+											</Link>
+										</li>
+									)}
+								</ul>
+							</div>
+						</nav>
 					</div>
 				</div>
-			</section>
-			{/* <!-- banner_part  end--> */}
->>>>>>> 8913c86 (1/31점검)
-		</div>
+			</div>
+			<div className={searchClassName} id="search_input_box">
+				<div className="container ">
+					<form className="d-flex justify-content-between search-inner">
+						<input
+							type="text"
+							className="form-control"
+							id="search_input"
+							placeholder="Search Here"
+						/>
+						<button type="submit" className="btn"></button>
+						<span
+							className="ti-close"
+							id="close_search"
+							title="Close Search"
+							onClick={() => setSearchClassName('search_input d-none')}></span>
+					</form>
+				</div>
+			</div>
+		</header>
 	);
 };
 

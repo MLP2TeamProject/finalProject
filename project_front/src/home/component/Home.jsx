@@ -39,6 +39,7 @@ const Home = () => {
 				</div>
 			</section>
 			{/* <!-- banner_part  end--> */}
+
 			{/* <!-- feature_part start--> */}
 			<section className="feature_part padding_top">
 				<div className="container">
