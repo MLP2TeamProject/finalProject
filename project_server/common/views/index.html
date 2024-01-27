@@ -7,11 +7,21 @@
     <!-- public/stylesheets/styls.css파일을  node static 모듈로 public 폴더를 설정할 것이라서 그 다음부터 경로 명시 -->
     <!-- app.use(express.static(path.join(__dirname, 'public'))) -->
     <!-- <link rel="stylesheet" href="/stylesheets/style.css" /> -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <!-- 우리의 목적은 front - backend연동을 통한 api service이기 때문에 대부분의 경우 클라이언트 요청이 들어올 때 데이터를 json으로 서비스할 것이다 -->
     <!-- backend가 잘동작하고 있는 지 확인 차원에서만 뿌릴 html 템플릿 -->
     <h1>{{title}}</h1>
     <p>Welcome to {{title}}</p>
+    <button onclick="signup_test()">signup test</button>
 </body>
 </html>
+<script>
+async function signup_test()
+{
+    const data = {email: 'test_user2@aaa.mygmail.com', user_name: 'test_user2', pwd: '1234', phone:'2222222', address:'2.2.2.2'};
+    const resp = await axios.post('http://localhost:8000/users/signup', data);
+    console.log(resp);
+}
+</script>
