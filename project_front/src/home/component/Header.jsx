@@ -1,13 +1,20 @@
 /* eslint-disable */
 
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+import React from 'react';
+>>>>>>> 19e2b7e (중간점검)
 import { Link } from 'react-router-dom';
 
 const Header = () => {
 	console.log('33');
+<<<<<<< HEAD
 
 	const [isShowSearch, setShowSearch] = useState(false);
 
+=======
+>>>>>>> 19e2b7e (중간점검)
 	return (
 		<div>
 			{/*
@@ -41,12 +48,16 @@ const Header = () => {
 												구매신청
 											</Link>
 										</li>
+<<<<<<< HEAD
 										<li
 											className="nav-item"
 											onClick={(e) => {
 												e.preventDefault();
 												setShowSearch(true);
 											}}>
+=======
+										<li className="nav-item">
+>>>>>>> 19e2b7e (중간점검)
 											<Link className="nav-link" id="search_1">
 												<i className="ti-search"></i>
 											</Link>
