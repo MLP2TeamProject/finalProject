@@ -43,7 +43,7 @@ const UserMain = () => {
         const resp = await axios.post('http://localhost:8000/users/signin', userLogin, { withCredentials: true })
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
-            window.alert(resp.data.message)
+            console.log(resp.data.message)
             console.log('로그인한정보',resp.data.data)
             context.action.loginUser({email:resp.data.data.email, user_name:resp.data.data.user_name})
             sessionStorage.setItem("email", resp.data.data.email)
@@ -58,7 +58,7 @@ const UserMain = () => {
         const resp = await axios.get('http://localhost:8000/users/logout', { withCredentials: true })
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
-            window.alert(resp.data.message)
+            console.log(resp.data.message)
             context.action.loginUser({email:'', user_name:''})
             sessionStorage.removeItem("email")
             sessionStorage.removeItem("user_name")
@@ -74,10 +74,12 @@ const UserMain = () => {
                 <div className="breadcrumb_iner">
                     <div className="breadcrumb_iner_item">
                         <h1>회원가입</h1>
-                        이름 : <input type="text" name='name' id='name' value={userData.name} onChange={changeData} /><br />
-                        이메일 : <input type="text" name='email' id='email' value={userData.email} onChange={changeData} /><br />
-                        비밀번호 : <input type="password" name='password' id='password' value={userData.password} onChange={changeData} /><br />
-                        <button type="button" onClick={signup}>회원가입</button>
+                        <form>
+                            이름 : <input type="text" name='name' id='name' value={userData.name} onChange={changeData} autoComplete="off" /><br />
+                            이메일 : <input type="text" name='email' id='email' value={userData.email} onChange={changeData} autoComplete="off" /><br />
+                            비밀번호 : <input type="password" name='password' id='password' value={userData.password} onChange={changeData} autoComplete="off" /><br />
+                            <button type="button" onClick={signup}>회원가입</button>
+                        </form>
                     </div>
 
                     <div className="breadcrumb_iner_item">
@@ -89,9 +91,11 @@ const UserMain = () => {
                             </>
                         ) : (
                             <>
-                                이메일 : <input type="text" name='loginEmail' id='loginEmail' value={userLogin.loginEmail} onChange={changeLogin} /><br />
-                                비밀번호 : <input type="password" name='loginPassword' id='loginPassword' value={userLogin.loginPassword} onChange={changeLogin} /><br />
-                                <button type="button" onClick={signin}>로그인</button>
+                                <form>
+                                    이메일 : <input type="text" name='loginEmail' id='loginEmail' value={userLogin.loginEmail} onChange={changeLogin} /><br />
+                                    비밀번호 : <input type="password" name='loginPassword' id='loginPassword' value={userLogin.loginPassword} onChange={changeLogin} autoComplete="off" /><br />
+                                    <button type="button" onClick={signin}>로그인</button>
+                                </form>
                             </>
                         )}
                         
