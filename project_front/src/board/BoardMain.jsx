@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import FaqBoardList from "./component/FaqBoardList";
 
+import './board.css'
+
 
 import NoticeBoardDetail from "./component/NoticeBoardDetail";
 import NoticeBoardInsert from "./component/NoticeBoardInsert";
