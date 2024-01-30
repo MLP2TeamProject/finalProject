@@ -42,8 +42,8 @@ const Header = () => {
                                             Notice
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                            <a className="dropdown-item" href="category.html">Notice</a>
-                                            <a className="dropdown-item" href="single-product.html">FAQ</a>
+                                            <Link className="dropdown-item" to={"/notice"}>Notice</Link>
+                                            <Link className="dropdown-item" to={"/faq"}>FAQ</Link>
                                         </div>
                                     </li>
                                     {context.state.userData.email ? (

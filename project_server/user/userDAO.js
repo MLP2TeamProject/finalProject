@@ -205,7 +205,7 @@ const userDAO = {
                     console.log('1', result) 
                     if(result) {
                         callback({status:200, message: '로그인 성공', data:{user_name: respCheck[0].user_name, email: respCheck[0].email}}) 
-                    } else if(error) {
+                    } else {
                         callback({status:500, message: '비밀번호가 맞지않습니다.'}) 
                     }
                 })

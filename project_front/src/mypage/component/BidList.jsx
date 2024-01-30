@@ -10,7 +10,7 @@ const BidList = () => {
 
     // 회원정보 get
     const userEmail = context.state.userData.email
-    const imgUrl = 'http://localhost:8000/static/'
+    const imgUrl = 'http://localhost:8000/static/upload/'
 
 
     // 구매등록 상품 상태
@@ -20,7 +20,7 @@ const BidList = () => {
         const resp = await axios.get('http://localhost:8000/product/' + userEmail)
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
-            console.log('구매등록상품', resp.data.data)
+            // console.log('구매등록상품', resp.data.data)
             const result = resp.data.data.map((item) => {
                 let auctionArr = []
                 if (item.auction_info) {
@@ -40,7 +40,7 @@ const BidList = () => {
         const resp = await axios.get('http://localhost:8000/auction/' + userEmail)
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
-            console.log('나의 입찰정보', resp.data.data)
+            // console.log('나의 입찰정보', resp.data.data)
             setBidList(resp.data.data)
         }        
     }, [userEmail])   
@@ -81,7 +81,7 @@ const BidList = () => {
     // 페이지 진입 시, useEmail이 변경될 때 실행  
     useEffect(()=>{
         if(userEmail) {
-            console.log('login user:', userEmail)
+            // console.log('login user:', userEmail)
             showInfo()
             showBidd()
         }
@@ -107,8 +107,8 @@ const BidList = () => {
                     <tbody>
                         {data[0] ? (
                             <>
-                            {data.map((item) => (
-                            <tr key={item.product_id}>
+                            {data.map((item, index) => (
+                            <tr key={index}>
                                 <td>
                                     <div className="media">
                                         <div className="media-body">
