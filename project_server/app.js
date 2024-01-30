@@ -9,7 +9,7 @@ const nunjucks = require('nunjucks')
 require('dotenv').config()
 
 const homeRouter = require('./home/homeRouter')
-
+const productRouter = require('./product/productRouter')
 const app = express()
 
 // nunjucks 등록 및 설정
