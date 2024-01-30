@@ -10,7 +10,10 @@ const Timer = () => {
     seconds: 0,
   });
   useEffect(() => {
-    const futureDate = new Date("2024/02/02 00:00:00").getTime();
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 7);
+    futureDate.setHours(0, 0, 0, 0);
+    // const futureDate = new Date("2024/02/08 00:00:00").getTime();
     //사용자에게 선택을 주면 이 부분을 바꿔야 함
 
     const updateTimer = () => {
