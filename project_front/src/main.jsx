@@ -16,6 +16,8 @@ import "./assets/css/magnific-popup.css";
 import "./assets/css/slick.css";
 import "./assets/css/style.css";
 
+import "./index.css";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
 	// <React.StrictMode>
 	<BrowserRouter>
