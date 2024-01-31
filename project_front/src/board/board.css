@@ -1,11 +1,45 @@
 /* textarea css stlyed  */
 .bmic-textarea {
-    display: block;
-    width: 100%;
-    line-height: 25px;
-    border: none;
-    outline: none;
-    padding: 0 20px;
-    height: 100px;
-    resize: none;
-  }
+	display: block;
+	width: 100%;
+	line-height: 25px;
+	border: none;
+	outline: none;
+	padding: 0 20px;
+	height: 100px;
+	resize: none;
+}
+
+/* B-mic ... faq Accordion */
+.bmic-accordion-item {
+	border: 1px solid #ebeef4;
+	padding: auto;
+}
+
+.bmic-accordion-button:focus {
+	outline: 0;
+    padding: 15px 10px;
+	box-shadow: none;
+}
+
+.bmic-accordion-button:not(.collapsed) {
+	color: #012970;
+	background-color: #ffffff;
+}
+
+.bmic-accordion-flush .accordion-button {
+	padding: 15px 10px;
+	background: none;
+	border: 0;
+}
+
+.bmic-accordion-flush .accordion-button:not(.collapsed) {
+	box-shadow: none;
+	color: #4154f1;
+}
+
+.bmic-accordion-flush .accordion-body {
+	padding: 0 0 15px 30px;
+	color: #3e4f6f;
+	font-size: 15px;
+}

@@ -65,21 +65,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //http요청의 body parser(즉 form post요청 => request body에 인코딩된 데이터를 해석하여 req.body에 넣음)
 
 // 개발자가 각 파일로 분리시킨 라우터 등록
-<<<<<<< HEAD
+
 app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use('/', homeRouter)
-<<<<<<< HEAD
 app.use('/boards', boardRouter)
-=======
 app.use('/users', userRouter)
-app.use('/product', productRouter)
 app.use('/auction', auctionRouter)
-
->>>>>>> 54fad11 (마이페이지 브랜치 커밋 완료)
-=======
-app.use("/", homeRouter);
 app.use("/products", productRouter);
->>>>>>> 57dfa30 (fix/bidding)
 
 // 위에서 안걸린 요청은 404로 처리
 app.use((req, res, next) => {
