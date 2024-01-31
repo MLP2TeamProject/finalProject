@@ -81,7 +81,7 @@ const Header = () => {
                                     </li>
                                     {context.state.userData.email ? ('') : (
                                         <li className="nav-item dropdown">
-                                        <Link className="nav-link" to={"/user/signup"}>signup</Link>
+                                        <Link className="nav-link" to={"/user/signup"}>Signup</Link>
                                         </li>
                                     )}
                                 </ul>
