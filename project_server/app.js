@@ -15,6 +15,7 @@ const homeRouter = require('./home/homeRouter')
 const userRouter = require('./user/userRouter')
 const productRouter = require('./product/productRouter')
 const auctionRouter = require('./auction/auctionRouter')
+const boardRouter = require('./board/boardRouter')
 
 const app = express()
 
@@ -57,6 +58,7 @@ app.use('/users', userRouter)
 app.use('/product', productRouter)
 app.use('/auction', auctionRouter)
 
+app.use('/boards', boardRouter)
 
 // 위에서 안걸린 요청은 404로 처리
 app.use((req, res, next) => {
