@@ -8,28 +8,28 @@ import BoardMain from "./board/BoardMain";
 import ProductMain from "./product/ProductMain";
 
 const App = () => {
-  return (
-    <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomeMain />} />
-        <Route path="/board/*" element={<BoardMain />} />
-        <Route path="/user/*" element={<UserMain />} />
-        <Route path="/mypage/*" element={<MypageMain />} />
-        <Route path="/products/*" element={<ProductMain />} />
-        <Route
-          path="*"
-          element={
-            <>
-              <hr />
-              <h3>Page Not Found</h3>
-            </>
-          }
-        />
-      </Routes>
-      <Footer />
-    </>
-  );
+	return (
+		<>
+			<Header />
+			<Routes>
+				<Route path="/" element={<HomeMain />} />
+				<Route path="/board/*" element={<BoardMain />} />
+				<Route path="/user/*" element={<UserMain />} />
+				<Route path="/mypage/*" element={<MypageMain />} />
+				<Route path="/products/*" element={<ProductMain />} />
+				<Route
+					path="*"
+					element={
+						<>
+							<hr />
+							<h3>Page Not Found</h3>
+						</>
+					}
+				/>
+			</Routes>
+			<Footer />
+		</>
+	);
 };
 
 export default App;
