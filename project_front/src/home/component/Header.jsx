@@ -1,11 +1,28 @@
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import UserContext from '../../userContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const Header = () => {
     const [searchClassName, setSearchClassName] = useState('search_input d-none')
 
+    const navigate = useNavigate()
     const context = useContext(UserContext)
+
+    // 로그아웃
+    const logout = async (e) => {
+        e.preventDefault()
+        const resp = await axios.get('http://localhost:8000/users/logout', { withCredentials: true })
+        if(resp.data.status === 500) window.alert(resp.data.message)
+        else {
+            // console.log(resp.data.message)
+            context.action.loginUser({email:'', user_name:''})
+            sessionStorage.removeItem("email")
+            sessionStorage.removeItem("user_name")
+            navigate('/')
+        }
+    }
 
     return (
         <header className="main_menu home_menu">
@@ -52,11 +69,21 @@ const Header = () => {
                                         </li>
                                     ) : ''}                                
                                     <li className="nav-item dropdown">
+                                    {context.state.userData.email ? (
+                                        <span className="nav-link">
+                                            <strong>{context.state.userData.user_name}</strong>님 환영합니다. {' '}
+                                            <button type='button' className="genric-btn primary small circle" onClick={logout}>로그아웃</button>
+                                        </span>
+                                    ) : (
                                         <Link className="nav-link" to={"/user/signin"}>Login</Link>
+                                    )}
+                                        
                                     </li>
-                                    <li className="nav-item dropdown">
+                                    {context.state.userData.email ? ('') : (
+                                        <li className="nav-item dropdown">
                                         <Link className="nav-link" to={"/user/signup"}>signup</Link>
-                                    </li>
+                                        </li>
+                                    )}
                                 </ul>
                             </div>
                         </nav>
