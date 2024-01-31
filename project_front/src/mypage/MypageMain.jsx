@@ -1,89 +1,32 @@
-import React from 'react'
+import {Routes, Route, Link} from 'react-router-dom'
+import BidList from './component/BidList'
+import MyInfo from './component/MyInfo'
+import './mypage.css'
 
 const MypageMain = () => {
     return (
-        <div>
-            <section className="banner_part">
+        <>
+            <section className="breadcrumb breadcrumb_bg mypage_breadcrumb">
                 <div className="container">
-                    <div className="row align-items-center">
-                        <div className="col-lg-12">
-                            <div className="banner_slider owl-carousel">
-                                <div className="single_banner_slider">
-                                    <div className="row">
-                                        <div className="col-lg-5 col-md-8">
-                                            <div className="banner_text">
-                                                <div className="banner_text_iner">
-                                                    <h1>Wood & Cloth
-                                                        Sofa</h1>
-                                                    <p>Incididunt ut labore et dolore magna aliqua quis ipsum
-                                                        suspendisse ultrices gravida. Risus commodo viverra</p>
-                                                    <a href="#" className="btn_2">buy now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="banner_img d-none d-lg-block">
-                                            <img src="./img/banner_img.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div><div className="single_banner_slider">
-                                    <div className="row">
-                                        <div className="col-lg-5 col-md-8">
-                                            <div className="banner_text">
-                                                <div className="banner_text_iner">
-                                                    <h1>Cloth & Wood
-                                                        Sofa</h1>
-                                                    <p>Incididunt ut labore et dolore magna aliqua quis ipsum
-                                                        suspendisse ultrices gravida. Risus commodo viverra</p>
-                                                    <a href="#" className="btn_2">buy now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="banner_img d-none d-lg-block">
-                                            <img src="./img/banner_img.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div><div className="single_banner_slider">
-                                    <div className="row">
-                                        <div className="col-lg-5 col-md-8">
-                                            <div className="banner_text">
-                                                <div className="banner_text_iner">
-                                                    <h1>Wood & Cloth
-                                                        Sofa</h1>
-                                                    <p>Incididunt ut labore et dolore magna aliqua quis ipsum
-                                                        suspendisse ultrices gravida. Risus commodo viverra</p>
-                                                    <a href="#" className="btn_2">buy now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="banner_img d-none d-lg-block">
-                                            <img src="./img/banner_img.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* <div className="single_banner_slider">
-                                    <div className="row">
-                                        <div className="col-lg-5 col-md-8">
-                                            <div className="banner_text">
-                                                <div className="banner_text_iner">
-                                                    <h1>Cloth $ Wood Sofa</h1>
-                                                    <p>Incididunt ut labore et dolore magna aliqua quis ipsum
-                                                        suspendisse ultrices gravida. Risus commodo viverra</p>
-                                                    <a href="#" className="btn_2">buy now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="banner_img d-none d-lg-block">
-                                            <img src="./assets/img/banner_img.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div> */}
-                            </div>
-                            <div className="slider-counter"></div>
+                <div className="row justify-content-center">
+                    <div className="col-lg-8">
+                    <div className="breadcrumb_iner">
+                        <div className="breadcrumb_iner_item">
+                        <h2>Mypage</h2>
+                            <Link to="/mypage"><h4>| 도서 목록</h4></Link> 
+                            <Link to="/mypage/myinfo"><h4>| 회원 정보</h4></Link>
                         </div>
                     </div>
+                    </div>
+                </div>
                 </div>
             </section>
-        </div>
+
+            <Routes>
+                <Route index element={<BidList />} />
+                <Route path='/myinfo' element={<MyInfo />} />
+            </Routes>
+        </>
     )
 }
 

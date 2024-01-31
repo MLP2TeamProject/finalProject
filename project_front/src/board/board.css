@@ -1,0 +1,11 @@
+/* textarea css stlyed  */
+.bmic-textarea {
+    display: block;
+    width: 100%;
+    line-height: 25px;
+    border: none;
+    outline: none;
+    padding: 0 20px;
+    height: 100px;
+    resize: none;
+  }
