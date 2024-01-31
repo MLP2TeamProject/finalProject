@@ -2431,10 +2431,14 @@ ul {
 .banner_part {
 	position: relative;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	background-color: #fff;
 =======
 	background-color: #ecfdff;
 >>>>>>> 8913c86 (1/31점검)
+=======
+	background-color: #fff;
+>>>>>>> 94c2edf (1/30 중간)
 	overflow: hidden;
 }
 
