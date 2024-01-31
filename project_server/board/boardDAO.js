@@ -3,7 +3,7 @@ const getPool = require('../common/pool')
 //이곳에 필요한 sql 등록.. 
 const sql = {
     // 고객센터 - 공지에 관련된 sql
-    noticeBoardList: 'SELECT * FROM notice_board ORDER BY notice_id DESC',
+    // noticeBoardList: 'SELECT * FROM notice_board ORDER BY notice_id DESC',
     noticeInsert: 'INSERT INTO notice_board (title, content) VALUES (?,?)',
     noticeBoard: 'SELECT * FROM notice_board WHERE notice_id = ?',
     noticeDelete: 'DELETE FROM notice_board WHERE notice_id = ?',
@@ -11,13 +11,9 @@ const sql = {
 
     // 고객센터 - FAQ에 관련된 sql 
     faqBoardList: 'SELECT * FROM faqboard',
-    faqInsert: 'INSERT INTO faqboard (title, content) VALUES (?,?)',
-    faqBoard: 'SELECT * FROM faqboard WHERE faq_id = ?',
-    faqDelete: 'DELETE FROM faqboard WHERE faq_id = ?',
-    faqUpdate: 'UPDATE faqboard SET title = ?, content = ? WHERE faq_id = ?',
 
     // pagination
-    pagination1: 'SELECT * from notice_board ORDER BY notice_id DESC limit ?,13',
+    pagination1: 'SELECT * from notice_board ORDER BY notice_id DESC limit 0,13',
     pagination2: 'SELECT * from notice_board ORDER BY notice_id DESC limit 13,13',
     pagination3: 'SELECT * from notice_board ORDER BY notice_id DESC limit 26,13',
 }
@@ -25,13 +21,31 @@ const sql = {
 const boardDAO = {
 
     // ---------- pagination board 관련 ------------------
-    pagination1: async (item,callback) => {
+    // pagination1: async (item,callback) => {
+    //     let conn = null
+    //     try {
+    //         conn = await getPool().getConnection()
+
+    //         const [resp] = await conn.query(sql.pagination1, [item.limit])
+
+    //         console.log('noticelist_pagination1_ss')
+    //         callback({ status: 200, message: 'OK', data: resp })
+    //     } catch (error) {
+    //         return { status: 500, message: '공지 목록1 조회 실패', error: error }
+    //     } finally {
+    //         if (conn !== null) conn.release()
+    //     }
+    // },
+    pagination1: async (callback) => {
         let conn = null
         try {
+            console.log('dao-00')
             conn = await getPool().getConnection()
 
-            const [resp] = await conn.query(sql.pagination1, [item.limit])
+            console.log('dao-11')
+            const [resp] = await conn.query(sql.pagination1, [])
 
+            console.log('dao-22')
             console.log('noticelist_pagination1_ss')
             callback({ status: 200, message: 'OK', data: resp })
         } catch (error) {

@@ -4,13 +4,20 @@ const boardDAO = require('./boardDAO')
 
 
 // pagination
+// router.get('/noticeBoardList', function (req, res, next) {
+//     console.log('notice Board List play - pagination1... router')
+//     console.log(req.query.page);
+//     let data = {
+//         limit :req.query.page ? Number(req.query.page) : 0,
+//     }
+//     boardDAO.pagination1(data,(resp) => {
+//         res.json(resp)
+//     })
+// })
 router.get('/noticeBoardList', function (req, res, next) {
     console.log('notice Board List play - pagination1... router')
-    console.log(req.query.page);
-    let data = {
-        limit :req.query.page ? Number(req.query.page) : 0,
-    }
-    boardDAO.pagination1(data,(resp) => {
+    boardDAO.pagination1((resp) => {
+        console.log('router 진입 ')
         res.json(resp)
     })
 })
