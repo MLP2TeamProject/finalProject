@@ -1,10 +1,12 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import UserContext from '../../userContext'
 
 const SignIn = () => {
 
     const navigate = useNavigate()
+    const context = useContext(UserContext)
 
     const [data, setData] = useState({ email: '', pwd: '' })
 
@@ -18,7 +20,12 @@ const SignIn = () => {
         e.preventDefault()
         const resp = await axios.post('http://localhost:8000/users/signin', data)
         if (resp.data.status === 500) window.alert(resp.data.message)
-        else navigate('/')
+        else {
+            context.action.loginUser({email:resp.data.data.email, user_name:resp.data.data.name})
+            sessionStorage.setItem("email", resp.data.data.email)
+            sessionStorage.setItem("user_name", resp.data.data.name)
+            navigate('/')
+        }
         console.log({resp})
     }, [data, navigate])
     return (
@@ -41,7 +48,7 @@ const SignIn = () => {
                                 <div className="login_part_form_iner">
                                     <h3>Welcome Back ! <br/>
                                         Please Sign in now</h3>
-                                    <form className="row contact_form" action="#" method="post" novalidate="novalidate">
+                                    <form className="row contact_form" action="#" method="post" noValidate="novalidate">
                                         <div className="col-md-12 form-group p_star">
                                             <input type="text" className="form-control" id="email" name="email" value={data.email} placeholder="E_mail"
                                                 onChange={changeData}/>
@@ -53,7 +60,7 @@ const SignIn = () => {
                                         <div className="col-md-12 form-group">
                                             <div className="creat_account d-flex align-items-center">
                                                 <input type="checkbox" id="f-option" name="selector"/>
-                                                    <label for="f-option">Remember me</label>
+                                                    <label htmlFor="f-option">Remember me</label>
                                             </div>
                                             <button type="submit" value="submit" className="btn_3" onClick={login} >
                                                 log in
