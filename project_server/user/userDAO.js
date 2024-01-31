@@ -4,7 +4,6 @@ const getPool = require('../common/pool')
 const sql = {
     // sql구문
     // ? 는 프로그램 데이터가 들어갈 자리
-    checkId: 'SELECT * FROM users WHERE email = ?',
     updatePw: 'UPDATE users SET pwd=? WHERE email= ?',
     checkBuyBooks: 'SELECT * FROM product WHERE email= ?',
     checkBids: 'SELECT * FROM auction WHERE product_id= ?',
@@ -12,11 +11,92 @@ const sql = {
     deleteAcc: 'DELETE FROM users WHERE email = ?',
     deleteBuyBooks: 'DELETE FROM product WHERE email= ?',
 
-    signup: "INSERT INTO users (user_name, email, pwd, address, phone) VALUES (?, ?, ?, '서울시', '01033334444')",
+    // signin, signup 이메일 중복 체크
+    checkId: 'SELECT * FROM users WHERE email = ?',
+    signup: 'INSERT INTO users (email, user_name, pwd, phone, address) VALUES (?, ?, ?, ?, ?)',
 }
 
 // DAO(Data Access Object) - DBMS연동처리
 const userDAO = {
+    // item = 클라이언트 요청 데이터
+    signup: async (item, callback) => {
+        let conn = null
+        try {
+            // 정상적으로 실행될 로직
+            conn = await getPool().getConnection();
+            console.log('연결 성공 dao=', item);
+
+            //email 체크
+            const [respCheck] = await conn.query(sql.checkId, item.email);
+
+            console.log('이메일 체크 결과 = ', respCheck);
+            if (respCheck[0]) {
+                console.log('이메일 이미 존재함.');
+                // email로 select했을 때 나오는 데이터가 있다면 이미 가입된 회원
+                callback({ status: 500, message: '이미 가입된 이메일입니다.' })
+            } else {
+                // DB에 insert
+                console.log('이메일 존재하지 않음.')
+                const salt = await bcrypt.genSalt();
+                bcrypt.hash(item.pwd, salt, async (error, hash) => {
+                    if (error) {
+                        console.log('암호화 실패');
+                        callback({ status: 500, message: '암호화 실패', error: error });                    }
+                    else {
+                        console.log("암호화 성공. 데이터 삽입 시도...");
+                        const [resp] = await conn.query(sql.signup, [item.email, item.user_name, hash, item.phone, item.address]);
+                        console.log("데이터 삽입 성공... 결과 반환....");
+                        callback({ status: 200, message: 'OK', data: resp });
+                    }
+                })
+            }
+        } catch (error) {
+            // 에러 발생 시 대처 로직
+            return { status: 500, message: '유저 등록 실패', error: error }
+        } finally {
+            // 최종적으로 실행될 반환 로직
+            if (conn !== null) conn.release()
+        }
+    },
+    login: async (item, callback) => { 
+        const { email, pwd } = item
+        let conn = null
+        try {
+            console.log('00')
+            conn = await getPool().getConnection()
+            console.log('11')
+            //sql 실행
+            const [users] = await conn.query(sql.checkId, [email])
+            console.log('22', users)
+            if (!users[0]) {
+                //db 에 데이터가 없음
+                callback({ status: 500, message: '아이디,패스워드를 확인해 주세요.' })
+            } else {
+                //db 데이터 있음 비교
+                console.log('33', pwd, users[0].pwd)
+                //db 에 비밀번호가 해시로 저장되어 있어서 해시로 만들어 비교
+                bcrypt.compare(pwd, users[0].pwd, async (error, result) => {
+                    if (error) {
+                        callback({ status: 500, message: '아이디, 패스워드를 확인해 주세요' })
+                    } else if (result) {
+                        console.log('44')
+                        callback({
+                            status: 200, message: 'OK',
+                            data: { name: users[0].user_name , email: users[0].email }
+                        })
+                    } else {
+                        callback({ status: 500, message: '아이디, 패스워드를 확인해 주세요' })
+                    }
+                })
+            }
+        } catch (e) {
+            return { status: 500, message: '로그인 실패', error: error }
+        } finally {
+            if (conn !== null) conn.release()
+        }
+    },
+
+
     // 회원정보 조회
     userinfo: async (email, callback) => {
         let conn = null
@@ -146,86 +226,6 @@ const userDAO = {
             if(conn !== null) conn.release()
         }        
     },
-
-    // 회원가입
-    signup: async (item, callback) => {
-        // console.log('user DAO, signup이 콜되었다.')
-        let conn = null
-        try {
-            // 정상실행 로직
-            // pool에서 connection 1개를 획득
-            conn = await getPool().getConnection()
-            console.log('회원가입 DAO', item)
-            // email check sql 문 실행
-            const [respCheck] = await conn.query(sql.checkId, item.email) // item.email를 ?에 대입
-            if (respCheck[0]) {
-                // console.log('respCheck', respCheck)
-                // 이메일로 select되는 데이터가 있다면, 이미 가입된 회원이다
-                callback({status:500, message:'사용자가 존재합니다.'})
-            } else {
-                // 회원가입. table에 insert
-                // 유저패스워드는 hash문자열로 변형시켜서 저장 
-                const salt = await bcrypt.genSalt()
-                // bcrypt.hash : bcrypt 라이브러리를 사용하여 비밀번호를 해시화
-                // item.password : 해시화할 원본 비밀번호
-                // salt : bcrypt에서 사용하는 salt 값으로, 해시 과정에서 추가적인 보안을 제공
-                // async (error, hash) => {} : 해시 생성이 완료되면 콜백 함수가 호출. 콜백 함수는 두 개의 매개변수를 받습니다.
-                //   error : 해시 생성 중 발생한 오류, hash : 생성된 해시 값, 
-                bcrypt.hash(item.password, salt, async (error, hash) => {
-                    if(error) callback({status: 500, message: '암호화 실패', error: error})
-                    else {
-                        // db insert
-                        const [resp] = await conn.query(sql.signup, [item.name, item.email, hash])
-                        callback({status: 200, message: 'OK', data: resp})
-                    }
-                })
-            }
-        } catch(error) {
-            // 에러발생시에 실행 로직
-            return {status: 500, message: '유저 입력 실패', error: error}
-        } finally {
-            // 마지막에 항상 실행되는 로직
-            // 사용했던 connection을 pool에 반환해서 다른 곳에서 사용할 수 있도록.
-            if(conn !== null) conn.release()
-        }
-    },
-
-    // 로그인
-    signin: async (item, callback) => {
-        let conn = null
-        try {
-            conn = await getPool().getConnection()
-            console.log('로그인 DAO', item)
-            // email check sql 문 실행
-            const [respCheck] = await conn.query(sql.checkId, item.loginEmail) // item.email를 ?에 대입
-            if (respCheck[0]) {
-                // item.loginPassword : 해쉬할 넘어온 비번 
-                bcrypt.compare(item.loginPassword, respCheck[0].pwd, async (error, result)=>{
-                    // 비밀번호 일치
-                    console.log('1', result) 
-                    if(result) {
-                        callback({status:200, message: '로그인 성공', data:{user_name: respCheck[0].user_name, email: respCheck[0].email}}) 
-                    } else {
-                        callback({status:500, message: '비밀번호가 맞지않습니다.'}) 
-                    }
-                })
-                // if(item.loginPassword === respCheck[0].pwd) {
-                //     callback({status:200, message:'로그인성공', data:{user_name: respCheck[0].user_name, email: respCheck[0].email}})
-                // } else {
-                //     callback({status:200, message:'비밀번호가 틀렸습니다.'})
-                // }
-            } else {
-                callback({status:500, message:'해당 유저가 없습니다.'})
-            }
-        } catch(error) {
-            // 에러발생시에 실행 로직
-            return {status: 500, message: '유저 입력 실패', error: error}
-        } finally {
-            // 마지막에 항상 실행되는 로직
-            // 사용했던 connection을 pool에 반환해서 다른 곳에서 사용할 수 있도록.
-            if(conn !== null) conn.release()
-        }
-    }
 }
 
 module.exports = userDAO

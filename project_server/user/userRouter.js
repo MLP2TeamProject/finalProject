@@ -2,22 +2,21 @@ const express = require('express')
 const router = express.Router()
 const userDAO = require('./userDAO')
 
-// 회원가입용
+//http://localhost:8000/users/signup
 router.post('/signup', async (req, res, next) => {
+    console.log('user router, singup.......')
+    //front 전달 데이터 획득
     const data = req.body
     userDAO.signup(data, (resp) => {
-        res.json(resp)
+        res.send(resp)
     })
 })
 
-// 로그인
-router.post('/signin', async (req, res, next) => {
+router.post('/signin', (req, res, next) => {
+    console.log('login router....')
     const data = req.body
-    userDAO.signin(data, (resp) => {
-        if(resp.status === 200){
-            req.session.loginEmail = resp.data.email
-            console.log(req.session)
-        }
+    userDAO.login(data, (resp) => {
+        //답변
         res.json(resp)
     })
 })
