@@ -1,10 +1,13 @@
 /* eslint-disable */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
 	console.log('33');
+
+	const [isShowSearch, setShowSearch] = useState(false);
+
 	return (
 		<div>
 			{/*
@@ -38,7 +41,12 @@ const Header = () => {
 												구매신청
 											</Link>
 										</li>
-										<li className="nav-item">
+										<li
+											className="nav-item"
+											onClick={(e) => {
+												e.preventDefault();
+												setShowSearch(true);
+											}}>
 											<Link className="nav-link" id="search_1">
 												<i className="ti-search"></i>
 											</Link>
@@ -60,77 +68,49 @@ const Header = () => {
 						</div>
 					</div>
 				</div>
-				<div className="search_input" id="search_input_box">
-					<div className="container">
-						<form className="d-flex justify-content-between search-inner">
-							<input
-								type="text"
-								className="form-control"
-								id="search_input"
-								placeholder=""
-							/>
-							<button type="submit" className="btn"></button>
-							<span
-								className="ti-close"
-								id="close_search"
-								title="Close Search"></span>
-						</form>
+				{isShowSearch ? (
+					<div className="search_input" id="search_input_box">
+						<div className="container">
+							<form className="d-flex justify-content-between search-inner">
+								<input
+									type="text"
+									className="form-control"
+									id="search_input"
+									placeholder=""
+								/>
+								<button type="submit" className="btn"></button>
+								<span
+									className="ti-close"
+									id="close_search"
+									title="Close Search"
+									onClick={(e) => {
+										e.preventDefault();
+										setShowSearch(false);
+									}}></span>
+							</form>
+						</div>
 					</div>
-				</div>
+				) : (
+					''
+				)}
 			</header>
 			{/* <!-- Header part end--> */}
+			{/* <!--::banner_part start::--> */}
 			<section className="banner_part">
 				<div className="container">
 					<div className="row align-items-center">
 						<div className="col-lg-12">
-							<div className="banner_slider owl-carousel">
-								{/* <div className="banner_slider owl-carousel owl-loaded owl-drag"> */}
-								<div className="single_banner_slider">
-									<div className="row">
-										<div className="col-lg-5 col-md-8">
-											<div className="banner_text">
-												<div className="banner_text_iner">
-													<img src="img/b-mic.png" alt="banner0" />
-												</div>
+							<div className="single_banner_slider">
+								<div className="row">
+									<div className="col-lg-5 col-md-8">
+										<div className="banner_text">
+											<div className="banner_text_iner">
+												<img src="img/b-mic.png" alt="banner0" />
 											</div>
-										</div>
-										<div className="banner_img d-none d-lg-block">
-											<img src="img/banner_img1.png" alt="banner1" />
 										</div>
 									</div>
-								</div>
-								<div className="single_banner_slider">
-									<div className="row">
-										<div className="col-lg-5 col-md-8">
-											<div className="banner_text">
-												<div className="banner_text_iner">
-													<h1>네이버페이 </h1>
-													<p>네이버페이 결제 시 1만포인트 적립</p>
-													<h6>1/18(목)부터 10만원 이상 결제 시</h6>
-												</div>
-											</div>
-										</div>
-										<div className="banner_img d-none d-lg-block">
-											<img src="img/banner_img2.png" alt="banner2" />
-										</div>
-									</div>
-								</div>
-								<div className="single_banner_slider">
-									<div className="row">
-										<div className="col-lg-5 col-md-8">
-											<div className="banner_text">
-												<div className="banner_text_iner">
-													<h1>역경매 전용</h1>
-													<p>5% 할인쿠폰</p>
-													<Link href="category.html" className="btn_2">
-														buy now
-													</Link>
-												</div>
-											</div>
-										</div>
-										<div className="banner_img d-none d-lg-block">
-											<img src="img/banner_img3.png" alt="banner3" />
-										</div>
+									<div className="banner_img d-none d-lg-block">
+										<img src="img/banner_img1.png" alt="banner1" />
 									</div>
 								</div>
 							</div>
@@ -138,6 +118,7 @@ const Header = () => {
 					</div>
 				</div>
 			</section>
+			{/* <!-- banner_part  end--> */}
 		</div>
 	);
 };
