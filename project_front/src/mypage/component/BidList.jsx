@@ -17,7 +17,7 @@ const BidList = () => {
     const [data, setData] = useState([{}])
     // 구매등록 상품정보 get
     const showInfo = useCallback(async ()=>{
-        const resp = await axios.get('http://localhost:8000/product/' + userEmail)
+        const resp = await axios.get('http://localhost:8000/products/' + userEmail)
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
             // console.log('구매등록상품', resp.data.data)
@@ -66,7 +66,7 @@ const BidList = () => {
         console.log('선택요소', product_id, selectedData.selectedAucId)
         const confirmOK = window.confirm(`${selectedData.selectedAucEmail}님 ${selectedData.selectedAucPrice}으로 낙찰하시겠습니까?`)
         if (confirmOK) {
-            const resp = await axios.post('http://localhost:8000/product/selectbid', {pId: product_id, selectedAucId: selectedData.selectedAucId})
+            const resp = await axios.post('http://localhost:8000/products/selectbid', {pId: product_id, selectedAucId: selectedData.selectedAucId})
             if(resp.data.status === 500) window.alert(resp.data.message)
             else {
                 // 성공시 페이지 리로드 

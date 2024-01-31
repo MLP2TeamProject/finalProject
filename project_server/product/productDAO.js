@@ -3,14 +3,13 @@ const getPool = require("../common/pool");
 const sql = {
   // sql구문
   // ? 는 프로그램 데이터가 들어갈 자리
-  checkProductAuction: `SELECT P.product_id, P.title, P.picture, P.auction_id, 
-    GROUP_CONCAT(CONCAT(A.auction_id, ',', A.email, ',', A.auction_price, ',', A.picture) 
-    ORDER BY A.auction_price DESC SEPARATOR ';') AS auction_info 
-    FROM product AS P  LEFT JOIN auction AS A 
-    ON A.product_id = P.product_id WHERE P.email = ? 
-    GROUP BY P.product_id, P.title, P.picture, P.auction_id`,
-  selectBidd:
-    "UPDATE product SET auction_id = ?, auction_status = 'Y' WHERE product_id = ?",
+
+  // 상품, 준영님
+  productList: "select * from product",
+  buy: "update product set auction_status = '?' where product_id = ?",
+
+
+  // 상품, 유경님
   detail: "select * from product where product_id = ?",
   detail_auction: "select * from auction where product_id = ?",
   update:
@@ -19,48 +18,61 @@ const sql = {
   insertAuction:
     "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
+
+  
+  // 마이페이지
+  checkProductAuction: `SELECT P.product_id, P.title, P.picture, P.auction_id, 
+    GROUP_CONCAT(CONCAT(A.auction_id, ',', A.email, ',', A.auction_price, ',', A.picture) 
+    ORDER BY A.auction_price DESC SEPARATOR ';') AS auction_info 
+    FROM product AS P  LEFT JOIN auction AS A 
+    ON A.product_id = P.product_id WHERE P.email = ? 
+    GROUP BY P.product_id, P.title, P.picture, P.auction_id`,
+  selectBidd: "UPDATE product SET auction_id = ?, auction_status = 'Y' WHERE product_id = ?",
+  
 };
 
 const productDAO = {
-  // 회원 구매 등록, 입찰 정보 조회
-  buyBooks: async (email, callback) => {
-    let conn = null;
+  // 상품, 준영님
+  productList: async (callback) => {
+    let conn = null
     try {
-      conn = await getPool().getConnection();
-      const [books] = await conn.query(sql.checkProductAuction, [email]);
-      console.log("북스", books);
-      if (books != []) {
-        callback({ status: 200, data: books });
-      } else {
-        callback({ status: 200, data: "구매등록한 책이 없습니다." });
-      }
-    } catch (e) {
-      console.log(e);
-      return { status: 500, message: "회원 구매등록 조회실패", error: e };
+        conn = await getPool().getConnection()
+        const [resp] = await conn.query(sql.productList, [])
+        console.log('1010', resp)
+        callback({ status: 200, message: 'OK', data: resp })
+    } catch (error) {
+        return { status: 500, message: '조회 실패', error: error }
     } finally {
-      if (conn !== null) conn.release();
+        if (conn !== null) conn.release()
     }
   },
 
-  bidWrite: async (pId, selectedAucId, callback) => {
-    let conn = null;
-    try {
-      conn = await getPool().getConnection();
-      console.log("넘어온 데이타", pId, selectedAucId);
-      const [selectedResult] = await conn.query(sql.selectBidd, [
-        selectedAucId,
-        pId,
-      ]);
-      console.log("업데이트 결과", selectedResult);
-      if (selectedResult) callback({ status: 200, data: "낙찰완료" });
-      else callback({ status: 200, data: "낙찰실패" });
-    } catch (e) {
-      console.log(e); // sql query를 날린 후 정상동작이 안된다면 여기서 로그 확인해보기
-      return { status: 500, message: "낙찰 입력 실패", error: e };
-    } finally {
-      if (conn !== null) conn.release();
-    }
+  buy: async (item, callback) => {
+      let conn = null;
+      try {
+          conn = await getPool().getConnection();
+          // auction 테이블에 구매 정보 기록 하나씩 전부 받아야 하는건가..? 빈 배열은?
+          // 'product' 테이블의 상태 업데이트
+          await conn.query(sql.buy, [
+              item.product_id,
+              item.title,
+              item.email,
+              item.master_price,
+              item.auction_id,
+              item.isbn,
+          ]);
+          console.log("22222", resp)
+          // 콜백으로 성공 응답 전송
+          callback(null, { status: 200, message: "구매 신청 완료" });
+      } catch (error) {
+          return { status: 500, message: '구매 실패', error: error }
+      } finally {
+          if (conn !== null) conn.release()
+      }
   },
+
+
+  // 상품, 유경님
   detail: async (item, callback) => {
     let conn = null;
     try {
@@ -135,6 +147,47 @@ const productDAO = {
     } catch (e) {
       console.log(e);
       return { status: 500, message: "입찰실패", error: e };
+    } finally {
+      if (conn !== null) conn.release();
+    }
+  },
+
+
+  // 마이페이지 : 회원 구매 등록, 입찰 정보 조회
+  buyBooks: async (email, callback) => {
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      const [books] = await conn.query(sql.checkProductAuction, [email]);
+      console.log("북스", books);
+      if (books != []) {
+        callback({ status: 200, data: books });
+      } else {
+        callback({ status: 200, data: "구매등록한 책이 없습니다." });
+      }
+    } catch (e) {
+      console.log(e);
+      return { status: 500, message: "회원 구매등록 조회실패", error: e };
+    } finally {
+      if (conn !== null) conn.release();
+    }
+  },
+
+  bidWrite: async (pId, selectedAucId, callback) => {
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      console.log("넘어온 데이타", pId, selectedAucId);
+      const [selectedResult] = await conn.query(sql.selectBidd, [
+        selectedAucId,
+        pId,
+      ]);
+      console.log("업데이트 결과", selectedResult);
+      if (selectedResult) callback({ status: 200, data: "낙찰완료" });
+      else callback({ status: 200, data: "낙찰실패" });
+    } catch (e) {
+      console.log(e); // sql query를 날린 후 정상동작이 안된다면 여기서 로그 확인해보기
+      return { status: 500, message: "낙찰 입력 실패", error: e };
     } finally {
       if (conn !== null) conn.release();
     }
