@@ -5,15 +5,17 @@ import axios from 'axios'
 
 const ProductList = () => {
     const navigate = useNavigate()
-    // const {id} = useParams()
-    // console.log('제품 ID', id)
     const [productList, setProductList] = useState({
         status: "", message: "", data: []
     })
     // 서버연동?
     const getProductList = useCallback(async () => {
-        const resp = await axios.get('http://localhost:8000/products/productList')
-        setProductList(resp.data)
+        try {
+            const resp = await axios.get('https://www.nl.go.kr/NL/search/openApi/searchKolisNet.do?key=39b4dd4a523f80ea24ba476b79fc50c968db9622ffd612dc415b4176e41ccadd&kwd=$%7Binput%7D&apiType=json&searchType=&sort=')
+            setProductList(resp.data)
+        } catch (error) {
+            console.error("Error fetching product list:", error);
+        }
     }, [])
 
     useEffect(() => {
@@ -28,7 +30,7 @@ const ProductList = () => {
             {/* // <!--================Home Banner Area =================-->
         // <!-- breadcrumb start--> */}
             <div>
-                <section className="breadcrumb breadcrumb_bg" style={{backgroundSize: "300px"}}> 
+                <section className="breadcrumb breadcrumb_bg" style={{ backgroundSize: "300px" }}>
                     {/* <section className="breadcrumb breadcrumb_bg"> style={{backgroundImage: "url(img/b-mic.png)"}} */}
                     <div className="container">
                         <div className="row justify-content-center">
@@ -352,48 +354,7 @@ const ProductList = () => {
                                     <h2>Best Sellers <span>shop</span></h2>
                                 </div>
                             </div>
-                        </div>
-                        <div className="row align-items-center justify-content-between">
-                            <div className="col-lg-12">
-                                <div className="best_product_slider owl-carousel">
-                                    <div className="single_product_item">
-                                        <img src="img/product/product_1.png" alt="" />
-                                        <div className="single_product_text">
-                                            <h4>Quartz Belt Watch</h4>
-                                            <h3>$150.00</h3>
-                                        </div>
-                                    </div>
-                                    <div className="single_product_item">
-                                        <img src="img/product/product_2.png" alt="" />
-                                        <div className="single_product_text">
-                                            <h4>Quartz Belt Watch</h4>
-                                            <h3>$150.00</h3>
-                                        </div>
-                                    </div>
-                                    <div className="single_product_item">
-                                        <img src="img/product/product_3.png" alt="" />
-                                        <div className="single_product_text">
-                                            <h4>Quartz Belt Watch</h4>
-                                            <h3>$150.00</h3>
-                                        </div>
-                                    </div>
-                                    <div className="single_product_item">
-                                        <img src="img/product/product_4.png" alt="" />
-                                        <div className="single_product_text">
-                                            <h4>Quartz Belt Watch</h4>
-                                            <h3>$150.00</h3>
-                                        </div>
-                                    </div>
-                                    <div className="single_product_item">
-                                        <img src="img/product/product_5.png" alt="" />
-                                        <div className="single_product_text">
-                                            <h4>Quartz Belt Watch</h4>
-                                            <h3>$150.00</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                       
                     </div>
                 </section>
                 {/* <!-- product_list part end--> */}

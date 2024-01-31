@@ -41,7 +41,6 @@ const ProductBuy = () => {
                     <tr>
                         {/* 각 열의 제목들 몇개는 삭제? */}
                         <th>제목</th>
-                        <th>이메일</th>
                         <th>사진</th>
                         <th>즉시 구매가</th>
                         <th>경매 종료시간</th>
@@ -55,7 +54,6 @@ const ProductBuy = () => {
                     {searchResults.map((item, index) => (
                         <tr key={index}>
                             <td>{item.title}</td>
-                            <td>{item.email}</td>
                             <td><img src={item.picture} alt={item.title} style={{ width: '100px' }} /></td>
                             <td>{item.master_price}</td>
                             <td>{new Date(item.endtime).toLocaleString()}</td>
@@ -89,6 +87,7 @@ const ProductBuy = () => {
             });
             // 구매 요청 함수를 호출
             buyProduct();
+            navigate("/products/list"); // 절대 경로 사용
         } else {
             alert("취소 되었습니다.")
         }

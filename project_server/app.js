@@ -29,6 +29,7 @@ app.use(express.urlencoded({extended: true})) //http요청의 body parser(즉 fo
 
 // 개발자가 각 파일로 분리시킨 라우터 등록
 app.use('/', homeRouter)
+app.use('/products', productRouter)
 
 // 위에서 안걸린 요청은 404로 처리
 app.use((req, res, next) => {
