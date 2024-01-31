@@ -21,23 +21,10 @@ const NoticeBoardList = () => {
 		data: [],
 	});
 
-
-//     const [page,setPage] = useState(0);
-//     const [offset,setOffset] = useState(13)
-
-//     const nextPage = () =>{
-// setPage(page +1)
-//     }
-
-/**
- * 1. limit 0page
- * 2. limit 13 page + 1 * 13 13
- * 3. limit 26
- */
-    let page = 1
+    let pageNumber = 1;
 
 	const getNoticeBoardList = useCallback(async () => {
-		const resp = await axios.get(`http://localhost:8000/boards/noticeBoardList/?${page}`, noticeBoarList);
+		const resp = await axios.get("http://localhost:8000/boards/noticeBoardList/" + pageNumber, noticeBoarList);
 		setNoticeBoardList(resp.data);
 	}, []);
 
@@ -130,17 +117,17 @@ const NoticeBoardList = () => {
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"1"}>
+								<a className="page-link" href={"/board/noticelist/1"}>
 									1
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"2"}>
+								<a className="page-link" href={"/board/noticelist/2"}>
 									2
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"3"}>
+								<a className="page-link" href={"/board/noticelist/3"}>
 									3
 								</a>
 							</li>

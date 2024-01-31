@@ -21,7 +21,7 @@ const NoticeBoardList = () => {
 
 
 	const getNoticeBoardList = useCallback(async () => {
-		const resp = await axios.get(`http://localhost:8000/boards/noticeBoardList`, noticeBoarList);
+		const resp = await axios.get('http://localhost:8000/boards/noticeBoardList/', noticeBoarList);
 		setNoticeBoardList(resp.data);
 	}, []);
 
@@ -115,17 +115,17 @@ const NoticeBoardList = () => {
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"1"}>
+								<a className="page-link" href={"/board/noticelist/1"}>
 									1
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"2"}>
+								<a className="page-link" href={"/board/noticelist/2"}>
 									2
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"3"}>
+								<a className="page-link" href={"/board/noticelist/3"}>
 									3
 								</a>
 							</li>

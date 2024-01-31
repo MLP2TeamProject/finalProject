@@ -3,18 +3,14 @@ const router = express.Router()
 const boardDAO = require('./boardDAO')
 
 
-// pagination
-// router.get('/noticeBoardList', function (req, res, next) {
-//     console.log('notice Board List play - pagination1... router')
-//     console.log(req.query.page);
-//     let data = {
-//         limit :req.query.page ? Number(req.query.page) : 0,
-//     }
-//     boardDAO.pagination1(data,(resp) => {
-//         res.json(resp)
-//     })
-// })
 router.get('/noticeBoardList', function (req, res, next) {
+    console.log('notice Board List play - pagination... router')
+    boardDAO.pagination1((resp) => {
+        console.log('router 진입 ')
+        res.json(resp)
+    })
+})
+router.get('/noticeBoardList/1', function (req, res, next) {
     console.log('notice Board List play - pagination1... router')
     boardDAO.pagination1((resp) => {
         console.log('router 진입 ')
@@ -33,15 +29,6 @@ router.get('/noticeBoardList/3', function (req, res, next) {
         res.json(resp)
     })
 })
-
-// 유저의 요청이 들어오면 실행 -> 페이지를 읽는 것만 하기 때문에 get방식
-// 공지 or FAQ board의 리스트를 펼쳐 줌
-// router.get('/noticeBoardList', function (req, res, next) {
-//     console.log('notice Board List play... router')
-//     boardDAO.noticeBoardList((resp) => {
-//         res.json(resp)
-//     })
-// })
 
 router.get('/faqBoardList', function (req, res, next) {
     console.log('faq Board List play... ')
