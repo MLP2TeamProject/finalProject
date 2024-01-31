@@ -88,17 +88,17 @@ const MyInfo = () => {
                         <h3>비밀번호 수정</h3>
                         <form className="row contact_form">
                             <div className="col-md-12 form-group p_star">
-                                <label htmlFor="orignPw" className="form-label">기존 비밀번호</label>
+                                <label htmlFor="originPw" className="form-label">기존 비밀번호</label>
                                 <input type="password" className="form-control" id="originPw" name="originPw" 
                                 value={data.originPw} onChange={changeData} placeholder="기존 비밀번호" />
                             </div>
                             <div className="col-md-12 form-group p_star">
-                                <label htmlFor="orignPw" className="form-label">변경 비밀번호</label>
+                                <label htmlFor="changePw" className="form-label">변경 비밀번호</label>
                                 <input type="password" className="form-control" id="changePw" name="changePw" 
                                 value={data.changePw} onChange={changeData} placeholder="변경 비밀번호" />
                             </div>
                             <div className="col-md-12 form-group p_star">
-                                <label htmlFor="orignPw" className="form-label">변경 비밀번호 확인</label>
+                                <label htmlFor="changePwConfirm" className="form-label">변경 비밀번호 확인</label>
                                 <input type="password" className="form-control" id="changePwConfirm" name="changePwConfirm" 
                                 value={data.changePwConfirm} onChange={changeData} placeholder="변경 비밀번호 확인" />
                             </div>

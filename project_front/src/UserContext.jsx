@@ -11,11 +11,11 @@ export const UserProvider = (props) => {
     const [userData, setUserData] = useState({email:'', user_name:''}) 
 
     useEffect(()=>{
-        console.log('페이지 진입')
+        // console.log('페이지 진입')
         const sessionEmail = sessionStorage.getItem("email")
         const sessionUserName = sessionStorage.getItem("user_name")
         if (sessionEmail && sessionUserName) {
-            console.log('마이세션', sessionEmail, sessionUserName)
+            // console.log('마이세션', sessionEmail, sessionUserName)
             setUserData({email:sessionEmail, user_name:sessionUserName})
         }
     }, [])
