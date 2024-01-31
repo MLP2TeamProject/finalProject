@@ -59,7 +59,7 @@ app.use(express.urlencoded({ extended: true })); //http요청의 body parser(즉
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/", homeRouter);
 app.use("/users", userRouter);
-app.use("/product", productRouter);
+app.use("/products", productRouter);
 app.use("/auction", auctionRouter);
 
 app.use("/boards", boardRouter);
