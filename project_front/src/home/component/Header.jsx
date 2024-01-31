@@ -23,7 +23,7 @@ const Header = () => {
                             <div className="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                                 <ul className="navbar-nav">
                                     <li className="nav-item dropdown">
-                                        <Link className="nav-link" to={"/"}><strong>SHOP</strong></Link>
+                                        <Link className="nav-link" to={"/product"}><strong>SHOP</strong></Link>
                                     </li>
                                     <li className="nav-item dropdown">
                                         <Link className="nav-link" to={"/"}><strong>BUY</strong></Link>
@@ -52,7 +52,10 @@ const Header = () => {
                                         </li>
                                     ) : ''}                                
                                     <li className="nav-item dropdown">
-                                        <Link className="nav-link" to={"/login"}>Login</Link>
+                                        <Link className="nav-link" to={"/user/signin"}>Login</Link>
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                        <Link className="nav-link" to={"/user/signup"}>signup</Link>
                                     </li>
                                 </ul>
                             </div>
