@@ -16,7 +16,7 @@ import "./assets/css/themify-icons.css";
 import "./assets/css/magnific-popup.css";
 import "./assets/css/slick.css";
 import "./assets/css/style.css";
-import App from "./App.jsx";
+
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
