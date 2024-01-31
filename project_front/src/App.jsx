@@ -7,6 +7,7 @@ import UserMain from "./user/UserMain";
 import BoardMain from "./board/BoardMain";
 import ProductMain from "./product/ProductMain";
 
+//수정했습니다. 
 const App = () => {
   return (
     <>
