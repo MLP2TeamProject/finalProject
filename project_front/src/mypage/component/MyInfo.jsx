@@ -11,6 +11,7 @@ const MyInfo = () => {
     // 회원정보 get
     const userEmail = context.state.userData.email 
     const userName = context.state.userData.user_name
+    // console.log(userEmail)
 
     // contextAPI를 안쓰면 사용 
     // const [userName, setUserName] = useState('')
@@ -27,25 +28,28 @@ const MyInfo = () => {
 
     // 비밀번호 변경
     const navigate = useNavigate()
-    const [data, setData] = useState({email:userEmail, originPw:'', changePw:'', changePwConfirm:''})
+    const [data, setData] = useState({originPw:'', changePw:'', changePwConfirm:''})
     const changeData = useCallback((e) => {
         setData((data)=> ({...data, [e.target.name]: e.target.value}))
     }, [])
 
     const changePassword = useCallback(async (e) => {
         e.preventDefault()
-        // console.log(data)
-        if (data.changePw === data.changePwConfirm) {
-            const resp = await axios.post('http://localhost:8000/users/changePw/', {email: data.email, originPw:data.originPw, changePw:data.changePw})
-            if(resp.data.status === 500) window.alert(resp.data.message)
-            else {
-                window.alert(resp.data.message)
-                navigate('/login') 
+        if (data.originPw !== '' && data.changePw !== '' && data.changePwConfirm !== '') {
+            if (data.changePw === data.changePwConfirm) {
+                const resp = await axios.post('http://localhost:8000/users/changePw/', {email: userEmail, originPw:data.originPw, changePw:data.changePw})
+                if(resp.data.status === 500) window.alert(resp.data.message)
+                else {
+                    window.alert(resp.data.message)
+                    setData({email:userEmail, originPw:'', changePw:'', changePwConfirm:''})
+                }
+            } else {
+                alert("변경 비밀번호가 맞지않습니다.")
             }
         } else {
-            alert("변경 비밀번호가 맞지않습니다.")
+            window.alert('항목이 입력되지 않았습니다.')
         }
-    }, [data, navigate])
+    }, [data, userEmail])
 
     // 회원탈퇴
     const deleteAccout = useCallback(async () => {

@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext, useCallback } from "react"
-// import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import UserContext from "../../userContext"
@@ -21,6 +20,7 @@ const BidList = () => {
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
             // console.log('구매등록상품', resp.data.data)
+            // 상품에 입찰된 정보 문자열을 배열로 
             const result = resp.data.data.map((item) => {
                 let auctionArr = []
                 if (item.auction_info) {
@@ -32,18 +32,6 @@ const BidList = () => {
             setData(result)
         }        
     }, [userEmail])  
-
-    // 입찰 정보 
-    const [bidList, setBidList] = useState([])
-    // 내가 입찰한 상품정보 get
-    const showBidd = useCallback(async ()=>{
-        const resp = await axios.get('http://localhost:8000/auction/' + userEmail)
-        if(resp.data.status === 500) window.alert(resp.data.message)
-        else {
-            // console.log('나의 입찰정보', resp.data.data)
-            setBidList(resp.data.data)
-        }        
-    }, [userEmail])   
 
     // 입찰 선택 상태 
     const [selectedData, setSelectedData] = useState({selectedAucId: 0, selectedAucEmail: '', selectedAucPrice: 0})
@@ -58,25 +46,38 @@ const BidList = () => {
     }
     // selectedLabel 상태 변경되었을 때, log 찍기
     // useEffect(() => { 
-    //     console.log(selectedAucId)
-    // }, [selectedAucId])
+    //     console.log(selectedData.selectedAucId)
+    // }, [selectedData])
 
     // 낙찰 요청 
     const selectBiddWrite = async (product_id) => {
-        console.log('선택요소', product_id, selectedData.selectedAucId)
+        // console.log('선택요소', product_id, selectedData.selectedAucId)
         const confirmOK = window.confirm(`${selectedData.selectedAucEmail}님 ${selectedData.selectedAucPrice}으로 낙찰하시겠습니까?`)
         if (confirmOK) {
             const resp = await axios.post('http://localhost:8000/products/selectbid', {pId: product_id, selectedAucId: selectedData.selectedAucId})
             if(resp.data.status === 500) window.alert(resp.data.message)
             else {
-                // 성공시 페이지 리로드 
-                location.reload(true)
+                // console.log('낙찰응답', resp.data.data)
+                showInfo() 
+                // location.reload(true)
                 // 리랜더링의 다른방법 
                 // 상품1개 - 입찰정보 - 단일 컴포넌트로 만들고, 낙찰시 서버연동후 서버에서 성공정보를 넘기면 그 데이터로 상태를 변경해서.. 
                 // 화면이 자동으로 리랜더링되게.. 처리..
             }  
         }
     }
+
+    // 입찰 정보 상태
+    const [bidList, setBidList] = useState([])
+    // 내가 입찰한 상품정보 get
+    const showBidd = useCallback(async ()=>{
+        const resp = await axios.get('http://localhost:8000/auction/' + userEmail)
+        if(resp.data.status === 500) window.alert(resp.data.message)
+        else {
+            // console.log('나의 입찰정보', resp.data.data)
+            setBidList(resp.data.data)
+        }        
+    }, [userEmail])      
 
     // 페이지 진입 시, useEmail이 변경될 때 실행  
     useEffect(()=>{
@@ -112,7 +113,7 @@ const BidList = () => {
                                 <td>
                                     <div className="media">
                                         <div className="media-body">
-                                            <Link to={'/product/'+item.product_id}>{item.title}</Link>
+                                            <Link to={'/product/detail/'+item.product_id}>{item.title}</Link>
                                         </div>
                                     </div>
                                 </td>
@@ -185,7 +186,7 @@ const BidList = () => {
                                                 <img src={imgUrl+item.picture} className='img_size' alt="" />
                                             </div>
                                             <div className="media-body">
-                                                <Link to={'/product/'+item.product_id}>{item.title}</Link>
+                                                <Link to={'/product/detail/'+item.product_id}>{item.title}</Link>
                                             </div>
                                         </div>
                                     </td>
