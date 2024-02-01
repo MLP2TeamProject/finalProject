@@ -68,57 +68,29 @@ const Header = () => {
 						</div>
 					</div>
 				</div>
-				{isShowSearch ? (
-					<div className="search_input" id="search_input_box">
-						<div className="container">
-							<form className="d-flex justify-content-between search-inner">
-								<input
-									type="text"
-									className="form-control"
-									id="search_input"
-									placeholder=""
-								/>
-								<button type="submit" className="btn"></button>
-								<span
-									className="ti-close"
-									id="close_search"
-									title="Close Search"
-									onClick={(e) => {
-										e.preventDefault();
-										setShowSearch(false);
-									}}></span>
-							</form>
-						</div>
-					</div>
-				) : (
-					''
-				)}
-			</header>
-			{/* <!-- Header part end--> */}
-			{/* <!--::banner_part start::--> */}
-			<section className="banner_part">
-				<div className="container">
-					<div className="row align-items-center">
-						<div className="col-lg-12">
-							<div className="single_banner_slider">
-								<div className="row">
-									<div className="col-lg-5 col-md-8">
-										<div className="banner_text">
-											<div className="banner_text_iner">
-												<img src="img/b-mic.png" alt="banner0" />
-											</div>
-										</div>
-									</div>
-									<div className="banner_img d-none d-lg-block">
-										<img src="img/banner_img1.png" alt="banner1" />
-									</div>
-								</div>
-							</div>
-						</div>
+				<div className="search_input" id="search_input_box">
+					<div className="container">
+						<form className="d-flex justify-content-between search-inner">
+							<input
+								type="text"
+								className="form-control"
+								id="search_input"
+								placeholder=""
+							/>
+							<button type="submit" className="btn"></button>
+							<span
+								className="ti-close"
+								id="close_search"
+								title="Close Search"
+								onClick={(e) => {
+									e.preventDefault();
+									setShowSearch(false);
+								}}></span>
+						</form>
 					</div>
 				</div>
-			</section>
-			{/* <!-- banner_part  end--> */}
+			</header>
+			{/* <!-- Header part end--> */}
 		</div>
 	);
 };

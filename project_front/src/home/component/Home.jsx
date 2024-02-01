@@ -15,6 +15,30 @@ const Home = () => {
         - style : inline style, jsx - javascript 표현식으로..
         - 이미지 경로 public 의 images 로 변경..
        */}
+			{/* <!--::banner_part start::--> */}
+			<section className="banner_part">
+				<div className="container">
+					<div className="row align-items-center">
+						<div className="col-lg-12">
+							<div className="single_banner_slider">
+								<div className="row">
+									<div className="col-lg-5 col-md-8">
+										<div className="banner_text">
+											<div className="banner_text_iner">
+												<img src="img/b-mic.png" alt="banner0" />
+											</div>
+										</div>
+									</div>
+									<div className="banner_img d-none d-lg-block">
+										<img src="img/banner_img1.png" alt="banner1" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			{/* <!-- banner_part  end--> */}
 			{/* <!-- feature_part start--> */}
 			<section className="feature_part padding_top">
 				<div className="container">
