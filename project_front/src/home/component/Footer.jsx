@@ -16,7 +16,7 @@ const Footer = () => {
 			<footer className="footer_part">
 				<div className="container">
 					<div className="row justify-content-around">
-						<div className="col-sm-6 col-lg-5">
+						<div className="col-sm-6 col-lg-6">
 							<div className="single_footer_part">
 								<ul className="list-unstyled">
 									<h4>CS CENTER INFO</h4>
@@ -29,17 +29,14 @@ const Footer = () => {
 									<li>통신판매업신고번호 제 2024-경기구리C-0001</li>
 									<br></br>
 									<li>반품 주소 : 경기도 구리시 이이구 삼삼대로111 사사주</li>
-								</ul>
-								<div className="footer-add-info">
 									<li>
 										<Link href="">가입사실확인</Link>
-									</li>
-									<li>공정거래위원회</li>
-									<li>현금영수증가맹점</li>
-									<li>
+										&nbsp; &nbsp; 공정거래위원회 &nbsp; &nbsp;
+										현금영수증가맹점&nbsp; &nbsp;
 										<Link href="">개인정보처리방침</Link>
 									</li>
-								</div>
+								</ul>
+								<ul className="footer-add-info"></ul>
 							</div>
 						</div>
 						<div className="col-sm-6 col-lg-3">
@@ -54,7 +51,7 @@ const Footer = () => {
 								</ul>
 							</div>
 						</div>
-						<div className="col-sm-6 col-lg-4">
+						<div className="col-sm-6 col-lg-3">
 							<div className="single_footer_part">
 								<h4>RETURN</h4>
 								<ul className="list-unstyled">

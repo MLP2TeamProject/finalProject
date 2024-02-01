@@ -1,27 +1,26 @@
-import axios from "axios";
-import React, { useCallback, useState, useEffect,useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import UserContext from "../../userContext"
+import axios from 'axios';
+import React, { useCallback, useState, useEffect, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import UserContext from '../../userContext';
 
 const NoticeBoardList = () => {
 	const navigate = useNavigate();
-    
-    // 관리자인가 확인
-    const context = useContext(UserContext)
-    const userIsadmin = context.state.userData.isadmin
 
-    
+	// 관리자인가 확인
+	const context = useContext(UserContext);
+	const userIsadmin = context.state.userData.isadmin;
 
 	const [noticeBoarList, setNoticeBoardList] = useState({
-		status: "",
-		message: "",
+		status: '',
+		message: '',
 		data: [],
 	});
 
-
-
 	const getNoticeBoardList = useCallback(async () => {
-		const resp = await axios.get('http://localhost:8000/boards/noticeBoardList/', noticeBoarList);
+		const resp = await axios.get(
+			'http://localhost:8000/boards/noticeBoardList/',
+			noticeBoarList
+		);
 		setNoticeBoardList(resp.data);
 	}, []);
 
@@ -43,14 +42,13 @@ const NoticeBoardList = () => {
 								<h2>고객센터</h2>
 							</div>
 							<div>
-								<Link to={"/board/noticelist/"}>
+								<Link to={'/board/noticelist/'}>
 									<p className="text-dark">공지사항</p>
 								</Link>
-								<Link to={"/board/faqlist"}>
+								<Link to={'/board/faqlist'}>
 									<p className="text-muted">FAQ</p>
 								</Link>
-                                <hr/>
-                                
+								<hr />
 							</div>
 						</div>
 
@@ -58,7 +56,11 @@ const NoticeBoardList = () => {
 						<div className="col-lg-10">
 							<div>
 								<h2 className="contact-title">공지사항</h2>
-								<form className="form-contact contact_form" action="contact_process.php" method="post" id="contactForm">
+								<form
+									className="form-contact contact_form"
+									action="contact_process.php"
+									method="post"
+									id="contactForm">
 									<div className="row">
 										<div className="col-lg-12">
 											<table className="table table">
@@ -74,7 +76,13 @@ const NoticeBoardList = () => {
 														<tr key={noticeBoardList.notice_id}>
 															{/* <td>{li.faq_id}</td> */}
 															<td>
-																<Link to={"/board/noticedetail/" + noticeBoardList.notice_id}>{noticeBoardList.title}</Link>
+																<Link
+																	to={
+																		'/board/noticedetail/' +
+																		noticeBoardList.notice_id
+																	}>
+																	{noticeBoardList.title}
+																</Link>
 															</td>
 															<td>{noticeBoardList.createAt}</td>
 															<td>{noticeBoardList.cnt}</td>
@@ -83,10 +91,12 @@ const NoticeBoardList = () => {
 												</tbody>
 												<tfoot>
 													<tr>
-                                                        {/* 이 부분에 삼항연산자 넣어서 버튼 나타내기 */}
+														{/* 이 부분에 삼항연산자 넣어서 버튼 나타내기 */}
 														<td colSpan={5}>
-															<Link to={"/board/noticeinsert"}>
-																<button className="btn btn-primary btn-sm float-right">글쓰기</button>
+															<Link to={'/board/noticeinsert'}>
+																<button className="btn btn-primary btn-sm float-right">
+																	글쓰기
+																</button>
 															</Link>
 														</td>
 													</tr>
@@ -115,17 +125,17 @@ const NoticeBoardList = () => {
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"/board/noticelist/1"}>
+								<a className="page-link" href={'/board/noticelist/1'}>
 									1
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"/board/noticelist/2"}>
+								<a className="page-link" href={'/board/noticelist/2'}>
 									2
 								</a>
 							</li>
 							<li className="page-item">
-								<a className="page-link" href={"/board/noticelist/3"}>
+								<a className="page-link" href={'/board/noticelist/3'}>
 									3
 								</a>
 							</li>
