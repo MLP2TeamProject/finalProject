@@ -109,7 +109,7 @@ router.get("/detail/:id", function (req, res, next) {
 
 
 // 마이페이지용 
-router.get("/:email", async (req, res, next) => {
+router.get("/my/:email", async (req, res, next) => {
   const email = req.params.email;
   productDAO.buyBooks(email, (resp) => {
     res.json(resp);
@@ -124,4 +124,12 @@ router.post("/selectbid", async (req, res, next) => {
   });
 });
 
+router.get("/listpage/:page/:count", async (req,res,next) => {
+  const page = Number(req.params.page)
+  const count = Number(req.params.count)
+  console.log('page',page, 'count', count)
+  productDAO.listpage(page, count, (resp) => {
+    res.json(resp);
+  });
+})
 module.exports = router;

@@ -16,7 +16,7 @@ const BidList = () => {
     const [data, setData] = useState([{}])
     // 구매등록 상품정보 get
     const showInfo = useCallback(async ()=>{
-        const resp = await axios.get('http://localhost:8000/products/' + userEmail)
+        const resp = await axios.get('http://localhost:8000/products/my/' + userEmail)
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
             // console.log('구매등록상품', resp.data.data)

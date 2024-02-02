@@ -29,6 +29,9 @@ const sql = {
     GROUP BY P.product_id, P.title, P.picture, P.auction_id`,
   selectBidd: "UPDATE product SET auction_id = ?, auction_status = 'Y' WHERE product_id = ?",
   
+  // 페이지네이션 
+  totalProducts: "SELECT COUNT(product_id) as TOTALCOUNT FROM product",
+  listOnepage: "SELECT * FROM product LIMIT ?, ?",
 };
 
 const productDAO = {
@@ -191,6 +194,23 @@ const productDAO = {
     } finally {
       if (conn !== null) conn.release();
     }
+  },
+
+  // 페이지네이션
+  listpage: async (page, count, callback) => {
+    let conn = null
+    try {
+      conn = await getPool().getConnection()
+      const [totalCount] = await conn.query(sql.totalProducts)
+      const [result] = await conn.query(sql.listOnepage, [(page-1)*count, count])
+      if(result) callback({status:200, data: result, totalCount: totalCount[0].TOTALCOUNT})
+      else callback({status:500, message:'결과없음'})
+    } catch(e) {
+      console.log(e)
+      return { status: 500, message: "상품조회실패", error: e }
+    } finally {
+      if (conn !== null) conn.release()
+    } 
   },
 };
 
