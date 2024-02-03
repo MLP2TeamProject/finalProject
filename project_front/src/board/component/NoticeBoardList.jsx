@@ -1,27 +1,25 @@
 import axios from "axios";
-import React, { useCallback, useState, useEffect,useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import UserContext from "../../userContext"
+import { useCallback, useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import UserContext from "../../userContext";
 
 const NoticeBoardList = () => {
-	const navigate = useNavigate();
-    
-    // 관리자인가 확인
-    const context = useContext(UserContext)
-    const userIsadmin = context.state.userData.isadmin
+	// 관리자인가 확인하기 위하여 공개된 전역상태 함수를 이용.
+	const context = useContext(UserContext);
+	const isadmin = context.state.userData.isadmin;
+	console.log("000", isadmin);
 
-    
-
+	// noticeboardlist
 	const [noticeBoarList, setNoticeBoardList] = useState({
 		status: "",
 		message: "",
 		data: [],
 	});
+	console.log(noticeBoarList);
 
-
-
+	// noticeboardlist의 목록 조회
 	const getNoticeBoardList = useCallback(async () => {
-		const resp = await axios.get('http://localhost:8000/boards/noticeBoardList/', noticeBoarList);
+		const resp = await axios.get("http://localhost:8000/boards/noticeBoardList/", noticeBoarList);
 		setNoticeBoardList(resp.data);
 	}, []);
 
@@ -29,6 +27,8 @@ const NoticeBoardList = () => {
 		getNoticeBoardList();
 	}, []);
 
+	// 프론트
+	// 아래의 글쓰기 버튼에서 관리자 여부에 따라 버튼이 나타나고, 나타나지 않음.
 	return (
 		<div>
 			{/* <h2>test - NoticeBoardList page</h2> */}
@@ -49,8 +49,7 @@ const NoticeBoardList = () => {
 								<Link to={"/board/faqlist"}>
 									<p className="text-muted">FAQ</p>
 								</Link>
-                                <hr/>
-                                
+								<hr />
 							</div>
 						</div>
 
@@ -72,7 +71,6 @@ const NoticeBoardList = () => {
 												<tbody className="table-group-divider">
 													{noticeBoarList.data.map((noticeBoardList) => (
 														<tr key={noticeBoardList.notice_id}>
-															{/* <td>{li.faq_id}</td> */}
 															<td>
 																<Link to={"/board/noticedetail/" + noticeBoardList.notice_id}>{noticeBoardList.title}</Link>
 															</td>
@@ -82,14 +80,17 @@ const NoticeBoardList = () => {
 													))}
 												</tbody>
 												<tfoot>
-													<tr>
-                                                        {/* 이 부분에 삼항연산자 넣어서 버튼 나타내기 */}
-														<td colSpan={5}>
-															<Link to={"/board/noticeinsert"}>
-																<button className="btn btn-primary btn-sm float-right">글쓰기</button>
-															</Link>
-														</td>
-													</tr>
+													{   // 관리자인지 확인해서 글쓰기 버튼을 나타내게 함
+                                                        isadmin === "Y" 
+														? <tr>
+															<td colSpan={5}>
+																<Link to={"/board/noticeinsert"}>
+																	<button className="btn btn-primary btn-sm float-right">글쓰기</button>
+																</Link>
+															</td>
+														</tr>
+                                                        : ""
+													}
 												</tfoot>
 											</table>
 										</div>

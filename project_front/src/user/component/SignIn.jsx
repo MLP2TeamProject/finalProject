@@ -21,9 +21,10 @@ const SignIn = () => {
         const resp = await axios.post('http://localhost:8000/users/signin', data)
         if (resp.data.status === 500) window.alert(resp.data.message)
         else {
-            context.action.loginUser({email:resp.data.data.email, user_name:resp.data.data.name})
+            context.action.loginUser({email:resp.data.data.email, user_name:resp.data.data.name, isadmin: resp.data.data.isadmin})
             sessionStorage.setItem("email", resp.data.data.email)
             sessionStorage.setItem("user_name", resp.data.data.name)
+            sessionStorage.setItem("isadmin", resp.data.data.isadmin)
             navigate('/')
         }
         console.log({resp})

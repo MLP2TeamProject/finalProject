@@ -2,11 +2,10 @@
 // icon 적용 시키기
 
 import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useCallback, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const FaqBoardList = () => {
-	const navigate = useNavigate();
 
 	const [faqBoarList, setFaqBoardList] = useState({
 		status: "",
@@ -58,7 +57,7 @@ const FaqBoardList = () => {
 													<div className="accordion accordion-flush" id="faq-group-1">
 														<div className="accordion-item">
 															<h2 className="accordion-header">
-																<button className="accordion-button collapsed" data-bs-target="#faqsOne-1" type="button" data-bs-toggle="collapse">
+																<button className="h3 accordion-button collapsed" data-bs-target="#faqsOne-1" type="button" data-bs-toggle="collapse">
 																	B-mic 사이트 판매 등록 방식
 																</button>
 															</h2>
@@ -67,58 +66,69 @@ const FaqBoardList = () => {
 															</div>
 														</div>
 
-														<div className="accordion-item">
-															<h2 className="accordion-header">
-																<button className="accordion-button collapsed" data-bs-target="#faqsOne-2" type="button" data-bs-toggle="collapse">
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-2" type="button" data-bs-toggle="collapse">
 																	B-mic, 상품의 가치 시스템
 																</button>
 															</h2>
-															<div id="faqsOne-2" className="accordion-collapse collapse" data-bs-parent="#faq-group-1">
-																<div className="accordion-body">해당 내용은 test 내용입니다.</div>
+															<div id="faqsOne-2" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>
 
-														<div className="accordion-item">
-															<h2 className="accordion-header">
-																<button className="accordion-button collapsed" data-bs-target="#faqsOne-3" type="button" data-bs-toggle="collapse">
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-3" type="button" data-bs-toggle="collapse">
 																	B-mic, 배송오류 시스템
 																</button>
 															</h2>
-															<div id="faqsOne-3" className="accordion-collapse collapse" data-bs-parent="#faq-group-1">
-																<div className="accordion-body">해당 내용은 test 내용입니다.</div>
+															<div id="faqsOne-3" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>
 
-														<div className="accordion-item">
-															<h2 className="accordion-header">
-																<button className="accordion-button collapsed" data-bs-target="#faqsOne-4" type="button" data-bs-toggle="collapse">
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-4" type="button" data-bs-toggle="collapse">
 																	B-mic, 구매 상품 반품시스템
 																</button>
 															</h2>
-															<div id="faqsOne-4" className="accordion-collapse collapse" data-bs-parent="#faq-group-1">
-																<div className="accordion-body">해당 내용은 test 내용입니다.</div>
+															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
+														</div>
 
-															<div className="accordion-item">
-																<h2 className="accordion-header">
-																	<button className="accordion-button collapsed" data-bs-target="#faqsOne-5" type="button" data-bs-toggle="collapse">
-																		B-mic, 상품 직접 픽업 시스템
-																	</button>
-																</h2>
-																<div id="faqsOne-5" className="accordion-collapse collapse" data-bs-parent="#faq-group-1">
-																	<div className="accordion-body">해당 내용은 test 내용입니다.</div>
-																</div>
+                                                        <div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-5" type="button" data-bs-toggle="collapse">
+																	B-mic, 구매 상품 반품시스템
+																</button>
+															</h2>
+															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
+														</div>
 
-															<div className="accordion-item">
-																<h2 className="accordion-header">
-																	<button className="accordion-button collapsed" data-bs-target="#faqsOne-6" type="button" data-bs-toggle="collapse">
-																		B-mic, 구매 취소 시스템
-																	</button>
-																</h2>
-																<div id="faqsOne-6" className="accordion-collapse collapse" data-bs-parent="#faq-group-1">
-																	<div className="accordion-body">해당 내용은 test 내용입니다.</div>
-																</div>
+                                                        <div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-6" type="button" data-bs-toggle="collapse">
+																	B-mic, 구매 상품 반품시스템
+																</button>
+															</h2>
+															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
+															</div>
+														</div>
+
+                                                        <div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-7" type="button" data-bs-toggle="collapse">
+																	B-mic, 구매 상품 반품시스템
+																</button>
+															</h2>
+															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>
 													</div>

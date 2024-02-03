@@ -1,14 +1,19 @@
 // 공지 페이지 글을 등록하는? 필요한지 추우 조금 더 고민.
 
 import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useCallback, useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import UserContext from "../../userContext"
 
 const NoticeBoardInsert = () => {
     const navigate = useNavigate()
 
+    const context = useContext(UserContext)
+    const userEmail = context.state.userData.email
+    console.log(userEmail)
+
     // 유효입력데이터
-    const [noticeData, setNoticeData] = useState({ id:'', title: '', content: '' });
+    const [noticeData, setNoticeData] = useState({ id:'', title: '', content: '', email: userEmail });
 
     const changeNoticeData = useCallback((e) => {
         setNoticeData((noticeData) => ({ ...noticeData, [e.target.name]: e.target.value }))
@@ -39,7 +44,7 @@ const NoticeBoardInsert = () => {
 								<h2>고객센터</h2>
 							</div>
 							<div>
-								<Link to={"/board/noticelist/1"}>
+								<Link to={"/board/noticelist/"}>
 									<p className="text-dark">공지사항</p>
 								</Link>
 								<Link to={"/board/faqlist"}>
@@ -75,6 +80,7 @@ const NoticeBoardInsert = () => {
                                                                 placeholder="내용을 입력해주세요." value={noticeData.content} onChange={changeNoticeData}></textarea>
 														</td>
 													</tr>
+                                                
 												</tbody>
 											</table>
 											<div className="container">
