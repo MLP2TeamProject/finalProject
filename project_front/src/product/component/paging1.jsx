@@ -19,7 +19,7 @@ const ProductListPage = () => {
 
     //서버연동..
     const getServerProductList = async(group, pageNum) => {
-        const resp = await axios.get("http://localhost:8000/products/listpage/" + pageNum + "/" + perPageItemNum)
+        const resp = await axios.get("http://localhost:8000/products/listpage1/" + pageNum + "/" + perPageItemNum)
         if (resp.data.status === 500) console.log("상품리스트 조회 실패")
         else {
             console.log("항목", resp.data.data, "총개수", resp.data.totalCount)
@@ -42,7 +42,7 @@ const ProductListPage = () => {
 
     useEffect(() => {
         //초기 서버 데이터 획득 호출.. 
-        getServerProductList(0, 1)
+        getServerProductList(0, 1) // 0 그룹, 1 페이지 넘버 
     }, [])
 
     const onClickPage = (page) => {
@@ -81,8 +81,8 @@ const ProductListPage = () => {
             ))}
             </tbody>
         </table>
-        <p>현재페이지: {pageState.currentPage} / 총페이지: {pageState.totalPageCount}, 현재그룹: {pageState.currentPageGroup} / 총페이지그룹: {pageState.totalGroupCount}</p>
-        <p>pageArray : {pageState.pageArray}</p>
+        <p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
+        <p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p>
         <nav className="justify-content-center d-flex">
             <ul className="pagination">
                 <li className={pageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>

@@ -197,13 +197,31 @@ const productDAO = {
   },
 
   // 페이지네이션
-  listpage: async (page, count, callback) => {
+  listpage1: async (page, count, callback) => {
     let conn = null
     try {
       conn = await getPool().getConnection()
       const [totalCount] = await conn.query(sql.totalProducts)
       const [result] = await conn.query(sql.listOnepage, [(page-1)*count, count])
       if(result) callback({status:200, data: result, totalCount: totalCount[0].TOTALCOUNT})
+      else callback({status:500, message:'결과없음'})
+    } catch(e) {
+      console.log(e)
+      return { status: 500, message: "상품조회실패", error: e }
+    } finally {
+      if (conn !== null) conn.release()
+    } 
+  },
+  listpage: async (page, callback) => {
+    let conn = null
+    try {      
+      conn = await getPool().getConnection()
+      const [items] = await conn.query(sql.productList)
+      //한페이지에 2개 item 가정
+      const responseData = items.slice((page-1)*2, page*2)
+      //totalItems : 항목 갯수
+      //perPage: 한 페이지당 항목 수
+      if(responseData) callback({status: 200, totalItems : items.length, perPage: 2, data: responseData})
       else callback({status:500, message:'결과없음'})
     } catch(e) {
       console.log(e)

@@ -10,8 +10,10 @@ import Bidding from "./component/Bidding";
 import Update from "./component/Update";
 //Timer랑 Table은 Detail 안에 있음
 
-//페이징 테스트
+//페이징 테스트 
 import ProductListPage from "./component/paging1";
+//페이징 테스트 : react-paginate 방식 
+// import ProductListPage from "./component/paging";
 
 const ProductMain = () => {
   return (

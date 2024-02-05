@@ -124,12 +124,23 @@ router.post("/selectbid", async (req, res, next) => {
   });
 });
 
-router.get("/listpage/:page/:count", async (req,res,next) => {
-  const page = Number(req.params.page)
-  const count = Number(req.params.count)
+// paging1 방식
+router.get("/listpage1/:page/:count", async (req,res,next) => {
+  const page = Number(req.params.page) // 페이지번호
+  const count = Number(req.params.count) // 한페이지 당 보여줄 페이지 개수
   console.log('page',page, 'count', count)
-  productDAO.listpage(page, count, (resp) => {
+  productDAO.listpage1(page, count, (resp) => {
     res.json(resp);
   });
 })
+
+// paging 방식 : react-paginate 사용 
+router.get('/listpage/:page', async (req, res, next) => {
+  //클라이언트에서 전송한 페이지 번호 
+  const page = req.params.page
+  productDAO.listpage(page, (resp) => {
+    res.json(resp);
+  });
+})
+
 module.exports = router;
