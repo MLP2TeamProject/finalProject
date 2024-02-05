@@ -55,14 +55,14 @@ const FaqBoardList = () => {
 													<h5 className="title">Frequently Asked Questions</h5>
 
 													<div className="accordion accordion-flush" id="faq-group-1">
-														<div className="accordion-item">
-															<h2 className="accordion-header">
-																<button className="h3 accordion-button collapsed" data-bs-target="#faqsOne-1" type="button" data-bs-toggle="collapse">
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-1" type="button" data-bs-toggle="collapse">
 																	B-mic 사이트 판매 등록 방식
 																</button>
 															</h2>
-															<div id="faqsOne-1" className="accordion-collapse collapse" data-bs-parent="#faq-group-1">
-																<div className="accordion-body">해당 내용은 test 내용입니다.</div>
+															<div id="faqsOne-1" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>
 
@@ -105,7 +105,7 @@ const FaqBoardList = () => {
 																	B-mic, 구매 상품 반품시스템
 																</button>
 															</h2>
-															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+															<div id="faqsOne-5" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
 																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>
@@ -116,7 +116,7 @@ const FaqBoardList = () => {
 																	B-mic, 구매 상품 반품시스템
 																</button>
 															</h2>
-															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+															<div id="faqsOne-6" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
 																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>
@@ -127,7 +127,7 @@ const FaqBoardList = () => {
 																	B-mic, 구매 상품 반품시스템
 																</button>
 															</h2>
-															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+															<div id="faqsOne-7" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
 																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>

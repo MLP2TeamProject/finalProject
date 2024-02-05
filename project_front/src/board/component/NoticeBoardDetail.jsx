@@ -5,7 +5,7 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import UserContext from "../../userContext";
+import UserContext from "../../UserContext";
 
 const NoticeBoardDetail = () => {
 	const navigate = useNavigate();

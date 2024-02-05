@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import UserContext from "../../userContext";
+import UserContext from "../../UserContext";
 
 const NoticeBoardList = () => {
 	// 관리자인가 확인하기 위하여 공개된 전역상태 함수를 이용.

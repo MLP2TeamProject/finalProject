@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useCallback, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import UserContext from "../../userContext"
+import UserContext from "../../UserContext"
 
 const NoticeBoardInsert = () => {
     const navigate = useNavigate()
