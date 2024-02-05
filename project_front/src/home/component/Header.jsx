@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import UserContext from '../../userContext'
+import UserContext from '../../UserContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -19,9 +19,10 @@ const Header = () => {
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
             // console.log(resp.data.message)
-            context.action.loginUser({email:'', user_name:''})
+            context.action.loginUser({email:'', user_name:'', isadmin:'N'})
             sessionStorage.removeItem("email")
             sessionStorage.removeItem("user_name")
+            sessionStorage.removeItem("isadmin")
             navigate('/')
         }
     }

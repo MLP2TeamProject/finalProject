@@ -2,11 +2,14 @@
 // icon 적용 시키기
 
 import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useCallback, useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import UserContext from "../../UserContext";
 
 const NoticeBoardList = () => {
-	const navigate = useNavigate();
+    // 관리자인가 확인하기 위하여 공개된 전역상태 함수를 이용.
+	const context = useContext(UserContext);
+	const isadmin = context.state.userData.isadmin;
 
 	const [noticeBoarList, setNoticeBoardList] = useState({
 		status: "",
@@ -78,13 +81,17 @@ const NoticeBoardList = () => {
 													))}
 												</tbody>
 												<tfoot>
-													<tr>
-														<td colSpan={5}>
-															<Link to={"/board/noticeinsert"}>
-																<button className="btn btn-primary btn-sm float-right" >글쓰기</button>
-															</Link>
-														</td>
-													</tr>
+													{   // 관리자인지 확인해서 글쓰기 버튼을 나타내게 함
+                                                        isadmin === "Y" 
+														? <tr>
+															<td colSpan={5}>
+																<Link to={"/board/noticeinsert"}>
+																	<button className="btn btn-primary btn-sm float-right">글쓰기</button>
+																</Link>
+															</td>
+														</tr>
+                                                        : ""
+													}
 												</tfoot>
 											</table>
 										</div>

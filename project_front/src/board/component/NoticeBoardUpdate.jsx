@@ -1,7 +1,7 @@
 // 공지 내용을 수정할 수 있는 버튼을 누르면 나오는 페이지. (관리자만 가능)
 
 import axios from 'axios'
-import React, {useCallback, useState, useEffect}  from 'react'
+import { useState, useEffect}  from 'react'
 import {useNavigate, useParams, Link}  from 'react-router-dom'
 
 const NoticeBoardUpdate = () =>{

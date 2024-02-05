@@ -82,7 +82,7 @@ const userDAO = {
                         console.log('44')
                         callback({
                             status: 200, message: 'OK',
-                            data: { name: users[0].user_name , email: users[0].email }
+                            data: { name: users[0].user_name , email: users[0].email, isadmin: users[0].isadmin }
                         })
                     } else {
                         callback({ status: 500, message: '아이디, 패스워드를 확인해 주세요' })
