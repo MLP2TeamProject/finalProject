@@ -1,7 +1,7 @@
 import { useCallback, useState, useContext } from "react"
 import { useNavigate } from 'react-router'
 import axios from 'axios'
-import UserContext from "../../userContext"
+import UserContext from "../../UserContext"
 
 const MyInfo = () => {
 

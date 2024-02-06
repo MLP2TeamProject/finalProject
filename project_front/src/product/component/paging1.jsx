@@ -22,7 +22,6 @@ const ProductListPage = () => {
         const resp = await axios.get("http://localhost:8000/products/listpage1/" + pageNum + "/" + perPageItemNum)
         if (resp.data.status === 500) console.log("상품리스트 조회 실패")
         else {
-            console.log("항목", resp.data.data, "총개수", resp.data.totalCount)
             const totalCount = resp.data.totalCount
             const totalPageCount = Math.ceil(totalCount / perPageItemNum)
             const totalGroupCount = Math.ceil(totalPageCount / perGroupPageNum)
@@ -30,12 +29,12 @@ const ProductListPage = () => {
             let pageArray = []
 
             if(totalPageCount - (group * perGroupPageNum) < perGroupPageNum) {
-                pageArray = Array.from({ length: totalPageCount - (group * perGroupPageNum) }, (_, index) => index + (group * perGroupPageNum) + 1)
+                pageArray = Array.from({ length: totalPageCount - (group * perGroupPageNum) }, (_, index) => index+1 + (group * perGroupPageNum))
             }else {
                 pageArray = Array.from({ length: perGroupPageNum }, (_, index) => index+1 + (group * perGroupPageNum))
             }
 
-            console.log(totalCount, totalPageCount, totalGroupCount, serverData, pageArray)
+            console.log('셋팅값', totalCount, totalPageCount, totalGroupCount, serverData, pageArray)
             setPageState({...pageState, totalCount, totalPageCount, totalGroupCount, serverData, pageArray, currentPage: pageNum, currentPageGroup:group })            
         }
     }
@@ -83,16 +82,17 @@ const ProductListPage = () => {
         </table>
         <p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
         <p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p>
+        <p>페이지배열 : {pageState.pageArray}</p>
         <nav className="justify-content-center d-flex">
             <ul className="pagination">
                 <li className={pageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>
-                    <a href="#" className="page-link" aria-label="Previous"
+                    <a href="#" className="page-link" aria-label="Previous Group"
                     onClick={() => onMoveGroup(pageState.currentPageGroup - 1, (pageState.currentPageGroup - 1) * perGroupPageNum +1)}>
                         <i className="ti-angle-double-left"></i>
                     </a>
                 </li>
                 <li className={pageState.currentPage === pageState.pageArray[0] ? "page-item disabled" : "page-item"}>
-                    <a href="#" className="page-link" aria-label="Previous"
+                    <a href="#" className="page-link" aria-label="Previous page"
                     onClick={() => onClickPage(pageState.currentPage - 1)}>
                         <i className="ti-angle-left"></i>
                     </a>
@@ -105,12 +105,13 @@ const ProductListPage = () => {
                 </li>
                 ))}
                 <li className={pageState.currentPage === pageState.pageArray[pageState.pageArray.length-1] ? "page-item disabled" : "page-item"}>
-                    <a href="#" className="page-link" aria-label="Next" onClick={() => onClickPage(pageState.currentPage + 1)}>
+                    <a href="#" className="page-link" aria-label="Next page" 
+                    onClick={() => onClickPage(pageState.currentPage + 1)}>
                         <i className="ti-angle-right"></i>
                     </a>
                 </li>
                 <li className={pageState.currentPageGroup === pageState.totalGroupCount - 1 ? "page-item disabled" : "page-item"}>
-                    <a href="#" className="page-link" aria-label="Next"
+                    <a href="#" className="page-link" aria-label="Next Group"
                     onClick={() => onMoveGroup(pageState.currentPageGroup + 1, (pageState.currentPageGroup + 1) * perGroupPageNum + 1)}>
                         <i className="ti-angle-double-right"></i>
                     </a>

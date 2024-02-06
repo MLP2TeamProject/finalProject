@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useCallback } from "react"
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import UserContext from "../../userContext"
+import UserContext from "../../UserContext"
 
 const BidList = () => {
     // context에 공개된 전역 상태,함수를 이용하겠다면 useContext를 이용
