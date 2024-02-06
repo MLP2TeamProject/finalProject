@@ -13,58 +13,43 @@ const sql = {
     faqBoardList: 'SELECT * FROM faqboard',
 
     // pagination
-    pagination1: 'SELECT * from notice_board ORDER BY notice_id DESC limit 0,13',
-    pagination2: 'SELECT * from notice_board ORDER BY notice_id DESC limit 13,13',
-    pagination3: 'SELECT * from notice_board ORDER BY notice_id DESC limit 26,13'
+    totalBoards: "SELECT COUNT(notice_id) as TOTALCOUNT FROM notice_board",
+    listOnepage: "SELECT * FROM notice_board ORDER BY notice_id DESC LIMIT ?, ?", // 내림차순 정렬
+    // listOnepage: "SELECT * FROM notice_board LIMIT ?, ?",
 }
 
 const boardDAO = {
 
     // ---------- pagination board 관련 ------------------
-    pagination1: async (callback) => {
+    listpage1: async (page, count, callback) => {
         let conn = null
         try {
-            console.log('dao-00p')
             conn = await getPool().getConnection()
-
-            console.log('dao-11p')
-            const [resp] = await conn.query(sql.pagination1, [])
-
-            console.log('dao-22p')
-            console.log('noticelist_pagination1_ss')
-            callback({ status: 200, message: 'OK', data: resp })
-        } catch (error) {
-            return { status: 500, message: '공지 목록1 조회 실패', error: error }
+            const [totalCount] = await conn.query(sql.totalBoards)
+            const [result] = await conn.query(sql.listOnepage, [(page - 1) * count, count])
+            if (result) callback({ status: 200, data: result, totalCount: totalCount[0].TOTALCOUNT })
+            else callback({ status: 500, message: '결과없음' })
+        } catch (e) {
+            console.log(e)
+            return { status: 500, message: "상품조회실패", error: e }
         } finally {
             if (conn !== null) conn.release()
         }
     },
-    pagination2: async (callback) => {
+    listpage: async (page, callback) => {
         let conn = null
         try {
             conn = await getPool().getConnection()
-
-            const [resp] = await conn.query(sql.pagination2, [])
-
-            console.log('noticelist_pagination2_ss')
-            callback({ status: 200, message: 'OK', data: resp })
-        } catch (error) {
-            return { status: 500, message: '공지 목록2 조회 실패', error: error }
-        } finally {
-            if (conn !== null) conn.release()
-        }
-    },
-    pagination3: async (callback) => {
-        let conn = null
-        try {
-            conn = await getPool().getConnection()
-
-            const [resp] = await conn.query(sql.pagination3, [])
-
-            console.log('noticelist_pagination3_ss')
-            callback({ status: 200, message: 'OK', data: resp })
-        } catch (error) {
-            return { status: 500, message: '공지 목록3 조회 실패', error: error }
+            const [items] = await conn.query(sql.productList)
+            //한페이지에 2개 item 가정
+            const responseData = items.slice((page - 1) * 2, page * 2)
+            //totalItems : 항목 갯수
+            //perPage: 한 페이지당 항목 수
+            if (responseData) callback({ status: 200, totalItems: items.length, perPage: 2, data: responseData })
+            else callback({ status: 500, message: '결과없음' })
+        } catch (e) {
+            console.log(e)
+            return { status: 500, message: "상품조회실패", error: e }
         } finally {
             if (conn !== null) conn.release()
         }
@@ -77,7 +62,7 @@ const boardDAO = {
             conn = await getPool().getConnection()
 
             const [resp] = await conn.query(sql.noticeInsert, [item.title, item.content, item.email])
-            
+
             console.log(resp, item)
 
             console.log('noticeinsert_ss')
