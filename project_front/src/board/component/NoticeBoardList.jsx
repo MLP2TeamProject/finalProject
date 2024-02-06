@@ -43,7 +43,7 @@ const NoticeBoardList = () => {
 								<h2>고객센터</h2>
 							</div>
 							<div>
-								<Link to={"/board/noticelist/"}>
+								<Link to={"/board/noticelist"}>
 									<p className="text-dark">공지사항</p>
 								</Link>
 								<Link to={"/board/faqlist"}>

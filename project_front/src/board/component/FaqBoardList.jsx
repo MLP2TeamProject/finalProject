@@ -33,10 +33,10 @@ const FaqBoardList = () => {
 							<h2>고객센터</h2>
 						</div>
 						<div className="col-sm-10">
-							<h2 className="contact-title">FAQ</h2>
+							<h1 className="contact-title ">FAQ</h1>
 						</div>
 						<div className="col-lg-2">
-							<Link to={"/board/noticelist/"}>
+							<Link to={"/board/noticelist"}>
 								<p className="text-muted">공지사항</p>
 							</Link>
 							<Link to={"/board/faqlist"}>
@@ -54,7 +54,7 @@ const FaqBoardList = () => {
 												<div>
 													<h5 className="title">Frequently Asked Questions</h5>
 
-													<div className="accordion accordion-flush" id="faq-group-1">
+													<div className="bmic-accordion bmic-accordion-flush" id="faq-group-1">
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-1" type="button" data-bs-toggle="collapse">
