@@ -153,48 +153,11 @@ const NoticeBoardList = () => {
 					</div>
 				</div>
 			</section>
+			
+			{/* pagination */}
 
-			{/* <!-- ================ contact section end ================= --> */}
-
-			{/* 숫자 버튼으로 페이지를 넘어감. */}
-
-			{/* <div className="col-lg-12">
-					<div className="pageination">
-						<nav aria-label="Page navigation example">
-							<ul className="pagination justify-content-center">
-								<li className="page-item">
-									<a className="page-link" href="#" aria-label="Previous">
-										<i className="ti-angle-double-left"></i>
-									</a>
-								</li>
-								<li className="page-item">
-									<a className="page-link" href={"/board/noticelist/1"}>
-										1
-									</a>
-								</li>
-								<li className="page-item">
-									<a className="page-link" href={"/board/noticelist/2"}>
-										2
-									</a>
-								</li>
-								<li className="page-item">
-									<a className="page-link" href={"/board/noticelist/3"}>
-										3
-									</a>
-								</li>
-								<li className="page-item">
-									<a className="page-link" href="#" aria-label="Next">
-										<i className="ti-angle-double-right"></i>
-									</a>
-								</li>
-							</ul>
-						</nav>
-					</div>
-				</div> */}
-			{/* 끝 부분 */}
-
-			<p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
-			<p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p>
+			{/* <p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
+			<p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p> */}
 			<nav className="justify-content-center d-flex">
 				<ul className="pagination">
 					<li className={pageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>
