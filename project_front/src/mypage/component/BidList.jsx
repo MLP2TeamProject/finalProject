@@ -139,7 +139,7 @@ const BidList = () => {
             showInfo()
             showBidd()
         }
-    }, [userEmail]) 
+    }, [userEmail, showInfo, showBidd]) 
 
     useEffect(()=>{
         paging(data, 0, 1)
