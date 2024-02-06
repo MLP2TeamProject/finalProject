@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext, useCallback } from "react"
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { useEffect, useState, useContext, useCallback } from "react"
+import axios from "axios"
+import { Link } from "react-router-dom"
 import UserContext from "../../UserContext"
 
 const BidList = () => {
@@ -11,11 +11,10 @@ const BidList = () => {
     const userEmail = context.state.userData.email
     const imgUrl = 'http://localhost:8000/static/upload/'
 
-
     // 구매등록 상품 상태
     const [data, setData] = useState([{}])
     // 구매등록 상품정보 get
-    const showInfo = useCallback(async ()=>{
+    const showInfo = useCallback(async ()=> {
         const resp = await axios.get('http://localhost:8000/products/my/' + userEmail)
         if(resp.data.status === 500) window.alert(resp.data.message)
         else {
@@ -47,7 +46,7 @@ const BidList = () => {
     // selectedLabel 상태 변경되었을 때, log 찍기
     // useEffect(() => { 
     //     console.log(selectedData.selectedAucId)
-    // }, [selectedData])
+    // }, [selectedData])    
 
     // 낙찰 요청 
     const selectBiddWrite = async (product_id) => {
@@ -79,6 +78,60 @@ const BidList = () => {
         }        
     }, [userEmail])      
 
+    // 페이징 상수 선언 
+    const perPageItemNum = 3 // 한 페이지에 보여줄 항목 개수
+    const perGroupPageNum = 3 // 한 그룹에 보여줄 페이지 개수
+
+    // 페이징 상태
+    const [pageState, setPageState] = useState({
+        totalCount: 0, //전체 항목 개수
+        totalPageCount: 0, //전체 페이지 개수 
+        totalGroupCount: 0, //전체 그룹 개수
+        currentPage: 1, //현재 페이지
+        currentPageGroup: 0, //현재 페이지그룹
+        pageArray: [], // 현재 그룹의 페이지 배열
+        listArray: [] // 항목 배열
+    })
+
+    const [bidPageState, setBidPageState] = useState({
+        totalCount: 0, //전체 항목 개수
+        totalPageCount: 0, //전체 페이지 개수 
+        totalGroupCount: 0, //전체 그룹 개수
+        currentPage: 1, //현재 페이지
+        currentPageGroup: 0, //현재 페이지그룹
+        pageArray: [], // 현재 그룹의 페이지 배열
+        listArray: [] // 항목 배열
+    })
+
+    // 페이징 set
+    const paging = (targetData, group, pageNum) => {
+        const totalCount = targetData.length
+        const totalPageCount = Math.ceil(totalCount / perPageItemNum)
+        const totalGroupCount = Math.ceil(totalPageCount / perGroupPageNum)
+        const listArray = targetData.slice((pageNum - 1) * perPageItemNum, (pageNum - 1) * perPageItemNum + perPageItemNum)
+        let pageArray = []
+
+        if(totalPageCount - (group * perGroupPageNum) < perGroupPageNum) {
+            pageArray = Array.from({ length: totalPageCount - (group * perGroupPageNum) }, (_, index) => index+1 + (group * perGroupPageNum))
+        }else {
+            pageArray = Array.from({ length: perGroupPageNum }, (_, index) => index+1 + (group * perGroupPageNum))
+        }
+        // console.log('셋팅값', totalCount, totalPageCount, totalGroupCount, listArray, pageArray)
+        // console.log('원데이터', data)
+        if (targetData === data) {
+            setPageState({...pageState, totalCount, totalPageCount, totalGroupCount, listArray, pageArray, currentPage: pageNum, currentPageGroup:group })
+        } else if (targetData === bidList) {
+            setBidPageState({...bidPageState, totalCount, totalPageCount, totalGroupCount, listArray, pageArray, currentPage: pageNum, currentPageGroup:group })
+        }        
+    }
+
+    const onClickPage = (targetData, page) => {
+        paging(targetData, pageState.currentPageGroup, page)
+    }
+    const onMoveGroup = (targetData, group, page) => {        
+        paging(targetData, group, page)
+    }
+
     // 페이지 진입 시, useEmail이 변경될 때 실행  
     useEffect(()=>{
         if(userEmail) {
@@ -86,29 +139,34 @@ const BidList = () => {
             showInfo()
             showBidd()
         }
-    }, [userEmail, showInfo, showBidd])     
-    
+    }, [userEmail]) 
+
+    useEffect(()=>{
+        paging(data, 0, 1)
+        paging(bidList, 0, 1)
+    }, [data, bidList]) 
+
     return (
-        <>
-        <section className="cart_area mt-5">
+    <section className="cart_area mt-5">
         <div className="container">
             <div className="col-lg-12">
                 <h3>구매 희망 도서 목록</h3>
             </div>
             <div className="cart_inner">
                 <div className="table-responsive">
+
                 <table className="table">
                     <thead className="table-light">
-                    <tr>
-                        <th scope="col"><strong>구매희망도서</strong></th>
-                        <th scope="col"><strong>입찰현황</strong></th>
-                        <th scope="col"><strong>낙찰</strong></th>
-                    </tr>
+                        <tr>
+                            <th scope="col"><strong>구매희망도서</strong></th>
+                            <th scope="col"><strong>입찰현황</strong></th>
+                            <th scope="col"><strong>낙찰</strong></th>
+                        </tr>
                     </thead>
                     <tbody>
-                        {data[0] ? (
+                        {pageState.listArray[0] ? (
                             <>
-                            {data.map((item, index) => (
+                            {pageState.listArray.map((item, index) => (
                             <tr key={index}>
                                 <td>
                                     <div className="media">
@@ -159,6 +217,46 @@ const BidList = () => {
                         )}
                     </tbody>
                 </table>
+                {/* <p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
+                <p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p>
+                <p>페이지배열 : {pageState.pageArray}</p> */}
+                {data[0] ? (
+                    <nav className="justify-content-center d-flex mb-5">
+                    <ul className="pagination">
+                        <li className={pageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Previous Group"
+                            onClick={() => onMoveGroup(data, pageState.currentPageGroup - 1, (pageState.currentPageGroup - 1) * perGroupPageNum +1)}>
+                                <i className="ti-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li className={pageState.currentPage === pageState.pageArray[0] ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Previous page"
+                            onClick={() => onClickPage(data, pageState.currentPage - 1)}>
+                                <i className="ti-angle-left"></i>
+                            </a>
+                        </li>
+                        {pageState.pageArray.map((item, index) => (
+                        <li className={pageState.pageArray[index] === pageState.currentPage ? "page-item active" : "page-item"} key={index}>
+                            <a href="#N" className="page-link" onClick={(e) => onClickPage(data, Number(e.target.text))}>
+                                {item}
+                            </a>
+                        </li>
+                        ))}
+                        <li className={pageState.currentPage === pageState.pageArray[pageState.pageArray.length-1] ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Next page" 
+                            onClick={() => onClickPage(data, pageState.currentPage + 1)}>
+                                <i className="ti-angle-right"></i>
+                            </a>
+                        </li>
+                        <li className={pageState.currentPageGroup === pageState.totalGroupCount - 1 ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Next Group"
+                            onClick={() => onMoveGroup(data, pageState.currentPageGroup + 1, (pageState.currentPageGroup + 1) * perGroupPageNum + 1)}>
+                                <i className="ti-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    </nav>
+                ) : ''}
                 </div>
             </div>
 
@@ -176,9 +274,9 @@ const BidList = () => {
                     </tr>
                     </thead>
                     <tbody>
-                        {bidList[0] ? (
+                        {bidPageState.listArray[0] ? (
                             <>
-                            {bidList.map((item, index)=>(
+                            {bidPageState.listArray.map((item, index)=>(
                                 <tr key={index}>
                                     <td>
                                         <div className="media">
@@ -210,11 +308,50 @@ const BidList = () => {
                         )}
                     </tbody>
                 </table>
+                {/* <p>현재페이지: {bidPageState.currentPage} / 총 페이지: {bidPageState.totalPageCount}</p>
+                <p>현재그룹: {bidPageState.currentPageGroup} / 총 그룹: {bidPageState.totalGroupCount}</p>
+                <p>페이지배열 : {bidPageState.pageArray}</p> */}
+                {bidList[0] ? (
+                    <nav className="justify-content-center d-flex mb-5">
+                    <ul className="pagination">
+                        <li className={bidPageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Previous Group"
+                            onClick={() => onMoveGroup(bidList, bidPageState.currentPageGroup - 1, (bidPageState.currentPageGroup - 1) * perGroupPageNum +1)}>
+                                <i className="ti-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li className={bidPageState.currentPage === bidPageState.pageArray[0] ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Previous page"
+                            onClick={() => onClickPage(bidList, bidPageState.currentPage - 1)}>
+                                <i className="ti-angle-left"></i>
+                            </a>
+                        </li>
+                        {bidPageState.pageArray.map((item, index) => (
+                        <li className={bidPageState.pageArray[index] === bidPageState.currentPage ? "page-item active" : "page-item"} key={index}>
+                            <a href="#N" className="page-link" onClick={(e) => onClickPage(bidList, Number(e.target.text))}>
+                                {item}
+                            </a>
+                        </li>
+                        ))}
+                        <li className={bidPageState.currentPage === bidPageState.pageArray[bidPageState.pageArray.length-1] ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Next page" 
+                            onClick={() => onClickPage(bidList, bidPageState.currentPage + 1)}>
+                                <i className="ti-angle-right"></i>
+                            </a>
+                        </li>
+                        <li className={bidPageState.currentPageGroup === bidPageState.totalGroupCount - 1 ? "page-item disabled" : "page-item"}>
+                            <a href="#N" className="page-link" aria-label="Next Group"
+                            onClick={() => onMoveGroup(bidList, bidPageState.currentPageGroup + 1, (bidPageState.currentPageGroup + 1) * perGroupPageNum + 1)}>
+                                <i className="ti-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    </nav>
+                ) : ''}
                 </div>
             </div>
         </div>
-        </section>
-        </>
+    </section>
     )
 }
 
