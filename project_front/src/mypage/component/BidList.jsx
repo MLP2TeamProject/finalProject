@@ -171,7 +171,7 @@ const BidList = () => {
                                 <td>
                                     <div className="media">
                                         <div className="media-body">
-                                            <Link to={'/product/detail/'+item.product_id}>{item.title}</Link>
+                                            <Link to={'/products/detail/'+item.product_id}>{item.title}</Link>
                                         </div>
                                     </div>
                                 </td>
@@ -284,7 +284,7 @@ const BidList = () => {
                                                 <img src={imgUrl+item.picture} className='img_size' alt="" />
                                             </div>
                                             <div className="media-body">
-                                                <Link to={'/product/detail/'+item.product_id}>{item.title}</Link>
+                                                <Link to={'/products/detail/'+item.product_id}>{item.title}</Link>
                                             </div>
                                         </div>
                                     </td>

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import UserContext from '../../UserContext'
 import { useNavigate } from 'react-router-dom'
@@ -26,6 +26,7 @@ const Header = () => {
     }
 
     // 검색창
+    const focusRef = useRef()
     const [searchClassName, setSearchClassName] = useState('search_input d-none')
     const [keyword, setKeyword] = useState('')
     
@@ -46,6 +47,10 @@ const Header = () => {
             searchProduct()
         }
     }
+
+    useEffect(()=> {
+        focusRef.current.focus()
+    }, [searchClassName])
 
     return (
         <header className="main_menu home_menu">
@@ -129,7 +134,7 @@ const Header = () => {
                 <div className="container">
                     <form className="d-flex justify-content-between search-inner">
                         <input type="text" className="form-control" id="search_input" placeholder="Search Here" 
-                        value={keyword} onChange={(e)=>setKeyword(e.target.value)} onKeyDown={handleEnter} style={{width:'88%'}} />
+                        value={keyword} onChange={(e)=>setKeyword(e.target.value)} onKeyDown={handleEnter} ref={focusRef} style={{width:'88%'}} />
                         <button type="button" className="btn form-control pt-2" onClick={searchProduct}><i className="ti-search"></i></button>
                         <span className="ti-close" id="close_search" title="Close Search" onClick={()=>setSearchClassName('search_input d-none')}></span>
                     </form>
