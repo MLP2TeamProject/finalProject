@@ -1,12 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import UserContext from '../../UserContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Header = () => {
-    const [searchClassName, setSearchClassName] = useState('search_input d-none')
-
     const navigate = useNavigate()
     const context = useContext(UserContext)
 
@@ -24,6 +22,28 @@ const Header = () => {
             sessionStorage.removeItem("user_name")
             sessionStorage.removeItem("isadmin")
             navigate('/')
+        }
+    }
+
+    // 검색창
+    const [searchClassName, setSearchClassName] = useState('search_input d-none')
+    const [keyword, setKeyword] = useState('')
+    
+    const searchProduct = async ()=>{
+        setSearchClassName('search_input d-none')
+        setKeyword('')
+        const resp = await axios.get('http://localhost:8000/products/keyword/' + keyword)
+        if(resp.data.status === 500) window.alert(resp.data.message)
+        else {
+            // console.log('검색결과', resp.data.data)
+            navigate('/keyword', {state: resp.data.data})
+        }        
+    }
+
+    const handleEnter = e => {
+        if (e.key === 'Enter') {
+            e.preventDefault() //form의 input text에서 엔터키를 누르면 자동으로 Submit이 되면서 페이지가 리로드되는 현상을 막음 
+            searchProduct()
         }
     }
 
@@ -104,11 +124,13 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <div className={searchClassName} id="search_input_box" >
-                <div className="container ">
+            {/* 검색창 */}
+            <div className={searchClassName} id="search_input_box">
+                <div className="container">
                     <form className="d-flex justify-content-between search-inner">
-                        <input type="text" className="form-control" id="search_input" placeholder="Search Here" />
-                        <button type="submit" className="btn"></button>
+                        <input type="text" className="form-control" id="search_input" placeholder="Search Here" 
+                        value={keyword} onChange={(e)=>setKeyword(e.target.value)} onKeyDown={handleEnter} style={{width:'88%'}} />
+                        <button type="button" className="btn form-control pt-2" onClick={searchProduct}><i className="ti-search"></i></button>
                         <span className="ti-close" id="close_search" title="Close Search" onClick={()=>setSearchClassName('search_input d-none')}></span>
                     </form>
                 </div>

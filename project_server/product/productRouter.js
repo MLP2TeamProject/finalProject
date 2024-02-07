@@ -143,4 +143,12 @@ router.get('/listpage/:page', async (req, res, next) => {
   });
 })
 
+// 헤더 상품검색 
+router.get('/keyword/:keyword', async (req, res, next) => {
+  const keyword = req.params.keyword
+  productDAO.keyword(keyword, (resp) => {
+    res.json(resp);
+  });
+})
+
 module.exports = router;

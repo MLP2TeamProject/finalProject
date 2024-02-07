@@ -32,6 +32,9 @@ const sql = {
   // 페이지네이션 
   totalProducts: "SELECT COUNT(product_id) as TOTALCOUNT FROM product",
   listOnepage: "SELECT * FROM product LIMIT ?, ?",
+
+  // 키워드검색
+  searchKeyword: "SELECT * FROM product WHERE title LIKE '%' ? '%'"
 };
 
 const productDAO = {
@@ -226,6 +229,23 @@ const productDAO = {
     } catch(e) {
       console.log(e)
       return { status: 500, message: "상품조회실패", error: e }
+    } finally {
+      if (conn !== null) conn.release()
+    } 
+  },
+
+  keyword: async (keyword, callback) => {
+    let conn = null
+    try {      
+      conn = await getPool().getConnection()
+      console.log('0', keyword)
+      const [keywordResult] = await conn.query(sql.searchKeyword, [keyword])
+      console.log('1',keywordResult)
+      if(keywordResult) callback({status: 200, data: keywordResult})
+      else callback({status:200, message:'검색 결과없음'})
+    } catch(e) {
+      console.log(e)
+      return { status: 500, message: "검색 실패", error: e }
     } finally {
       if (conn !== null) conn.release()
     } 

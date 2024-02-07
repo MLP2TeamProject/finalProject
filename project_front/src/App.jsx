@@ -6,6 +6,7 @@ import MypageMain from "./mypage/MypageMain";
 import UserMain from "./user/UserMain";
 import BoardMain from "./board/BoardMain";
 import ProductMain from "./product/ProductMain";
+import SearchKeyword from "./home/component/SearchKeyword";
 
 //수정했습니다. 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<HomeMain />} />
+        <Route path="/keyword" element={<SearchKeyword />} />
         <Route path="/board/*" element={<BoardMain />} />
         <Route path="/user/*" element={<UserMain />} />
         <Route path="/mypage/*" element={<MypageMain />} />
