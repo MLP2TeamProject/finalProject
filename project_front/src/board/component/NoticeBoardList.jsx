@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../UserContext";
 
@@ -8,25 +8,6 @@ const NoticeBoardList = () => {
 	const context = useContext(UserContext);
 	const isadmin = context.state.userData.isadmin;
 	console.log("000", isadmin);
-
-	// noticeboardlist
-	// const [noticeBoarList, setNoticeBoardList] = useState({
-	// 	status: "",
-	// 	message: "",
-	// 	data: [],
-	// });
-	// console.log(noticeBoarList);
-
-	// // noticeboardlist의 목록 조회
-	// const getNoticeBoardList = useCallback(async () => {
-	// 	const resp = await axios.get("http://localhost:8000/boards/noticeBoardList/", noticeBoarList);
-	// 	setNoticeBoardList(resp.data);
-	// }, []);
-
-	// useEffect(() => {
-	// 	getNoticeBoardList();
-	// }, []);
-
 
 	// pagination
 	const perPageItemNum = 13 // 한 페이지에 보여줄 항목 개수

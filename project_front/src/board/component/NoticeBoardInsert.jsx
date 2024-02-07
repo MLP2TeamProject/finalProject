@@ -1,4 +1,4 @@
-// 공지 페이지 글을 등록하는? 필요한지 추우 조금 더 고민.
+// notice board의 글쓰기 버튼을 누르면 이동되는 페이지(관리자만 사용 )
 
 import axios from "axios";
 import { useCallback, useState, useContext } from "react";
