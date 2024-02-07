@@ -49,7 +49,9 @@ const Header = () => {
     }
 
     useEffect(()=> {
-        focusRef.current.focus()
+        if (searchClassName === 'search_input d-block') {
+            focusRef.current.focus()
+        }
     }, [searchClassName])
 
     return (
