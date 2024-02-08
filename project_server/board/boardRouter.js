@@ -3,34 +3,21 @@ const router = express.Router()
 const boardDAO = require('./boardDAO')
 
 
+router.get("/listpage1/:page/:count", async (req, res, next) => {
+    const page = Number(req.params.page) // 페이지번호
+    const count = Number(req.params.count) // 한페이지 당 보여줄 페이지 개수
+    console.log('page', page, 'count', count)
+    boardDAO.listpage1(page, count, (resp) => {
+        res.json(resp);
+    });
+})
+
 router.get('/noticeBoardList', function (req, res, next) {
     console.log('notice Board List play - pagination... router')
     boardDAO.pagination1((resp) => {
         console.log('router 진입 ')
         res.json(resp)
     })
-})
-router.get('/noticeBoardList/1', function (req, res, next) {
-    console.log('notice Board List play - pagination1... router')
-    boardDAO.pagination1((resp) => {
-        console.log('router 진입 ')
-        res.json(resp)
-    })
-
-})
-router.get('/noticeBoardList/2', function (req, res, next) {
-    console.log('notice Board List play - pagination2... router')
-    boardDAO.pagination2((resp) => {
-        res.json(resp)
-    })
-
-})
-router.get('/noticeBoardList/3', function (req, res, next) {
-    console.log('notice Board List play - pagination3... router')
-    boardDAO.pagination3((resp) => {
-        res.json(resp)
-    })
-
 })
 
 router.get('/faqBoardList', function (req, res, next) {

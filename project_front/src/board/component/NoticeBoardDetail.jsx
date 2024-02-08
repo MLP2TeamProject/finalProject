@@ -87,24 +87,6 @@ const NoticeBoardDetail = () => {
 												</tbody>
 											</table>
 
-											{/* <div className="container">
-												<div className="col-auto">
-                                                    <button type="button" className="btn btn-primary btn-sm float-right" onClick={() => navigate('/board/noticelist')}>목록</button>
-                                                    {
-                                                        isadmin === "Y"
-                                                        //  관리자인 경우 버튼이 나타남 
-                                                        ?
-                                                        <div>
-                                                        <button type="button" className="btn btn-warning btn-sm float-right bnt-space" onClick={() => navigate('/board/noticeupdate/'+id)}>수정</button>
-                                                        <button type="button" className="btn btn-danger btn-sm float-right bnt-space" onClick={()=> noticeDeleteBoard(noticeBoard.notice_id)} >삭제</button>
-                                                        </div>
-                                                        :
-                                                        ""
-                                                    }
-                                                    
-												</div>
-											</div> */}
-
 											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 {
                                                     isadmin === "Y"

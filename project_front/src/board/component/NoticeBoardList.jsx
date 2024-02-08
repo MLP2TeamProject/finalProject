@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../UserContext";
 
@@ -9,23 +9,56 @@ const NoticeBoardList = () => {
 	const isadmin = context.state.userData.isadmin;
 	console.log("000", isadmin);
 
-	// noticeboardlist
-	const [noticeBoarList, setNoticeBoardList] = useState({
-		status: "",
-		message: "",
-		data: [],
-	});
-	console.log(noticeBoarList);
+	// pagination
+	const perPageItemNum = 13 // 한 페이지에 보여줄 항목 개수
+	const perGroupPageNum = 3 // 한 그룹에 보여줄 페이지 개수
 
-	// noticeboardlist의 목록 조회
-	const getNoticeBoardList = useCallback(async () => {
-		const resp = await axios.get("http://localhost:8000/boards/noticeBoardList/", noticeBoarList);
-		setNoticeBoardList(resp.data);
-	}, []);
+	const [pageState, setPageState] = useState({
+		totalCount: 0, //전체 항목 개수
+		totalPageCount: 0, //전체 페이지 개수 
+		totalGroupCount: 0, //전체 그룹 개수
+		currentPage: 1, //현재 페이지
+		currentPageGroup: 0, //현재 페이지그룹
+		pageArray: [], // 현재 그룹의 페이지 배열
+		serverData: [] // 항목 배열
+	})
+
+	//서버연동..
+	const getServerProductList = async (group, pageNum) => {
+		const resp = await axios.get("http://localhost:8000/boards/listpage1/" + pageNum + "/" + perPageItemNum)
+		if (resp.data.status === 500) console.log("notice board 리스트 조회 실패")
+		else {
+			console.log("항목", resp.data.data, "총개수", resp.data.totalCount)
+			const totalCount = resp.data.totalCount
+			const totalPageCount = Math.ceil(totalCount / perPageItemNum)
+			const totalGroupCount = Math.ceil(totalPageCount / perGroupPageNum)
+			const serverData = resp.data.data
+			let pageArray = []
+
+			if (totalPageCount - (group * perGroupPageNum) < perGroupPageNum) {
+				pageArray = Array.from({ length: totalPageCount - (group * perGroupPageNum) }, (_, index) => index + (group * perGroupPageNum) + 1)
+			} else {
+				pageArray = Array.from({ length: perGroupPageNum }, (_, index) => index + 1 + (group * perGroupPageNum))
+			}
+
+			console.log(totalCount, totalPageCount, totalGroupCount, serverData, pageArray)
+			setPageState({ ...pageState, totalCount, totalPageCount, totalGroupCount, serverData, pageArray, currentPage: pageNum, currentPageGroup: group })
+		}
+	}
 
 	useEffect(() => {
-		getNoticeBoardList();
-	}, []);
+		//초기 서버 데이터 획득 호출.. 
+		getServerProductList(0, 1) // 0 그룹, 1 페이지 넘버 
+	}, [])
+
+	const onClickPage = (page) => {
+		getServerProductList(pageState.currentPageGroup, page)
+	}
+	const onMoveGroup = (group, page) => {
+		getServerProductList(group, page)
+	}
+
+
 
 	// 프론트
 	// 아래의 글쓰기 버튼에서 관리자 여부에 따라 버튼이 나타나고, 나타나지 않음.
@@ -43,7 +76,7 @@ const NoticeBoardList = () => {
 								<h2>고객센터</h2>
 							</div>
 							<div>
-								<Link to={"/board/noticelist/"}>
+								<Link to={"/board/noticelist"}>
 									<p className="text-dark">공지사항</p>
 								</Link>
 								<Link to={"/board/faqlist"}>
@@ -69,27 +102,27 @@ const NoticeBoardList = () => {
 													</tr>
 												</thead>
 												<tbody className="table-group-divider">
-													{noticeBoarList.data.map((noticeBoardList) => (
-														<tr key={noticeBoardList.notice_id}>
+													{pageState.serverData.map((item, index) => (
+														<tr key={index}>
 															<td>
-																<Link to={"/board/noticedetail/" + noticeBoardList.notice_id}>{noticeBoardList.title}</Link>
+																<Link to={`/board/noticedetail/${item.notice_id}`}>{item.title}</Link>
 															</td>
-															<td>{noticeBoardList.createAt}</td>
-															<td>{noticeBoardList.cnt}</td>
+															<td>{item.createAt}</td>
+															<td>{item.cnt}</td>
 														</tr>
 													))}
 												</tbody>
 												<tfoot>
 													{   // 관리자인지 확인해서 글쓰기 버튼을 나타내게 함
-                                                        isadmin === "Y" 
-														? <tr>
-															<td colSpan={5}>
-																<Link to={"/board/noticeinsert"}>
-																	<button className="btn btn-primary btn-sm float-right">글쓰기</button>
-																</Link>
-															</td>
-														</tr>
-                                                        : ""
+														isadmin === "Y"
+															? <tr>
+																<td colSpan={5}>
+																	<Link to={"/board/noticeinsert"}>
+																		<button className="btn btn-primary btn-sm float-right">글쓰기</button>
+																	</Link>
+																</td>
+															</tr>
+															: ""
 													}
 												</tfoot>
 											</table>
@@ -101,45 +134,46 @@ const NoticeBoardList = () => {
 					</div>
 				</div>
 			</section>
+			
+			{/* pagination */}
 
-			{/* <!-- ================ contact section end ================= --> */}
+			{/* <p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
+			<p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p> */}
+			<nav className="justify-content-center d-flex">
+				<ul className="pagination">
+					<li className={pageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>
+						<a href="#" className="page-link" aria-label="Previous"
+							onClick={() => onMoveGroup(pageState.currentPageGroup - 1, (pageState.currentPageGroup - 1) * perGroupPageNum + 1)}>
+							<i className="ti-angle-double-left"></i>
+						</a>
+					</li>
+					<li className={pageState.currentPage === pageState.pageArray[0] ? "page-item disabled" : "page-item"}>
+						<a href="#" className="page-link" aria-label="Previous"
+							onClick={() => onClickPage(pageState.currentPage - 1)}>
+							<i className="ti-angle-left"></i>
+						</a>
+					</li>
+					{pageState.pageArray.map((item, index) => (
+						<li className={pageState.pageArray[index] === pageState.currentPage ? "page-item active" : "page-item"} key={index}>
+							<a href="#N" className="page-link" onClick={(e) => onClickPage(Number(e.target.text))}>
+								{item}
+							</a>
+						</li>
+					))}
+					<li className={pageState.currentPage === pageState.pageArray[pageState.pageArray.length - 1] ? "page-item disabled" : "page-item"}>
+						<a href="#" className="page-link" aria-label="Next" onClick={() => onClickPage(pageState.currentPage + 1)}>
+							<i className="ti-angle-right"></i>
+						</a>
+					</li>
+					<li className={pageState.currentPageGroup === pageState.totalGroupCount - 1 ? "page-item disabled" : "page-item"}>
+						<a href="#" className="page-link" aria-label="Next"
+							onClick={() => onMoveGroup(pageState.currentPageGroup + 1, (pageState.currentPageGroup + 1) * perGroupPageNum + 1)}>
+							<i className="ti-angle-double-right"></i>
+						</a>
+					</li>
+				</ul>
+			</nav>
 
-			{/* 숫자 버튼으로 페이지를 넘어감. */}
-
-			<div className="col-lg-12">
-				<div className="pageination">
-					<nav aria-label="Page navigation example">
-						<ul className="pagination justify-content-center">
-							<li className="page-item">
-								<a className="page-link" href="#" aria-label="Previous">
-									<i className="ti-angle-double-left"></i>
-								</a>
-							</li>
-							<li className="page-item">
-								<a className="page-link" href={"/board/noticelist/1"}>
-									1
-								</a>
-							</li>
-							<li className="page-item">
-								<a className="page-link" href={"/board/noticelist/2"}>
-									2
-								</a>
-							</li>
-							<li className="page-item">
-								<a className="page-link" href={"/board/noticelist/3"}>
-									3
-								</a>
-							</li>
-							<li className="page-item">
-								<a className="page-link" href="#" aria-label="Next">
-									<i className="ti-angle-double-right"></i>
-								</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-			{/* 끝 부분 */}
 		</div>
 	);
 };
