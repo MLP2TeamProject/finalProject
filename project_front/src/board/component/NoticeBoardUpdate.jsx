@@ -77,11 +77,9 @@ const NoticeBoardUpdate = () =>{
 												</tbody>
 											</table>
 											<hr />
-											<div className="container">
-												<div className="col-auto">
-													<button type="button" className="btn btn-primary btn-sm float-right" onClick={updateNoticeBoard}>저장</button>
-                                                    <button type="button" className="btn btn-warning btn-sm float-right bnt-space" onClick={() => navigate('/board/noticedetail/'+ noticeBoard.notice_id)}>취소</button>
-												</div>
+											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
+												<button type="button" class="btn btn-danger btn-sm me-md-2" onClick={() => navigate('/board/noticedetail/'+ noticeBoard.notice_id)}>취소</button>
+												<button type="button" class="btn btn-primary btn-sm" onClick={updateNoticeBoard}>저장</button>
 											</div>
 										</div>
 									</div>
