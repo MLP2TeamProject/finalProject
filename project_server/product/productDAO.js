@@ -21,7 +21,7 @@ const sql = {
 
   
   // 마이페이지
-  checkProductAuction: `SELECT P.product_id, P.title, P.picture, P.auction_id, 
+  checkProductAuction: `SELECT P.product_id, P.title, P.picture, P.auction_id, P.endtime, 
     GROUP_CONCAT(CONCAT(A.auction_id, ',', A.email, ',', A.auction_price, ',', A.picture) 
     ORDER BY A.auction_price DESC SEPARATOR ';') AS auction_info 
     FROM product AS P  LEFT JOIN auction AS A 

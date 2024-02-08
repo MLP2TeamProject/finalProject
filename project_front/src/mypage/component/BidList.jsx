@@ -182,7 +182,8 @@ const BidList = () => {
                                                 {item.auction_info.map((subitem,index) => (
                                                     <li key={index}>
                                                         <input type="radio" name="selectBid" id={`selectBid${item.product_id}_${index}`} 
-                                                        onChange={handleRadioChange} disabled={item.auction_id === null ? false:true} />{' '}
+                                                        onChange={handleRadioChange} 
+                                                        disabled={item.auction_id === null && new Date(item.endtime).getTime() > new Date().getTime() ? false:true} />{' '}
                                                         <img src={imgUrl+subitem.split(',')[3]} className='img_size' alt="" />{' '}
                                                         입찰번호:{' '}
                                                         <label htmlFor={`selectBid${item.product_id}_${index}`}>
@@ -201,10 +202,14 @@ const BidList = () => {
                                 </td>
                                 <td>
                                     <div className="product_count">
-                                        {item.auction_info && item.auction_id === null ? (
-                                            <button type='button' className='genric-btn info circle small' 
-                                            onClick={()=>selectBiddWrite(item.product_id)}>낙찰</button>
-                                        ) : ('')}
+                                        {new Date(item.endtime).getTime() > new Date().getTime() ? (
+                                            <>
+                                                {item.auction_info && item.auction_id === null ? (
+                                                    <button type='button' className='genric-btn info circle small' 
+                                                    onClick={()=>selectBiddWrite(item.product_id)}>낙찰</button>
+                                                ) : ''}
+                                            </>
+                                        ) : ('경매 기간 종료')}
                                     </div>
                                 </td>
                             </tr>
@@ -296,7 +301,19 @@ const BidList = () => {
                                             <>
                                                 {item.selectedEmail === userEmail ? '낙찰되었습니다.' : '유찰되었습니다.'}
                                             </>
-                                        ) : '경매진행 중입니다.'} <br />
+                                        ) : (
+                                            <>
+                                                {new Date(item.endtime).getTime() < new Date().getTime() ? (
+                                                    '경매가 종료되었습니다.'
+                                                    ) : (
+                                                        <p>
+                                                            경매진행 중<br />
+                                                            (경매종료일 : ~ {new Date(item.endtime).toLocaleString()})
+                                                        </p>
+                                                        )
+                                                }
+                                            </>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
