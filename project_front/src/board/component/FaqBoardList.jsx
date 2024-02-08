@@ -58,7 +58,7 @@ const FaqBoardList = () => {
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-1" type="button" data-bs-toggle="collapse">
-																	B-mic 사이트 판매 등록 방식
+																	B-mic, faq board test
 																</button>
 															</h2>
 															<div id="faqsOne-1" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
@@ -69,7 +69,7 @@ const FaqBoardList = () => {
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-2" type="button" data-bs-toggle="collapse">
-																	B-mic, 상품의 가치 시스템
+																	B-mic, faq board test
 																</button>
 															</h2>
 															<div id="faqsOne-2" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
@@ -80,7 +80,7 @@ const FaqBoardList = () => {
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-3" type="button" data-bs-toggle="collapse">
-																	B-mic, 배송오류 시스템
+																	B-mic, faq board test
 																</button>
 															</h2>
 															<div id="faqsOne-3" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
@@ -91,7 +91,7 @@ const FaqBoardList = () => {
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-4" type="button" data-bs-toggle="collapse">
-																	B-mic, 구매 상품 반품시스템
+																	B-mic, faq board test
 																</button>
 															</h2>
 															<div id="faqsOne-4" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
@@ -102,7 +102,7 @@ const FaqBoardList = () => {
                                                         <div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-5" type="button" data-bs-toggle="collapse">
-																	B-mic, 구매 상품 반품시스템
+																	B-mic, faq board test
 																</button>
 															</h2>
 															<div id="faqsOne-5" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
@@ -113,7 +113,7 @@ const FaqBoardList = () => {
                                                         <div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-6" type="button" data-bs-toggle="collapse">
-																	B-mic, 구매 상품 반품시스템
+																	B-mic, faq board test
 																</button>
 															</h2>
 															<div id="faqsOne-6" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
@@ -124,7 +124,7 @@ const FaqBoardList = () => {
                                                         <div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-7" type="button" data-bs-toggle="collapse">
-																	B-mic, 구매 상품 반품시스템
+																	B-mic, faq board test
 																</button>
 															</h2>
 															<div id="faqsOne-7" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
