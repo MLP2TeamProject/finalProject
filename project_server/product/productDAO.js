@@ -14,10 +14,10 @@ const sql = {
   detail_auction: "select * from auction where product_id = ?",
   update:
     "update product set master_price =?, content = ? where product_id = ?",
-  //이부분은 buy에서 글쓴이가 수정하려면 쓸 부분
   insertAuction:
     "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
+  biddingCountDown: "SELECT createAt from product WHERE product_id = ?",
 
   
   // 마이페이지
@@ -105,6 +105,8 @@ const productDAO = {
   },
 
   //상품 정보 수정 : 글작성자 권한이 있는 사람만이 수정 가능
+  //글 작성자 정보를 먼저 가져와야??
+
   update: async (item, callback) => {
     let conn = null;
     try {
@@ -138,7 +140,7 @@ const productDAO = {
         const [bookInfo] = await conn.query(sql.checkBookTitle, [
           data.product_id,
         ]); //insert성공하면 책 정보를 db에서 조회, bookinfo에 결과 할당하기
-        console.log("5", bookInfo);
+        // console.log("5", bookInfo);
         callback({
           status: 200,
           message: "입찰성공",
@@ -153,6 +155,46 @@ const productDAO = {
     } catch (e) {
       console.log(e);
       return { status: 500, message: "입찰실패", error: e };
+    } finally {
+      if (conn !== null) conn.release();
+    }
+  },
+
+  timer: async (productId, callback) => {
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      const [result] = await conn.query(sql.biddingCountDown, [productId]);
+
+      if (result.length > 0) {
+        console.log("000", result[0].createAt);
+
+        const createdAt = new Date(result[0].createAt);
+        console.log("createdAt", createdAt);
+        const currentDate = new Date();
+        const biddingDate = new Date(createdAt);
+        //문자열 데이터 객체로 변화하고
+        biddingDate.setDate(createdAt.getDate() + 30); //일로 반환을 하고
+
+        const timeRemaining = biddingDate - currentDate;
+        console.log(biddingDate, currentDate, timeRemaining);
+        //밀리초
+
+        callback({
+          status: 200,
+          message: "타이머 정보 가져오기 완료",
+          countdown: { endtime: biddingDate },
+        });
+      } else {
+        callback({ status: 404, message: "상품을 찾을 수 없습니다." });
+      }
+    } catch (error) {
+      console.error("타이머 정보 가져오기 실패", error);
+      callback({
+        status: 500,
+        message: "타이머 정보 가져오기 실패",
+        error: error,
+      });
     } finally {
       if (conn !== null) conn.release();
     }

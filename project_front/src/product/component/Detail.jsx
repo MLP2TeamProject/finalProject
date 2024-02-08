@@ -1,11 +1,17 @@
 //여기 페이지에서 입찰하기 클릭하면 bidding
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
 import Table from "./Table";
-import Timer from "./timer";
+import Timer from "./Timer";
+import React, { useCallback, useState, useEffect, useContext } from "react";
+import UserContext from "../../UserContext";
 
 const Detail = () => {
+  const context = useContext(UserContext);
+  const loggedInUserEmail = context.state.userData.email;
+  // console.log(context);
+  // alert(loggedInUserEmail);
+  // const loggedInUserEmail = "";
   const navigate = useNavigate();
   const { product_id } = useParams();
   const [product, setProduct] = useState({
@@ -23,17 +29,49 @@ const Detail = () => {
     auctions: [],
     // 여기 Table의 auctions
   });
+
   const getDetail = async () => {
-    // console.log("1111", product_id);
     const resp = await axios.get(
       "http://localhost:8000/products/detail/" + product_id
     );
-    // console.log(resp.data.data[0]);
+
     setProduct(resp.data.data[0]);
   };
   useEffect(() => {
     getDetail();
   }, []);
+
+  const [countdownData, setCountdownData] = useState({
+    day: 0,
+    hours: 0,
+    minuts: 0,
+    seconds: 0,
+  });
+
+  const [countDownFinished, setCountDownFinished] = useState(false); //disbled 속성 추가
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/products/timer/${product_id}`
+        );
+        console.log("11", response.data);
+        const { endtime } = response.data.countdown;
+        console.log("endtime...", endtime);
+        setCountdownData(endtime);
+
+        //disbled 속성 추가
+        const currentTime = new Date().getTime();
+        if (currentTime > endtime) {
+          setCountDownFinished(true);
+        }
+      } catch (error) {
+        console.error("타이머 불러들이기 실패", error);
+      }
+    };
+    fetchData();
+  }, [product_id]);
 
   return (
     <div>
@@ -42,8 +80,11 @@ const Detail = () => {
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">
               <div className="product_slider_img">
-                <img src="/images/book_image1.jpg" alt="book image" />
-                {/* 여기서 api에서 받아온 사진이 올라갔으면 좋겠음.. */}
+                <img
+                  src={`http://localhost:8000/static/upload/${product.picture}`}
+                  style={{ width: "80px" }}
+                  alt="boookImage"
+                />
               </div>
             </div>
             <div className="col-lg-5 col-xl-4">
@@ -63,22 +104,24 @@ const Detail = () => {
                 <p></p>
                 {/* p태그에 라인 있음 */}
                 <h3>낙찰까지 남은 시간</h3>
-                <Timer />
+                <Timer endtime={countdownData} />
                 <br />
                 <br />
                 <button
                   className="btn_3"
                   // onClick={() => navigate(`/products/bidding/${product_id}`
                   onClick={() => navigate("/products/bidding/")}
+                  disabled={countDownFinished}
                 >
+                  {/* disabled 속성 추가 */}
                   판매입찰하기
                 </button>
                 <br />
                 <br />
                 <button
                   className="btn_3"
-                  onClick={() => navigate("/products/bidding")}
-                  // 여기 구매페이지는 없으니까... 어떻게 할지?
+                  onClick={() => navigate("/products/pay")}
+                  // 02047 일단 기본 pay 페이지로 넘어가게끔...
                 >
                   즉시구매가 {product.master_price} 원(₩)
                   <br />
@@ -110,11 +153,21 @@ const Detail = () => {
               <Table auctions={product.auctions} />
             </div>
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button className="btn btn-warning" type="button">
-                수정
-              </button>
-              {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 
-                이 부분이 작성자 권한이 있을 때만 수정이 가능하게끔 해야함 */}
+              {/* {userEmail ? (
+                <button className="btn btn-warning" type="button">
+                  수정
+                </button>
+              ) : (
+                ""
+              )} */}
+              {loggedInUserEmail === product.email ? (
+                <button className="btn btn-warning" type="button">
+                  수정
+                </button>
+              ) : (
+                ""
+              )}
+              {/* 여기 onClick하면 update 페이지로가야됨(준영님 buy html 필요)  */}
             </div>
             <div className="col-lg-4 col-lx-4"></div>
             <div className="col-lg-4 col-lx-4"></div>

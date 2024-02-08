@@ -15,22 +15,22 @@ const Bidding = (props) => {
   };
 
   //입찰 데이터 상태
-  // const [data, setData] = useState({
-  //   email: email,
-  //   product_id: product_id,
-  //   isbn: "",
-  //   auctionPrice: 0,
-  //   quality: "",
-  //   additional: "",
-  // });
   const [data, setData] = useState({
-    email: "happy@happy.happy",
-    product_id: 1,
-    isbn: "23541658",
+    email: email,
+    product_id: product_id,
+    isbn: "",
     auctionPrice: 0,
     quality: "",
     additional: "",
   });
+  // const [data, setData] = useState({
+  //   email: "happy@happy.happy",
+  //   product_id: 1,
+  //   isbn: "23541658",
+  //   auctionPrice: 0,
+  //   quality: "",
+  //   additional: "",
+  // });
 
   const changeData = useCallback((e) => {
     setData((data) => ({ ...data, [e.target.name]: e.target.value }));
@@ -72,6 +72,7 @@ const Bidding = (props) => {
       const res = await axios.post(
         "http://localhost:8000/products/bidding/insert",
         formData
+        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??
       );
       if (res.data.status === 200) {
         console.log(res.data);
@@ -113,12 +114,12 @@ const Bidding = (props) => {
                     name="auctionPrice"
                     id="auctionPrice"
                     required
-                    value={data.auctionPrice}
+                    defaultValue={data.auctionPrice} //0202 defaultValue로 수정 원래 value
                     // onChange={changeData}
-                    // onChange={(e) => {
-                    //   changeData(e);
-                    //   setFinalAuctionPrice(e.target.value);
-                    // }}
+                    onChange={(e) => {
+                      changeData(e);
+                      setFinalAuctionPrice(e.target.value);
+                    }}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>
@@ -188,7 +189,7 @@ const Bidding = (props) => {
                   <input
                     type="text"
                     name="fileName"
-                    value={fileName}
+                    defaultValue={fileName}
                     onChange={(e) => setFileName(e.target.value)}
                   />
                   <input
@@ -284,7 +285,7 @@ const Bidding = (props) => {
                       className="form-check-input"
                       id="isChecked"
                       name="isChecked"
-                      value={isChecked}
+                      defaultValue={isChecked}
                       // onChange={() => setIsChecked(!isChecked)}
                       onChange={(e) => setIsChecked(e.target.checked)}
                     />
@@ -293,7 +294,7 @@ const Bidding = (props) => {
                     </label>
                   </div>
                   {!isChecked ? (
-                    <div className="alert alert-warning">
+                    <div className="alert alert-danger">
                       최종 입찰을 위해 체크박스를 선택하세요.
                     </div>
                   ) : (
@@ -316,13 +317,15 @@ const Bidding = (props) => {
                 <button
                   className="btn_3"
                   type="button"
-                  onClick={() => navigate(`/detail/${product_id}`)}
+                  onClick={() => navigate(`/products/detail/${product_id}`)}
+                  //undefined가 나옴.. 코드 추가해야할듯
                 >
                   취소하기
                 </button>
                 <button className="btn_3" type="button" onClick={insertBidding}>
                   입찰하기
                 </button>
+                {/* 여기도 navigate 넣어서 detail화면으로 돌아가기?? 근데 onClick이 두 번이...?*/}
               </div>
             </div>
           </div>

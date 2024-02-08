@@ -9,6 +9,7 @@ import Detail from "./component/Detail";
 import Bidding from "./component/Bidding";
 import Update from "./component/Update";
 //Timer랑 Table은 Detail 안에 있음
+import Pay from "./component/Pay"; //0207 pay 추가 (가짜)
 
 //페이징 테스트 
 import ProductListPage from "./component/paging1";
@@ -25,6 +26,7 @@ const ProductMain = () => {
         {/* 여기를 detail쪽에서 설정한 변수랑 똑같이 맞춰야되니까 product_id로 */}
         <Route path="/bidding" element={<Bidding />} />
         <Route path="/update/:product_id" element={<Update />} />
+        <Route path="/pay" element={<Pay />} />
         {/* 페이징 샘플 컴포넌트 */}
         <Route path='/listpage' element={<ProductListPage />} />
       </Routes>

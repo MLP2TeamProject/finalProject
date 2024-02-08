@@ -1,3 +1,4 @@
+//상품정보를 수정하는 페이지(Update임) - Detail에서 권한이 있으면 수정 버튼이 보이고 - 클릭했을 때 buy html을 갖고와야할 것 같음
 import axios from "axios";
 import React, { useCallback, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,10 +8,9 @@ const Update = () => {
   const { product_id } = useParams();
   //해당 url에서 product_id 받아올거고
   const [product, setProduct] = useState({
-    product_id: "",
     master_price: "",
     content: "",
-    //여기는 바꿀 수 있는 부분만 넣는건가? 변경될 내용? 초기값...
+    //여기는 바꿀 수 있는 부분만
   });
 
   const changeData = (e) => {

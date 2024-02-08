@@ -107,6 +107,22 @@ router.get("/detail/:id", function (req, res, next) {
   });
 });
 
+router.get("/timer/:id", function (req, res, next) {
+  console.log("작성시간 가져오기");
+  const productId = req.params.id;
+  productDAO.timer(productId, (resp) => {
+    res.json(resp);
+  });
+});
+
+router.post("/update", function (req, res, next) {
+  const data = req.body;
+  console.log("게시글 수정하기");
+  productDAO.update(data, (resp) => {
+    res.json(resp);
+  });
+}); //0202 추가 buy 페이지랑 연결을 해야됨
+
 
 // 마이페이지용 
 router.get("/my/:email", async (req, res, next) => {
