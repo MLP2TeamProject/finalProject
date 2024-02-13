@@ -3789,7 +3789,12 @@ ul {
 	width: 15px;
 	border: 1px solid #ff3368;
 	background-color: #ff3368;
-	background: linear-gradient(to bottom, #ff3368 0%, #ff3368 20%, #ff3368 100%);
+	background: linear-gradient(
+		to bottom,
+		#ff3368 0%,
+		#ff3368 20%,
+		#ff3368 100%
+	);
 	top: 28px;
 	box-shadow: none;
 }
@@ -9108,7 +9113,6 @@ h6 {
 /* home css */
 .feature_part {
 	border-top: 1px solid #eaeaea;
-	padding-bottom: 140px;
 }
 
 .feature_part .single_feature_post_text:hover .feature_btn {
@@ -9118,12 +9122,6 @@ h6 {
 }
 
 .nav-item text {
-	color: #000;
-}
-
-.dddd {
-	width: 250px;
-	font-size: 12px;
 	color: #000;
 }
 

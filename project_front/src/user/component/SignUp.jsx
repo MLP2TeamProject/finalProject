@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -25,8 +26,12 @@ const SignUp = () => {
 		async (e) => {
 			e.preventDefault();
 			//서버 연동
-			const resp = await axios.post('http://localhost:8000/users/signup', data);
-			if (resp.data.status === 500) window.alert('이미 가입된 이메일 입니다.');
+			const resp = await axios.post(
+				'http://localhost:8000/users/signup',
+				data
+			);
+			if (resp.data.status === 500)
+				window.alert('이미 가입된 이메일 입니다.');
 			//첫 화면으로 이동
 			else navigate('/');
 		},
@@ -42,8 +47,9 @@ const SignUp = () => {
 								<div className="login_part_text_iner">
 									<h2>New to our Shop?</h2>
 									<p>
-										There are advances being made in science and technology
-										everyday, and a good example of this is the
+										There are advances being made in science
+										and technology everyday, and a good
+										example of this is the
 									</p>
 									<a href="#" className="btn_3">
 										Create an Account

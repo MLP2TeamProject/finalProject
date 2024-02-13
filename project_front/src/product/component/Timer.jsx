@@ -1,66 +1,57 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-//assets => css => all.css 에 css 붙여놓음
+const Timer = ({ endtime }) => {
+	const [countTime, setCountTime] = useState({
+		days: 0,
+		hours: 0,
+		minutes: 0,
+		seconds: 0,
+	});
 
-const Timer = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  useEffect(() => {
-    const futureDate = new Date();
-    futureDate.setDate(futureDate.getDate() + 7);
-    futureDate.setHours(0, 0, 0, 0);
-    // const futureDate = new Date("2024/02/08 00:00:00").getTime();
-    //사용자에게 선택을 주면 이 부분을 바꿔야 함
+	useEffect(() => {
+		const updateTimer = () => {
+			const currentDate = new Date();
+			const endDate = new Date(endtime);
+			const timeRemaining = endDate - currentDate;
+			const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24)); //1초 1000밀리초
+			const hours = Math.floor(
+				(timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+			);
+			const minutes = Math.floor(
+				(timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+			);
+			const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    const updateTimer = () => {
-      const now = new Date().getTime();
-      const diff = futureDate - now;
+			setCountTime({ days, hours, minutes, seconds });
+		};
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+		const timerId = setInterval(updateTimer, 1000);
 
-      setTimeLeft({
-        days,
-        hours,
-        minutes,
-        seconds,
-      });
-    };
+		return () => clearInterval(timerId);
+	}, [endtime]);
 
-    const timerId = setInterval(updateTimer, 1000);
-
-    return () => clearInterval(timerId);
-  }, []);
-
-  return (
-    <div>
-      <div id="timer">
-        <div>
-          {timeLeft.days}
-          <span>Days</span>
-        </div>
-        <div>
-          {timeLeft.hours}
-          <span>Hours</span>
-        </div>
-        <div>
-          {timeLeft.minutes}
-          <span>Minutes</span>
-        </div>
-        <div>
-          {timeLeft.seconds}
-          <span>Seconds</span>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div>
+			<div id="timer">
+				<div>
+					{countTime.days}
+					<span>Days</span>
+				</div>
+				<div>
+					{countTime.hours}
+					<span>Hours</span>
+				</div>
+				<div>
+					{countTime.minutes}
+					<span>Minutes</span>
+				</div>
+				<div>
+					{countTime.seconds}
+					<span>Seconds</span>
+				</div>
+			</div>
+		</div>
+	);
 };
+
 export default Timer;

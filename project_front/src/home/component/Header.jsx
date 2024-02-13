@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Header = () => {
-	const [searchClassName, setSearchClassName] = useState('search_input d-none');
+	const [searchClassName, setSearchClassName] = useState(
+		'search_input d-none'
+	);
 
 	const navigate = useNavigate();
 	const context = useContext(UserContext);
@@ -31,7 +33,7 @@ const Header = () => {
 	};
 
 	return (
-		<header className="main_menu home_menu">
+		<header className="">
 			<div className="container">
 				<div className="row align-items-center">
 					<div className="col-lg-12">
@@ -44,12 +46,16 @@ const Header = () => {
 								id="navbarSupportedContent">
 								<ul className="navbar-nav">
 									<li className="nav-item dropdown">
-										<Link className="nav-link" to={'/products/list'}>
+										<Link
+											className="nav-link"
+											to={'/products/list'}>
 											<strong>상품</strong>
 										</Link>
 									</li>
 									<li className="nav-item dropdown">
-										<Link className="nav-link" to={'/products/buy'}>
+										<Link
+											className="nav-link"
+											to={'/products/buy'}>
 											<strong>구매신청</strong>
 										</Link>
 									</li>
@@ -58,7 +64,9 @@ const Header = () => {
 											className="nav-link"
 											id="search_1"
 											onClick={() =>
-												setSearchClassName('search_input d-block')
+												setSearchClassName(
+													'search_input d-block'
+												)
 											}>
 											<i className="ti-search"></i>
 										</a>
@@ -78,7 +86,9 @@ const Header = () => {
 							<div className="hearer_icon d-flex">
 								<ul className="navbar-nav">
 									<li className="nav-item">
-										<Link className="nav-link" to={'/board/noticelist'}>
+										<Link
+											className="nav-link"
+											to={'/board/noticelist'}>
 											고객센터
 										</Link>
 									</li>
@@ -94,7 +104,9 @@ const Header = () => {
                                     </li> */}
 									{context.state.userData.email ? (
 										<li className="nav-item">
-											<Link className="nav-link" to={'/mypage'}>
+											<Link
+												className="nav-link"
+												to={'/mypage'}>
 												마이페이지
 											</Link>
 										</li>
@@ -104,8 +116,13 @@ const Header = () => {
 									<li className="nav-item dropdown">
 										{context.state.userData.email ? (
 											<span className="nav-link">
-												<strong>{context.state.userData.user_name}</strong>님
-												환영합니다.{' '}
+												<strong>
+													{
+														context.state.userData
+															.user_name
+													}
+												</strong>
+												님 환영합니다.{' '}
 												<button
 													type="button"
 													className="genric-btn primary small circle"
@@ -114,7 +131,9 @@ const Header = () => {
 												</button>
 											</span>
 										) : (
-											<Link className="nav-link" to={'/user/signin'}>
+											<Link
+												className="nav-link"
+												to={'/user/signin'}>
 												로그인
 											</Link>
 										)}
@@ -123,7 +142,9 @@ const Header = () => {
 										''
 									) : (
 										<li className="nav-item dropdown">
-											<Link className="nav-link" to={'/user/signup'}>
+											<Link
+												className="nav-link"
+												to={'/user/signup'}>
 												회원가입
 											</Link>
 										</li>
@@ -149,7 +170,9 @@ const Header = () => {
 							className="ti-close"
 							id="close_search"
 							title="Close Search"
-							onClick={() => setSearchClassName('search_input d-none')}></span>
+							onClick={() =>
+								setSearchClassName('search_input d-none')
+							}></span>
 					</form>
 				</div>
 			</div>

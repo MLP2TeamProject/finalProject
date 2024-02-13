@@ -1,7 +1,8 @@
+/* eslint-disable */
 import React, { useCallback, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import UserContext from '../../userContext';
+import UserContext from '../../UserContext';
 
 const SignIn = () => {
 	const navigate = useNavigate();
@@ -18,15 +19,20 @@ const SignIn = () => {
 		async (e) => {
 			console.log('Run event?...');
 			e.preventDefault();
-			const resp = await axios.post('http://localhost:8000/users/signin', data);
+			const resp = await axios.post(
+				'http://localhost:8000/users/signin',
+				data
+			);
 			if (resp.data.status === 500) window.alert(resp.data.message);
 			else {
 				context.action.loginUser({
 					email: resp.data.data.email,
 					user_name: resp.data.data.name,
+					isadmin: resp.data.data.isadmin,
 				});
 				sessionStorage.setItem('email', resp.data.data.email);
 				sessionStorage.setItem('user_name', resp.data.data.name);
+				sessionStorage.setItem('isadmin', resp.data.data.isadmin);
 				navigate('/');
 			}
 			console.log({ resp });
@@ -43,8 +49,9 @@ const SignIn = () => {
 								<div className="login_part_text_iner">
 									<h2>New to our Shop?</h2>
 									<p>
-										There are advances being made in science and technology
-										everyday, and a good example of this is the
+										There are advances being made in science
+										and technology everyday, and a good
+										example of this is the
 									</p>
 									<a href="#" className="btn_3">
 										Login
@@ -88,8 +95,14 @@ const SignIn = () => {
 										</div>
 										<div className="col-md-12 form-group">
 											<div className="creat_account d-flex align-items-center">
-												<input type="checkbox" id="f-option" name="selector" />
-												<label htmlFor="f-option">Remember me</label>
+												<input
+													type="checkbox"
+													id="f-option"
+													name="selector"
+												/>
+												<label htmlFor="f-option">
+													Remember me
+												</label>
 											</div>
 											<button
 												type="submit"
