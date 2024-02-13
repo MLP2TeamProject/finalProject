@@ -33,7 +33,7 @@ const Header = () => {
 	};
 
 	return (
-		<header className="">
+		<header className="main_menu">
 			<div className="container">
 				<div className="row align-items-center">
 					<div className="col-lg-12">

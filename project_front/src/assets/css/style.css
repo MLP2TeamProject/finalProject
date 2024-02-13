@@ -9125,7 +9125,7 @@ h6 {
 	color: #000;
 }
 
-.main_menu #nav123 {
+.main_menu {
 	color: rgb(0, 0, 0);
 	position: relative;
 	z-index: 1;

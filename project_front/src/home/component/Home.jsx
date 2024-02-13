@@ -16,7 +16,7 @@ const Home = () => {
         - 이미지 경로 public 의 images 로 변경..
        */}
 			{/* <!--::banner_part start::--> */}
-			<section className="banner_part  padding_top">
+			<section className="banner_part">
 				<div className="container">
 					<div className="row align-items-center">
 						<div className="col-lg-12">
@@ -26,7 +26,7 @@ const Home = () => {
 									<div className="banner_text">
 										<div className="banner_text_iner">
 											<img
-												src="img/banner_img1.png"
+												src="img/banner_img2.png"
 												alt="banner0"
 											/>
 										</div>
