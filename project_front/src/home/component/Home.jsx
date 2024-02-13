@@ -16,7 +16,7 @@ const Home = () => {
         - 이미지 경로 public 의 images 로 변경..
        */}
 			{/* <!--::banner_part start::--> */}
-			<section className="banner_part">
+			<section className="banner_part  padding_top">
 				<div className="container">
 					<div className="row align-items-center">
 						<div className="col-lg-12">
@@ -25,7 +25,10 @@ const Home = () => {
 									{/* <div className="col-lg-5 col-md-8"> */}
 									<div className="banner_text">
 										<div className="banner_text_iner">
-											<img src="img/banner_img0.png" alt="banner0" />
+											<img
+												src="img/banner_img1.png"
+												alt="banner0"
+											/>
 										</div>
 									</div>
 									{/* </div> */}
@@ -43,10 +46,7 @@ const Home = () => {
 					<div className="row justify-content-center">
 						<div className="col-lg-12">
 							<div className="section_tittle text-center">
-								<h2>
-									New buy
-									<br />
-								</h2>
+								<h2>New buy</h2>
 								<h5>신규 구매 등록</h5>
 							</div>
 						</div>
