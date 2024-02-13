@@ -114,7 +114,7 @@ const MyInfo = () => {
                         </form>                        
                     </div>
                     <hr className="mt-5 mb-5" />
-                    <div className="col-lg-6 col-md-6">
+                    <div className="col-lg-6 col-md-6 mb-5">
                         <h3>회원탈퇴</h3>
                         <button type="button" className="btn_3 genric-btn danger-border circle" onClick={deleteAccout}>
                             탈퇴

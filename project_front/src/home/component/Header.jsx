@@ -29,7 +29,7 @@ const Header = () => {
     }
 
     // 검색창
-    const focusRef = useRef()
+    const focusRef = useRef() // real dom의 식별자 지정
     const [searchClassName, setSearchClassName] = useState('search_input d-none')
     const [keyword, setKeyword] = useState('')
     

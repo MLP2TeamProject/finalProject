@@ -101,7 +101,7 @@ const SearchKeyword = () => {
                         {/* <p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
                         <p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p>
                         <p>페이지배열 : {pageState.pageArray}</p> */}
-                        <nav className="justify-content-center d-flex">
+                        <nav className="justify-content-center d-flex mb-5">
                             <ul className="pagination">
                                 <li className={pageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>
                                     <a href="#" className="page-link" aria-label="Previous Group"
