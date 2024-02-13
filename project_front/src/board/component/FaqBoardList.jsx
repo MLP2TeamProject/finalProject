@@ -53,7 +53,7 @@ const FaqBoardList = () => {
 											<div>
 												<div>
 													<h5 className="title">Frequently Asked Questions</h5>
-
+													<hr />
 													<div className="bmic-accordion bmic-accordion-flush" id="faq-group-1">
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
@@ -99,7 +99,7 @@ const FaqBoardList = () => {
 															</div>
 														</div>
 
-                                                        <div className="bmic-accordion-item">
+														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-5" type="button" data-bs-toggle="collapse">
 																	B-mic, faq board test
@@ -110,7 +110,7 @@ const FaqBoardList = () => {
 															</div>
 														</div>
 
-                                                        <div className="bmic-accordion-item">
+														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-6" type="button" data-bs-toggle="collapse">
 																	B-mic, faq board test
@@ -121,7 +121,7 @@ const FaqBoardList = () => {
 															</div>
 														</div>
 
-                                                        <div className="bmic-accordion-item">
+														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-7" type="button" data-bs-toggle="collapse">
 																	B-mic, faq board test
@@ -131,6 +131,52 @@ const FaqBoardList = () => {
 																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
 															</div>
 														</div>
+
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-8" type="button" data-bs-toggle="collapse">
+																	B-mic, faq board test
+																</button>
+															</h2>
+															<div id="faqsOne-8" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
+															</div>
+														</div>
+
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-9" type="button" data-bs-toggle="collapse">
+																	B-mic, faq board test
+																</button>
+															</h2>
+															<div id="faqsOne-9" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
+															</div>
+														</div>
+
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-10" type="button" data-bs-toggle="collapse">
+																	B-mic, faq board test
+																</button>
+															</h2>
+															<div id="faqsOne-10" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
+															</div>
+														</div>
+
+														<div className="bmic-accordion-item">
+															<h2 className="bmic-accordion-header">
+																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-11" type="button" data-bs-toggle="collapse">
+																	B-mic, faq board test
+																</button>
+															</h2>
+															<div id="faqsOne-11" className="bmic-accordion-collapse collapse" data-bs-parent="#faq-group-1">
+																<div className="bmic-accordion-body">해당 내용은 test 내용입니다.</div>
+															</div>
+														</div>
+
+
 													</div>
 												</div>
 											</div>
