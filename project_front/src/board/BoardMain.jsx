@@ -12,22 +12,26 @@ import NoticeBoardList from "./component/NoticeBoardList";
 
 const BoardMain = () => {
     return (
-        <div>
-            {/* <h2>test - Board Main</h2> */}
+        <>
+            <div>
+                {/* <h2>test - Board Main</h2> */}
+            </div>
+
             <Routes>
                 {/* noticeboard */}
                 <Route path="/noticelist" element={<NoticeBoardList />} />
-                
+
                 {/* 상세페이지, 삭제까지 */}
                 <Route path="/noticedetail/:id" element={<NoticeBoardDetail />} />
                 <Route path="/noticeinsert" element={<NoticeBoardInsert />} />
                 <Route path="/noticeupdate/:id" element={<NoticeBoardUpdate />} />
-                
+
                 {/* faqboard */}
                 <Route path="/faqlist" element={<FaqBoardList />} />
                 {/* FaqBoardDetail에서 상세페이지, 삭제까지 */}
             </Routes>
-        </div>
+        </>
+
     );
 };
 export default BoardMain;
