@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 // error handler middleware
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
-  res.locals.error = process.env.NODE_ENV != "production" ? err : {};
+  res.locals.error = process.env.NODE_ENV != "production" ? err : {}; // 개발환경이면 err를 출력하고 아니면 출력안하는 설정
   res.status(err.status || 500);
   res.render("error"); //error.html
 });
