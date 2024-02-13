@@ -1,17 +1,37 @@
 const getPool = require('../common/pool');
 
 const sql = {
-	//제품클릭 넘어가게끔
-	click: 'DELETE FROM users WHERE email = ?',
+	productList: "SELECT * FROM product ORDER BY product_id DESC LIMIT 0, 4",
+	auctionList: "SELECT * FROM auction ORDER BY auction_id DESC LIMIT 0, 4",
 };
 
 const homeDAO = {
-	clickBooks: async (callback) => {
-		let conn = null;
+	newBuy: async (callback) => {
+		let conn = null
 		try {
-			console.log('000000');
-			conn = await getPool().getConnection();
-		} catch (error) {}
+			conn = await getPool().getConnection()
+			const [resp] = await conn.query(sql.productList, [])
+			// console.log('00', resp)
+			callback({ status: 200, message: 'OK', data: resp })
+		} catch (error) {
+			return { status: 500, message: '조회 실패', error: error }
+		} finally {
+			if (conn !== null) conn.release()
+		}
+	},
+
+	auctionBuy: async (callback) => {
+		let conn = null
+		try {
+			conn = await getPool().getConnection()
+			const [resp] = await conn.query(sql.auctionList, [])
+			// console.log('11', resp)
+			callback({ status: 200, message: 'OK', data: resp })
+		} catch (error) {
+			return { status: 500, message: '조회 실패', error: error }
+		} finally {
+			if (conn !== null) conn.release()
+		}
 	},
 };
 

@@ -57,7 +57,7 @@ app.use(express.urlencoded({ extended: true })); //http요청의 body parser(즉
 
 // 개발자가 각 파일로 분리시킨 라우터 등록
 app.use("/static", express.static(path.join(__dirname, "public")));
-app.use("/", homeRouter);
+app.use("/home", homeRouter);
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/auction", auctionRouter);
