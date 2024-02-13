@@ -68,10 +68,10 @@ const NoticeBoardList = () => {
 
 			{/* <!-- ================ contact section start ================= --> */}
 
-			<section className="contact-section padding_top">
+			<section className="contact-section padding_top bmic-padding">
 				<div className="container">
 					<div className="row col-12">
-						<div className="col-lg-2">
+						<div className="col-lg-2 bmic-visiable">
 							<div>
 								<h2>고객센터</h2>
 							</div>

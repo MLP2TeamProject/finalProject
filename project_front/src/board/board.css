@@ -10,10 +10,20 @@
 	resize: none;
 }
 
-/* hr */
+/* hr
 hr {
 	width: 50%;
+} */
+
+/* board visiavle */
+@media screen and (max-width: 999px) {
+    .bmic-visiable {display:none;}
+	.bmic-padding {
+		margin-top: 40px;
+	}
 }
+
+
 
 /* Accordion */
 .bmic-accordion-item {

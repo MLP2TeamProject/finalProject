@@ -26,22 +26,22 @@ const FaqBoardList = () => {
 		<div>
 			{/* <h2>test - FnaBoardList page</h2> */}
 
-			<section className="contact-section padding_top">
+			<section className="contact-section padding_top bmic-padding">
 				<div className="container">
 					<div className="row col-12">
-						<div className="col-sm-2">
-							<h2>고객센터</h2>
-						</div>
-						<div className="col-sm-10">
-							<h1 className="contact-title ">FAQ</h1>
-						</div>
-						<div className="col-lg-2">
-							<Link to={"/board/noticelist"}>
-								<p className="text-muted">공지사항</p>
-							</Link>
-							<Link to={"/board/faqlist"}>
-								<p className="text-dark">FAQ</p>
-							</Link>
+						<div className="col-lg-2 bmic-visiable">
+							<div>
+								<h2>고객센터</h2>
+							</div>
+							<div>
+								<Link to={"/board/noticelist"}>
+									<p className="text-dark">공지사항</p>
+								</Link>
+								<Link to={"/board/faqlist"}>
+									<p className="text-muted">FAQ</p>
+								</Link>
+								<hr />
+							</div>
 						</div>
 						<div className="col-lg-10">
 							<div>
@@ -52,8 +52,8 @@ const FaqBoardList = () => {
 											{/* <!-- F.A.Q Group 1 --> */}
 											<div>
 												<div>
-													<h5 className="title">Frequently Asked Questions</h5>
-													<hr />
+													<h2 className="contact-title">FAQ</h2>
+													<h5 className="title">-Frequently Asked Questions-</h5>
 													<div className="bmic-accordion bmic-accordion-flush" id="faq-group-1">
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
