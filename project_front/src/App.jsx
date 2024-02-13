@@ -1,20 +1,36 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
+import Header from "./home/component/Header";
+import Footer from "./home/component/Footer";
+import HomeMain from "./home/HomeMain";
+import MypageMain from "./mypage/MypageMain";
+import UserMain from "./user/UserMain";
+import BoardMain from "./board/BoardMain";
+import ProductMain from "./product/ProductMain";
 
-
-import ProductMain from './product/ProductMain';
-
-function App() {
+//수정했습니다. 
+const App = () => {
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route path='/products/*' element={<ProductMain />} /> {/*Product 컴포넌트를 위한 라우트를 추가 */}
-        </Routes>
-        {/* <Footer /> */}
-      </div>
-      </Router>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomeMain />} />
+        <Route path="/board/*" element={<BoardMain />} />
+        <Route path="/user/*" element={<UserMain />} />
+        <Route path="/mypage/*" element={<MypageMain />} />
+        <Route path="/products/*" element={<ProductMain />} />
+        <Route
+          path="*"
+          element={
+            <>
+              <hr />
+              <h3>Page Not Found</h3>
+            </>
+          }
+        />
+      </Routes>
+      <Footer />
+    </>
   );
-}
+};
 
 export default App;

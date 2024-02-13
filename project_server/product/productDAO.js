@@ -1,14 +1,38 @@
-//데이터베이스와 상호작용
 const getPool = require("../common/pool");
-const axios = require('axios');
 
 const sql = {
+    // sql구문
+    // ? 는 프로그램 데이터가 들어갈 자리
+
+    // 상품, 준영님
     productList: "select * from product",
     buy: "update product set auction_status = '?' where product_id = ?",
+
+
+    // 상품, 유경님
+    detail: "select * from product where product_id = ?",
+    detail_auction: "select * from auction where product_id = ?",
+    update:
+        "update product set master_price =?, content = ? where product_id = ?",
+    //이부분은 buy에서 글쓴이가 수정하려면 쓸 부분
+    insertAuction:
+        "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
+    checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
+
+
+    // 마이페이지
+    checkProductAuction: `SELECT P.product_id, P.title, P.picture, P.auction_id, 
+    GROUP_CONCAT(CONCAT(A.auction_id, ',', A.email, ',', A.auction_price, ',', A.picture) 
+    ORDER BY A.auction_price DESC SEPARATOR ';') AS auction_info 
+    FROM product AS P  LEFT JOIN auction AS A 
+    ON A.product_id = P.product_id WHERE P.email = ? 
+    GROUP BY P.product_id, P.title, P.picture, P.auction_id`,
+    selectBidd: "UPDATE product SET auction_id = ?, auction_status = 'Y' WHERE product_id = ?",
+
 };
 
 const productDAO = {
-
+    // 상품, 준영님
     productList: async (callback) => {
         let conn = null
         try {
@@ -22,8 +46,6 @@ const productDAO = {
             if (conn !== null) conn.release()
         }
     },
-
-
 
     buy: async (item, callback) => {
         let conn = null;

@@ -109,15 +109,10 @@ const ProductBuy = () => {
 
     return (
         <main >
-            {/*<!--================Home Banner Area =================-->
-            <!-- breadcrumb start--> */}
+            {/* // <!--================Home Banner Area =================-->
+        // <!-- breadcrumb start--> */}
             <div>
-            <section className="breadcrumb" style={{
-                    backgroundImage: "url('/img/b-mic.png')",
-                    backgroundSize: "300px",
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center' // 여기를 조정하면 원하는 위치로 바꿀수 있다.
-                }}>
+                <section className="breadcrumb breadcrumb_bg" style={{ backgroundSize: "300px" }}>
                     <div className="container">
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
@@ -133,7 +128,7 @@ const ProductBuy = () => {
                 </section>
                 {/* // <!-- breadcrumb start End-->  */}
                 <br />
-                <aside className="single_sidebar_widget search_widget">
+                <aside className="single_sidebar_widget search_widget p-5">
                     <form onSubmit={executeSearch}>
                         <div className="form-group">
                             <div className="input-group mb-3">
