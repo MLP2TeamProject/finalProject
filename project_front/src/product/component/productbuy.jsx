@@ -113,6 +113,7 @@ const ProductBuy = () => {
         // <!-- breadcrumb start--> */}
             <div>
                 <section className="breadcrumb" style={{
+                    // 파일과 사이즈 수정
                     backgroundImage: "url('/img/bmic-page.png')",
                     backgroundSize: "auto",
                     backgroundRepeat: 'no-repeat',
