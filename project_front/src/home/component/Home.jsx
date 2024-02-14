@@ -1,10 +1,41 @@
 /* eslint-disable */
 
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Home = () => {
-	console.log('11');
+	// New Buy 상태
+	const [newBuy, setNewBuy] = useState([{}]);
+	// 상품정보 get
+	const getNewBuy = useCallback(async () => {
+		console.log('11');
+		const resp = await axios.get('http://localhost:8000/home/newbuy');
+		if (resp.data.status === 500) window.alert(resp.data.message);
+		else {
+			console.log('상품정보', resp.data.data);
+			setNewBuy(resp.data.data);
+		}
+	}, []);
+
+	// Auction Buy 상태
+	const [auctionBuy, setAuctionBuy] = useState([{}]);
+	// 상품정보 get
+	const getAuctionBuy = useCallback(async () => {
+		const resp = await axios.get('http://localhost:8000/home/auctionbuy');
+		if (resp.data.status === 500) window.alert(resp.data.message);
+		else {
+			console.log('입찰정보', resp.data.data);
+			setAuctionBuy(resp.data.data);
+		}
+	}, []);
+
+	// 페이지 진입 시 실행
+	useEffect(() => {
+		getNewBuy();
+		getAuctionBuy();
+	}, []);
+
 	return (
 		<div>
 			{/*
@@ -53,38 +84,26 @@ const Home = () => {
 					</div>
 
 					<div className="row align-items-center justify-content-between">
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_1.png" alt="" />
+						{newBuy.map((item) => (
+							<div
+								className="col-lg-5 col-sm-6"
+								key={item.product_id}>
+								<div className="single_feature_post_text">
+									<Link
+										className="feature_btn"
+										to={`/products/detail/${item.product_id}`}>
+										상품 상세{' '}
+										<i className="fas fa-play"></i>
+									</Link>
+									<h4>{item.title}</h4>
+									<img
+										src={`http://localhost:8000/upload/${item.picture}`}
+										alt=""
+										style={{ height: '280px' }}
+									/>
+								</div>
 							</div>
-						</div>
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_2.png" alt="" />
-							</div>
-						</div>
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_3.png" alt="" />
-							</div>
-						</div>
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_4.png" alt="" />
-							</div>
-						</div>
+						))}
 					</div>
 				</div>
 			</section>
@@ -104,38 +123,25 @@ const Home = () => {
 						</div>
 					</div>
 					<div className="row align-items-center justify-content-between">
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_5.png" alt="" />
+						{auctionBuy.map((item) => (
+							<div
+								className="col-lg-5 col-sm-6"
+								key={item.auction_id}>
+								<div className="single_feature_post_text">
+									<Link
+										className="feature_btn"
+										to={`/products/detail/${item.product_id}`}>
+										상품 상세{' '}
+										<i className="fas fa-play"></i>
+									</Link>
+									<img
+										src={`http://localhost:8000/upload/${item.picture}`}
+										alt=""
+										style={{ height: '280px' }}
+									/>
+								</div>
 							</div>
-						</div>
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_6.png" alt="" />
-							</div>
-						</div>
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_7.png" alt="" />
-							</div>
-						</div>
-						<div className="col-lg-5 col-sm-6">
-							<div className="single_feature_post_text">
-								<Link className="feature_btn" to="/user/signin">
-									상품 상세 <i className="fas fa-play"></i>
-								</Link>
-								<img src="img/feature/feature_8.png" alt="" />
-							</div>
-						</div>
+						))}
 					</div>
 				</div>
 			</section>

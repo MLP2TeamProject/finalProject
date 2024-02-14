@@ -36,9 +36,15 @@ const Footer = () => {
 										삼삼대로111 사사주
 									</li>
 									<li>
-										<Link href="">가입사실확인</Link>
-										&nbsp; &nbsp; 공정거래위원회 &nbsp;
-										&nbsp; 현금영수증가맹점&nbsp; &nbsp;
+										<Link href="https://www.ftc.go.kr/bizCommPopView.do">
+											가입사실확인
+										</Link>
+										&nbsp; &nbsp;
+										<Link href="https://www.ftc.go.kr/bizCommPopView.do">
+											공정거래위원회
+										</Link>
+										&nbsp; &nbsp; 현금영수증가맹점&nbsp;
+										&nbsp;
 										<Link href="">개인정보처리방침</Link>
 									</li>
 								</ul>
@@ -66,14 +72,11 @@ const Footer = () => {
 									</li>
 									<br />
 									<li>
-										<Link href="">
-											경기도 구리시 이이구 삼삼대로111
-											사사주 우체국 물류센터
-										</Link>
+										경기도 구리시 이이구 삼삼대로111 사사주
+										우체국 물류센터
 									</li>
-									<li>
-										<Link href="">북믹 앞</Link>
-									</li>
+									<br></br>
+									<li>북믹 앞</li>
 								</ul>
 							</div>
 						</div>

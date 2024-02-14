@@ -49,14 +49,18 @@ const Header = () => {
 										<Link
 											className="nav-link"
 											to={'/products/list'}>
-											<strong>상품</strong>
+											<h4>
+												<strong>상품</strong>
+											</h4>
 										</Link>
 									</li>
 									<li className="nav-item dropdown">
 										<Link
 											className="nav-link"
 											to={'/products/buy'}>
-											<strong>구매신청</strong>
+											<h4>
+												<strong>구매신청</strong>
+											</h4>
 										</Link>
 									</li>
 									<li className="nav-item">
