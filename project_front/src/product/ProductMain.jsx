@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
 // 준영님
-import ProductList from './component/productlist'
-import ProductBuy from './component/productbuy'
+import ProductList from './component/ProDuctList'
+import ProductBuy from './component/ProDuctBuy'
 
 // 유경님
 import Detail from "./component/Detail";

@@ -112,7 +112,12 @@ const ProductBuy = () => {
             {/* // <!--================Home Banner Area =================-->
         // <!-- breadcrumb start--> */}
             <div>
-                <section className="breadcrumb breadcrumb_bg" style={{ backgroundSize: "300px" }}>
+                <section className="breadcrumb" style={{
+                    backgroundImage: "url('/img/b-mic.png')",
+                    backgroundSize: "300px",
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center'
+                }}>
                     <div className="container">
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
@@ -128,7 +133,8 @@ const ProductBuy = () => {
                 </section>
                 {/* // <!-- breadcrumb start End-->  */}
                 <br />
-                <aside className="single_sidebar_widget search_widget p-5">
+                <aside className="single_sidebar_widget search_widget">
+                    {/* 버튼과 관련된 front */}
                     <form onSubmit={executeSearch}>
                         <div className="form-group">
                             <div className="input-group mb-3">
@@ -148,6 +154,43 @@ const ProductBuy = () => {
                             </div>
                         </div>
                     </form>
+                    {/* 버튼관련 front 수정 */}
+                    {/* <nav className="navbar navbar-light bg-light">
+                        <a className="navbar-brand" href="#">
+                            <nav><input type="text" class="form-control" placeholder="Have a question? Ask Now" /></nav>
+                            <nav><button class="btn btn-primary">Search</button></nav>
+                        </a>
+                    </nav> */}
+                    <hr />
+                    {/* 2 */}
+                    <form className="form-inline my-2 my-lg-0">
+                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <hr />
+                    {/*  */}
+                    <form className="form-inline my-2 my-lg-0">
+                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+
+                    {/* 4 */}
+                    <div className="container">
+
+                        <div className="row height d-flex justify-content-center align-items-center">
+
+                            <div className="col-md-8">
+
+                                <div clclassNameass="search">
+                                    <i className="fa fa-search"></i>
+                                    <input type="text" className="form-control" placeholder="Have a question? Ask Now"/>
+                                        <button className="btn btn-primary">Search</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
                     {/* 검색 결과 */}
                     <div>
                         {renderSearchResults()}
