@@ -68,10 +68,18 @@ const Header = () => {
                             <div className="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                                 <ul className="navbar-nav">
                                     <li className="nav-item dropdown">
-                                        <Link className="nav-link" to={"/products/list"}><strong>상품</strong></Link>
+                                        <Link className="nav-link" to={"/products/list"}>
+                                            <h4>
+												<strong>상품</strong>
+											</h4>
+                                        </Link>
                                     </li>
                                     <li className="nav-item dropdown">
-                                        <Link className="nav-link" to={"/products/buy"}><strong>구매신청</strong></Link>
+                                        <Link className="nav-link" to={"/products/buy"}>
+                                            <h4>
+												<strong>구매신청</strong>
+											</h4>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link" id="search_1" onClick={() => setSearchClassName('search_input d-block')}><i className="ti-search"></i></a>

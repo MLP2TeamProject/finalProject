@@ -9119,6 +9119,10 @@ h6 {
 	border-top: 1px solid #eaeaea;
 }
 
+.banner_part {
+	padding-bottom: 70px;
+}
+
 .feature_part .single_feature_post_text:hover .feature_btn {
 	bottom: 50px;
 	opacity: 1;
@@ -9134,7 +9138,9 @@ h6 {
 	position: relative;
 	z-index: 2;
 	font-size: 13px;
-	margin-left: 31px;
+	/* margin-left: 31px; */
+	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 .footer_part {
@@ -9155,4 +9161,8 @@ h6 {
 	background: #888;
 	position: absolute;
 	transform: translate(-6px, -14px);
+}
+
+.main-menu-item {
+	justify-content: center;
 }

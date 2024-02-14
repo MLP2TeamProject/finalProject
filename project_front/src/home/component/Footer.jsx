@@ -26,13 +26,25 @@ const Footer = () => {
 									<br></br>
 									<li>대표자 최아별 book-mimic@daum.net</li>
 									<li>사업자등록번호 : 402-86-03809</li>
-									<li>통신판매업신고번호 제 2024-경기구리C-0001</li>
-									<br></br>
-									<li>반품 주소 : 경기도 구리시 이이구 삼삼대로111 사사주</li>
 									<li>
-										<Link href="">가입사실확인</Link>
-										&nbsp; &nbsp; 공정거래위원회 &nbsp; &nbsp;
-										현금영수증가맹점&nbsp; &nbsp;
+										통신판매업신고번호 제
+										2024-경기구리C-0001
+									</li>
+									<br></br>
+									<li>
+										반품 주소 : 경기도 구리시 이이구
+										삼삼대로111 사사주
+									</li>
+									<li>
+										<Link href="https://www.ftc.go.kr/bizCommPopView.do">
+											가입사실확인
+										</Link>
+										&nbsp; &nbsp;
+										<Link href="https://www.ftc.go.kr/bizCommPopView.do">
+											공정거래위원회
+										</Link>
+										&nbsp; &nbsp; 현금영수증가맹점&nbsp;
+										&nbsp;
 										<Link href="">개인정보처리방침</Link>
 									</li>
 								</ul>
@@ -60,13 +72,11 @@ const Footer = () => {
 									</li>
 									<br />
 									<li>
-										<Link href="">
-											경기도 구리시 이이구 삼삼대로111 사사주 우체국 물류센터
-										</Link>
+										경기도 구리시 이이구 삼삼대로111 사사주
+										우체국 물류센터
 									</li>
-									<li>
-										<Link href="">북믹 앞</Link>
-									</li>
+									<br></br>
+									<li>북믹 앞</li>
 								</ul>
 							</div>
 						</div>
@@ -80,11 +90,19 @@ const Footer = () => {
 								<div className="copyright_text">
 									<p>
 										Copyright &copy;{new Date().getFullYear()}{' '}
-										{/* Copyright &copy;
-										<script>document.write(new Date().getFullYear());</script> */}
-										All rights reserved | This template is made with
-										<i className="ti-heart" aria-hidden="true"></i> by
-										<Link href="https://colorlib.com" target="_blank">
+										{/* <script>
+											document.write(new
+											Date().getFullYear());
+										</script> */}
+										All rights reserved | This template is
+										made with
+										<i
+											className="ti-heart"
+											aria-hidden="true"></i>{' '}
+										by
+										<Link
+											href="https://colorlib.com"
+											target="_blank">
 											Colorlib
 										</Link>
 									</p>
@@ -94,22 +112,30 @@ const Footer = () => {
 								<div className="footer_icon social_icon">
 									<ul className="list-unstyled">
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fab fa-facebook-f"></i>
 											</Link>
 										</li>
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fab fa-twitter"></i>
 											</Link>
 										</li>
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fas fa-globe"></i>
 											</Link>
 										</li>
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fab fa-behance"></i>
 											</Link>
 										</li>
