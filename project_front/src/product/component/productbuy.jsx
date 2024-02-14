@@ -113,8 +113,8 @@ const ProductBuy = () => {
         // <!-- breadcrumb start--> */}
             <div>
                 <section className="breadcrumb" style={{
-                    backgroundImage: "url('/img/b-mic.png')",
-                    backgroundSize: "300px",
+                    backgroundImage: "url('/img/Group-4.png')",
+                    backgroundSize: "auto",
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center'
                 }}>
@@ -122,10 +122,10 @@ const ProductBuy = () => {
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
                                 <div className="breadcrumb_iner">
-                                    <div className="breadcrumb_iner_item">
+                                    {/* <div className="breadcrumb_iner_item">
                                         <h2>ProDuct Buy</h2>
                                         <p>Home <span>-</span> ProDuct Buy</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
