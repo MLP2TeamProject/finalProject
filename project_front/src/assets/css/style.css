@@ -2379,6 +2379,10 @@ ul {
 	.main_menu a i {
 		margin-left: 13px;
 	}
+
+	.header_right {
+		margin-top:15px;
+	}
 }
 
 @media (max-width: 576px) {

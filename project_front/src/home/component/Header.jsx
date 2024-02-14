@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useState, useContext, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import UserContext from '../../UserContext';
@@ -7,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Header = () => {
-
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 	const context = useContext(UserContext);
 
 	// 로그아웃
@@ -55,40 +52,31 @@ const Header = () => {
         }
     }, [searchClassName])
 
-	return (
-		<header className="main_menu home_menu">
-			<div className="container">
-				<div className="row align-items-center">
-					<div className="col-lg-12">
-						<nav className="navbar navbar-expand-lg navbar-light">
-							<Link className="navbar-brand" to={'/'}>
-								<img src="/img/logo.png" alt="logo" />
-							</Link>
-							<div
-								className="collapse navbar-collapse main-menu-item"
-								id="navbarSupportedContent">
-								<ul className="navbar-nav">
-									<li className="nav-item dropdown">
-										<Link className="nav-link" to={'/products/list'}>
-											<strong>상품</strong>
-										</Link>
-									</li>
-									<li className="nav-item dropdown">
-										<Link className="nav-link" to={'/products/buy'}>
-											<strong>구매신청</strong>
-										</Link>
-									</li>
-									<li className="nav-item">
-										<a
-											className="nav-link"
-											id="search_1"
-											onClick={() =>
-												setSearchClassName('search_input d-block')
-											}>
-											<i className="ti-search"></i>
-										</a>
-									</li>
-									{/* <li
+    return (
+        <header className="main_menu home_menu">
+            <div className="container">
+                <div className="row align-items-center">
+                    <div className="col-lg-12">
+                        <nav className="navbar navbar-expand-lg navbar-light">
+                            <Link className="navbar-brand" to={'/'}> <img src="/img/logo.png" alt="logo" /> </Link>
+                            <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="menu_icon"><i className="fas fa-bars"></i></span>
+                            </button>
+
+                            <div className="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                                <ul className="navbar-nav">
+                                    <li className="nav-item dropdown">
+                                        <Link className="nav-link" to={"/products/list"}><strong>상품</strong></Link>
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                        <Link className="nav-link" to={"/products/buy"}><strong>구매신청</strong></Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" id="search_1" onClick={() => setSearchClassName('search_input d-block')}><i className="ti-search"></i></a>
+                                    </li>
+                                    {/* <li
                                         className="nav-item"
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -98,69 +86,60 @@ const Header = () => {
                                             <i className="ti-search"></i>
                                         </Link>
 									</li> */}
-								</ul>
-							</div>
-							<div className="hearer_icon d-flex">
-								<ul className="navbar-nav">
-									<li className="nav-item">
-										<Link className="nav-link" to={'/board/noticelist'}>
-											고객센터
-										</Link>
-									</li>
-									{/* <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Notice
-                                        </a>
-                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                            <Link className="dropdown-item" to={"/board/noticelist"}>Notice</Link>
-                                            <Link className="dropdown-item" to={"/board/faqlist"}>FAQ</Link>
-                                        </div>
-                                    </li> */}
-									{context.state.userData.email ? (
-										<li className="nav-item">
-											<Link className="nav-link" to={'/mypage'}>
-												마이페이지
-											</Link>
-										</li>
-									) : (
-										''
-									)}
-									<li className="nav-item dropdown">
-										{context.state.userData.email ? (
-											<span className="nav-link">
-												<strong>{context.state.userData.user_name}</strong>님
-												환영합니다.{' '}
-												<button
-													type="button"
-													className="genric-btn primary small circle"
-													onClick={logout}>
-													로그아웃
-												</button>
-											</span>
-										) : (
-											<Link className="nav-link" to={'/user/signin'}>
-												로그인
-											</Link>
-										)}
-									</li>
-									{context.state.userData.email ? (
-										''
-									) : (
-										<li className="nav-item dropdown">
-											<Link className="nav-link" to={'/user/signup'}>
-												회원가입
-											</Link>
-										</li>
-									)}
-								</ul>
-							</div>
-						</nav>
-					</div>
-				</div>
-			</div>
+                                </ul>
+                            </div>
+                            <div className="hearer_icon d-flex header_right">
+                                <Link className="nav-link" to={"/board/noticelist"}>고객센터</Link>
 
-			<div className={searchClassName} id="search_input_box">
+                                {context.state.userData.email ? (
+                                    <Link className="nav-link" to={"/mypage"}>마이페이지</Link>
+                                ) : ''}
+
+                                {context.state.userData.email ? (
+                                    <span className="nav-link">
+                                        <strong>{context.state.userData.user_name}</strong>님 환영합니다. {' '}
+                                        <button type='button' className="genric-btn primary small circle" onClick={logout}>로그아웃</button>
+                                    </span>
+                                ) : (
+                                    <Link className="nav-link" to={"/user/signin"}>로그인</Link>
+                                )}
+
+                                {context.state.userData.email ? ('') : (
+                                    <Link className="nav-link" to={"/user/signup"}>회원가입</Link>
+                                )}
+
+                                {/* <ul className="navbar-nav">
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to={"/board/noticelist"}>고객센터</Link>
+                                    </li>
+                                    
+                                    {context.state.userData.email ? (
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to={"/mypage"}>마이페이지</Link>
+                                        </li>
+                                    ) : ''}                                
+                                    <li className="nav-item dropdown">
+                                    {context.state.userData.email ? (
+                                        <span className="nav-link">
+                                            <strong>{context.state.userData.user_name}</strong>님 환영합니다. {' '}
+                                            <button type='button' className="genric-btn primary small circle" onClick={logout}>로그아웃</button>
+                                        </span>
+                                    ) : (
+                                        <Link className="nav-link" to={"/user/signin"}>로그인</Link>
+                                    )}                                        
+                                    </li>
+                                    {context.state.userData.email ? ('') : (
+                                        <li className="nav-item dropdown">
+                                            <Link className="nav-link" to={"/user/signup"}>회원가입</Link>
+                                        </li>
+                                    )}
+                                </ul> */}
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div className={searchClassName} id="search_input_box">
 				<div className="container ">
 					<form className="d-flex justify-content-between search-inner">
 						<input
@@ -187,8 +166,8 @@ const Header = () => {
 					</form>
 				</div>
 			</div>
-		</header>
-	);
-};
+        </header>
+    )
+}
 
-export default Header;
+export default Header
