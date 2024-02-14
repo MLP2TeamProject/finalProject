@@ -113,12 +113,12 @@ const ProductBuy = () => {
         // <!-- breadcrumb start--> */}
             <div>
                 <section className="breadcrumb" style={{
-                    backgroundImage: "url('/img/Group-4.png')",
+                    backgroundImage: "url('/img/bmic-page.png')",
                     backgroundSize: "auto",
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center'
                 }}>
-                    <div className="container">
+                    <div className="container product-margin">
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
                                 <div className="breadcrumb_iner">
@@ -158,7 +158,8 @@ const ProductBuy = () => {
                     {/* 버튼관련 front 수정 */}
 
                     <form className="form-inline-pds col-12 my-2 my-lg-0">
-                        <img src="../img/bmic-img.png" width="40" height="40" className="d-inline-block align-top" alt=""/>
+                        {/* <img src="../img/bmic-img.png" width="40" height="40" className="d-inline-block align-top" alt=""/> */}
+                        <img src="../img/bmic-img.png" width="40" height="40" className="search-visiable align-top" alt=""/>
                         <input className="form-control col-sm-10 mr-sm-2" 
                             type="text" 
                             placeholder="제목을 입력하세요."

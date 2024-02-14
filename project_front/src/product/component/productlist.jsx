@@ -77,7 +77,7 @@ const ProductList = () => {
             <!-- breadcrumb start--> */}
             <div>
                 <section className="breadcrumb" style={{
-                    backgroundImage: "url('/img/Group-4.png')",
+                    backgroundImage: "url('/img/bmic-page.png')",
                     backgroundSize: "auto",
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center'
