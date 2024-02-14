@@ -87,7 +87,7 @@ const NoticeBoardDetail = () => {
 												</tbody>
 											</table>
 
-											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
+											<div className="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
                                                 {
                                                     isadmin === "Y"
                                                     //  관리자인 경우 버튼이 나타남 

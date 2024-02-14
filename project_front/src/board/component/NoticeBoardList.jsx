@@ -113,19 +113,20 @@ const NoticeBoardList = () => {
 													))}
 												</tbody>
 												<tfoot>
-													{   // 관리자인지 확인해서 글쓰기 버튼을 나타내게 함
-														isadmin === "Y"
-															? <tr>
-																<td colSpan={5}>
-																	<Link to={"/board/noticeinsert"}>
-																		<button className="btn btn-primary btn-sm float-right">글쓰기</button>
-																	</Link>
-																</td>
-															</tr>
-															: ""
-													}
 												</tfoot>
+												{   // 관리자인지 확인해서 글쓰기 버튼을 나타내게 함
+													isadmin === "Y"
+														? <tr>
+															<td colSpan={5}>
+																<Link to={"/board/noticeinsert"}>
+																	<button className="btn btn-primary btn-sm float-right">글쓰기</button>
+																</Link>
+															</td>
+														</tr>
+														: ""
+												}
 											</table>
+
 										</div>
 									</div>
 								</form>
@@ -134,12 +135,12 @@ const NoticeBoardList = () => {
 					</div>
 				</div>
 			</section>
-			
+
 			{/* pagination */}
 
 			{/* <p>현재페이지: {pageState.currentPage} / 총 페이지: {pageState.totalPageCount}</p>
 			<p>현재그룹: {pageState.currentPageGroup} / 총 그룹: {pageState.totalGroupCount}</p> */}
-			<nav className="justify-content-center d-flex">
+			<nav className="justify-content-center d-flex pagination-margin mb-5">
 				<ul className="pagination">
 					<li className={pageState.currentPageGroup === 0 ? "page-item disabled" : "page-item"}>
 						<a href="#" className="page-link" aria-label="Previous"

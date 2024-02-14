@@ -77,7 +77,7 @@ const NoticeBoardUpdate = () =>{
 												</tbody>
 											</table>
 											<hr />
-											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
+											<div className="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
 												<button type="button" className="btn btn-danger btn-sm me-md-2" onClick={() => navigate('/board/noticedetail/'+ noticeBoard.notice_id)}>취소</button>
 												<button type="button" className="btn btn-primary btn-sm" onClick={updateNoticeBoard}>저장</button>
 											</div>

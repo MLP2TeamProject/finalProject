@@ -54,7 +54,7 @@ const FaqBoardList = () => {
 												<div>
 													<h2 className="contact-title">FAQ</h2>
 													<h5 className="title">-Frequently Asked Questions-</h5>
-													<div className="bmic-accordion bmic-accordion-flush" id="faq-group-1">
+													<div className="bmic-accordion bmic-accordion-flush mb-5" id="faq-group-1">
 														<div className="bmic-accordion-item">
 															<h2 className="bmic-accordion-header">
 																<button className="h3 bmic-accordion-button collapsed" data-bs-target="#faqsOne-1" type="button" data-bs-toggle="collapse">

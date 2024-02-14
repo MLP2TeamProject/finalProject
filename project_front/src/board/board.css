@@ -23,6 +23,10 @@ hr {
 	}
 }
 
+/* pagination padding */
+.pagination-margin {
+	margin-top: 20px;
+}
 
 
 /* Accordion */

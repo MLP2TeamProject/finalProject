@@ -83,7 +83,7 @@ const NoticeBoardInsert = () => {
 
 												</tbody>
 											</table>
-											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
+											<div className="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
 												<button type="button" className="btn btn-danger btn-sm me-md-2" onClick={() => navigate('/board/noticelist/')}>취소</button>
 												<button type="button" className="btn btn-primary btn-sm" onClick={noticeInsert}>저장</button>
 											</div>
