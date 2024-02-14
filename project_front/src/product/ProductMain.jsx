@@ -24,7 +24,7 @@ const ProductMain = () => {
         <Route path='/buy' element={<ProductBuy />} />
         <Route path="/detail/:product_id" element={<Detail />} />
         {/* 여기를 detail쪽에서 설정한 변수랑 똑같이 맞춰야되니까 product_id로 */}
-        <Route path="/bidding" element={<Bidding />} />
+        <Route path="/bidding/:product_id" element={<Bidding />} />
         <Route path="/update/:product_id" element={<Update />} />
         <Route path="/pay" element={<Pay />} />
         {/* 페이징 샘플 컴포넌트 */}

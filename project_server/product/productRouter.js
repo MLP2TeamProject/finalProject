@@ -69,32 +69,28 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.post("/bidding/insert", async (req, res, next) => {
-  console.log("0000000");
-
-  //파일 업로드 처리하고.. 이 라인에서 에러가 발생하지 않으면 파일 업로드 성공
-  const a1 = upload.single("file1"); //여기서 사진 전송
-
-  a1(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      console.log(err);
-      res.json({ status: 500, message: "error" });
-    } else if (err) {
-      console.log(err);
-      res.json({ status: 500, message: "error" });
-    } else {
-      //에러가 없다면.. 나머지 데이터를 받는다..
-      console.log("upload router....");
-      const data = req.body; //클라이언트에서 서버로 전송된 HTTP 요청의 본문(body), 이게 폼 데이터
+router.post(
+  "/bidding/insert",
+  upload.single("file1"),
+  async (req, res, next) => {
+    try {
+      // 파일 업로드 성공 여부 확인
+      if (!req.file) {
+        return res.json({ status: 500, message: "파일 업로드 실패" });
+      }
+      const data = req.body;
       const obj = JSON.parse(data.sendData);
-
-      console.log("sendData", obj);
-      productDAO.bidding(obj, (resp) => {
+      const filename = req.file.filename;
+      const biddingData = { ...data, ...obj, filename };
+      productDAO.bidding(biddingData, (resp) => {
         res.json(resp);
       });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: 500, message: "서버 에러" });
     }
-  });
-});
+  }
+);
 
 router.get("/detail/:id", function (req, res, next) {
   console.log("디테일 불러오기");

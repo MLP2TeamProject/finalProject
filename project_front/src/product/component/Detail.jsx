@@ -79,10 +79,10 @@ const Detail = () => {
         <div className="container">
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">
-              <div className="product_slider_img">
+              <div className="product_slider_img text-center">
                 <img
                   src={`http://localhost:8000/static/upload/${product.picture}`}
-                  style={{ width: "80px" }}
+                  style={{ width: "400px" }}
                   alt="boookImage"
                 />
               </div>

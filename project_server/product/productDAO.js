@@ -122,7 +122,7 @@ const productDAO = {
     }
   },
 
-  bidding: async (data, filename, callback) => {
+  bidding: async (data, callback) => {
     let conn = null;
     try {
       console.log("1", data);
