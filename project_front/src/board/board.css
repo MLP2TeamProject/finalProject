@@ -16,7 +16,7 @@ hr {
 } */
 
 /* board visiavle */
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 991px) {
     .bmic-visiable {display:none;}
 	.bmic-padding {
 		margin-top: 40px;
