@@ -30,7 +30,7 @@ const SignIn = () => {
         console.log({resp})
     }, [data, navigate])
     return (
-        <main id="main">
+        <main>
             <section className="login_part padding_top">
                 <div className="container">
                     <div className="row align-items-center">

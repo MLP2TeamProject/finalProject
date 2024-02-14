@@ -13,19 +13,19 @@ const Home = () => {
 		const resp = await axios.get('http://localhost:8000/home/newbuy')
 		if(resp.data.status === 500) window.alert(resp.data.message)
 		else {
-			console.log('상품정보', resp.data.data)
+			// console.log('상품정보', resp.data.data)
 			setNewBuy(resp.data.data)
 		}        
 	}, [])
 
 	// Auction Buy 상태
 	const [auctionBuy, setAuctionBuy] = useState([{}])
-	// 상품정보 get
+	// 입찰정보 get
 	const getAuctionBuy = useCallback(async ()=> {
 		const resp = await axios.get('http://localhost:8000/home/auctionbuy')
 		if(resp.data.status === 500) window.alert(resp.data.message)
 		else {
-			console.log('입찰정보', resp.data.data)
+			// console.log('입찰정보', resp.data.data)
 			setAuctionBuy(resp.data.data)
 		}        
 	}, [])	
@@ -87,9 +87,9 @@ const Home = () => {
 						{newBuy.map((item)=> (
 							<div className="col-lg-5 col-sm-6" key={item.product_id}>
 								<div className="single_feature_post_text">
-									<Link className="feature_btn" to={`/products/detail/${item.product_id}`}>
+									<a className="feature_btn" href={`/products/detail/${item.product_id}`}>
 										상품 상세 <i className="fas fa-play"></i>
-									</Link>
+									</a>
 									<h4>{item.title}</h4>
 									<img src={`http://localhost:8000/upload/${item.picture}`} alt="" style={{height:'280px'}} />
 								</div>
@@ -117,9 +117,11 @@ const Home = () => {
 						{auctionBuy.map((item) => (
 							<div className="col-lg-5 col-sm-6" key={item.auction_id}>
 								<div className="single_feature_post_text">
-									<Link className="feature_btn" to={`/products/detail/${item.product_id}`}>
+									<a className="feature_btn" href={`/products/detail/${item.product_id}`}>
 										상품 상세 <i className="fas fa-play"></i>
-									</Link>
+									</a>
+									<h4>{item.title}</h4>
+									<p>입찰가: {item.auction_price}</p>
 									<img src={`http://localhost:8000/upload/${item.picture}`} alt="" style={{height:'280px'}} />
 								</div>
 							</div>

@@ -11,8 +11,6 @@ const Header = () => {
 	const navigate = useNavigate();
 	const context = useContext(UserContext);
 
-	const [isShowSearch, setShowSearch] = useState(false);
-
 	// 로그아웃
     const logout = async (e) => {
         e.preventDefault()
@@ -64,7 +62,7 @@ const Header = () => {
 					<div className="col-lg-12">
 						<nav className="navbar navbar-expand-lg navbar-light">
 							<Link className="navbar-brand" to={'/'}>
-								<img src="img/logo.png" alt="logo" />
+								<img src="/img/logo.png" alt="logo" />
 							</Link>
 							<div
 								className="collapse navbar-collapse main-menu-item"
@@ -173,13 +171,13 @@ const Header = () => {
                             value={keyword} 
                             onChange={(e)=>setKeyword(e.target.value)} 
                             onKeyDown={handleEnter} 
-                            ref={focusRef} 
-                            style={{width:'88%'}}
+                            ref={focusRef}
 						/>
 						<button 
                             type="button" 
                             className="btn form-control pt-2"
                             onClick={searchProduct}
+							style={{float:'right', marginRight:'25px'}}
                         ><i className="ti-search"></i></button>
 						<span
 							className="ti-close"

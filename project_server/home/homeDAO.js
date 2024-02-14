@@ -1,8 +1,11 @@
 const getPool = require('../common/pool');
 
 const sql = {
-	productList: "SELECT * FROM product ORDER BY product_id DESC LIMIT 0, 4",
-	auctionList: "SELECT * FROM auction ORDER BY auction_id DESC LIMIT 0, 4",
+	productList: "SELECT product_id, title, picture FROM product WHERE auction_id is NULL ORDER BY product_id DESC LIMIT 0, 4;",
+	auctionList: `SELECT A.auction_id, A.product_id, A.picture, A.auction_price, P.title
+	FROM product AS P 
+	LEFT JOIN auction AS A ON A.product_id = P.product_id && P.auction_id is NULL
+	ORDER BY A.auction_id DESC limit 0, 4`
 };
 
 const homeDAO = {
