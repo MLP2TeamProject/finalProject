@@ -107,15 +107,25 @@ const Detail = () => {
                 <Timer endtime={countdownData} />
                 <br />
                 <br />
-                <button
+                {/* <button
                   className="btn_3"
-                  // onClick={() => navigate(`/products/bidding/${product_id}`
                   onClick={() => navigate("/products/bidding/")}
                   disabled={countDownFinished}
                 >
-                  {/* disabled 속성 추가 */}
                   판매입찰하기
-                </button>
+                </button> */}
+                {loggedInUserEmail === product.email ? (
+                  ""
+                ) : (
+                  <button
+                    className="btn_3"
+                    onClick={() => navigate("/products/bidding/" + product_id)} //0208
+                    disabled={countDownFinished}
+                  >
+                    판매입찰하기
+                  </button>
+                )}
+
                 <br />
                 <br />
                 <button

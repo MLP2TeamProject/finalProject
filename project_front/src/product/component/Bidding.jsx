@@ -1,22 +1,29 @@
 import axios from "axios";
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom"; //0208
 import PropTypes from "prop-types"; //prop-types install
+import UserContext from "../../UserContext";
 
-const Bidding = (props) => {
-  console.log(props);
+const Bidding = () => {
+  //괄호 내부 props 지웠고
+  // console.log(`props:${props}`); //0208
   const navigate = useNavigate();
-  const { product_id } = props;
-  const { email } = props;
+  // const { product_id } = props;
+  const { product_id } = useParams(); //0208
+
+  //userContext에서 정보 갖고 오기
+  const userContext = useContext(UserContext);
+
+  // const { email: loggedInUserEmail } = userContext;
+  // const loggedInUserEmail = userContext.state.userData.email;
 
   Bidding.propTypes = {
     product_id: PropTypes.number.isRequired,
-    email: PropTypes.string.isRequired,
   };
 
   //입찰 데이터 상태
   const [data, setData] = useState({
-    email: email,
+    email: userContext.state.userData.email,
     product_id: product_id,
     isbn: "",
     auctionPrice: 0,
@@ -317,8 +324,7 @@ const Bidding = (props) => {
                 <button
                   className="btn_3"
                   type="button"
-                  onClick={() => navigate(`/products/detail/${product_id}`)}
-                  //undefined가 나옴.. 코드 추가해야할듯
+                  onClick={() => navigate("/products/list")}
                 >
                   취소하기
                 </button>

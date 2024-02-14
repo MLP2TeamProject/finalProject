@@ -6,6 +6,7 @@ const path = require("path");
 const axios = require('axios')
 const xpath = require('xpath');
 const dom = require('@xmldom/xmldom').DOMParser;
+const { func } = require("prop-types");
 
 // 상품, 준영님
 router.get("/productlist", function (req, res, next) {
@@ -72,7 +73,7 @@ router.post("/bidding/insert", async (req, res, next) => {
   console.log("0000000");
 
   //파일 업로드 처리하고.. 이 라인에서 에러가 발생하지 않으면 파일 업로드 성공
-  const a1 = upload.single("file1");
+  const a1 = upload.single("file1"); //여기서 사진 전송
 
   a1(req, res, function (err) {
     if (err instanceof multer.MulterError) {
@@ -84,7 +85,7 @@ router.post("/bidding/insert", async (req, res, next) => {
     } else {
       //에러가 없다면.. 나머지 데이터를 받는다..
       console.log("upload router....");
-      const data = req.body;
+      const data = req.body; //클라이언트에서 서버로 전송된 HTTP 요청의 본문(body), 이게 폼 데이터
       const obj = JSON.parse(data.sendData);
 
       console.log("sendData", obj);
