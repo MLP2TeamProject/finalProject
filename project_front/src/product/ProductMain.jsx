@@ -10,6 +10,9 @@ import Bidding from "./component/Bidding";
 import Update from "./component/Update";
 //Timer랑 Table은 Detail 안에 있음
 
+//product.css 파일 추가
+import "./product.css"
+
 const ProductMain = () => {
   return (
     <>

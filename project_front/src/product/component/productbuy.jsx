@@ -36,7 +36,7 @@ const ProductBuy = () => {
     // 검색 결과를 렌더링하는 함수
     const renderSearchResults = () => {
         return (
-            <table className="table">
+            <table className="table  product-margin">
                 <thead>
                     <tr>
                         {/* 각 열의 제목들 몇개는 삭제? */}
@@ -135,15 +135,16 @@ const ProductBuy = () => {
                 <br />
                 <aside className="single_sidebar_widget search_widget">
                     {/* 버튼과 관련된 front */}
-                    <form onSubmit={executeSearch}>
+                    {/* <form onSubmit={executeSearch}>
                         <div className="form-group">
                             <div className="input-group mb-3">
-                                <input type="text"
-                                    className="form-control"
+                                <input className="form-control"
+                                    type="text"
+                                    placeholder='제목을 입력하세요'
                                     name="title"
                                     value={product.title}
                                     onChange={changeData}
-                                    placeholder='제목을 입력하세요'
+                                    
                                     onFocus={(e) => e.target.placeholder = ''}
                                     onBlur={(e) => e.target.placeholder = 'Search Keyword'} />
                                 <div className="input-group-append">
@@ -153,44 +154,22 @@ const ProductBuy = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form> */}
                     {/* 버튼관련 front 수정 */}
-                    {/* <nav className="navbar navbar-light bg-light">
-                        <a className="navbar-brand" href="#">
-                            <nav><input type="text" class="form-control" placeholder="Have a question? Ask Now" /></nav>
-                            <nav><button class="btn btn-primary">Search</button></nav>
-                        </a>
-                    </nav> */}
-                    <hr />
-                    {/* 2 */}
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+
+                    <form className="form-inline-pds col-12 my-2 my-lg-0">
+                        <img src="../img/bmic-img.png" width="40" height="40" className="d-inline-block align-top" alt=""/>
+                        <input className="form-control col-sm-10 mr-sm-2" 
+                            type="text" 
+                            placeholder="제목을 입력하세요."
+                            name="title"
+                            value={product.title}
+                            onChange={changeData}
+                            onFocus={(e) => e.target.placeholder = ''}
+                            onBlur={(e) => e.target.placeholder = 'Search Keyword'} />
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
-                    <hr />
-                    {/*  */}
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-
-                    {/* 4 */}
-                    <div className="container">
-
-                        <div className="row height d-flex justify-content-center align-items-center">
-
-                            <div className="col-md-8">
-
-                                <div clclassNameass="search">
-                                    <i className="fa fa-search"></i>
-                                    <input type="text" className="form-control" placeholder="Have a question? Ask Now"/>
-                                        <button className="btn btn-primary">Search</button>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
+                    
                     {/* 검색 결과 */}
                     <div>
                         {renderSearchResults()}
