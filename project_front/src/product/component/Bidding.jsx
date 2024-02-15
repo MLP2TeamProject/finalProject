@@ -5,17 +5,12 @@ import PropTypes from "prop-types"; //prop-types install
 import UserContext from "../../UserContext";
 
 const Bidding = () => {
-  //괄호 내부 props 지웠고
-  // console.log(`props:${props}`); //0208
   const navigate = useNavigate();
-  // const { product_id } = props;
+
   const { product_id } = useParams(); //0208
 
   //userContext에서 정보 갖고 오기
   const userContext = useContext(UserContext);
-
-  // const { email: loggedInUserEmail } = userContext;
-  // const loggedInUserEmail = userContext.state.userData.email;
 
   Bidding.propTypes = {
     product_id: PropTypes.number.isRequired,
@@ -30,14 +25,6 @@ const Bidding = () => {
     quality: "",
     additional: "",
   });
-  // const [data, setData] = useState({
-  //   email: "happy@happy.happy",
-  //   product_id: 1,
-  //   isbn: "23541658",
-  //   auctionPrice: 0,
-  //   quality: "",
-  //   additional: "",
-  // });
 
   const changeData = useCallback((e) => {
     setData((data) => ({ ...data, [e.target.name]: e.target.value }));
@@ -68,18 +55,18 @@ const Bidding = () => {
       return;
     }
     if (file) {
-      //파일업로드는 항상 FormData 로 구성해서 서버에 전달해야..
       const formData = new FormData();
       formData.append("file1", file);
       console.log("넘어가는 data 확인", data, file);
-      //FormData 로 json 을 넘기려면 문자열로 바꾸어서 넘겨야 한다.
+
       const strData = JSON.stringify(data);
       formData.append("sendData", strData);
-      //파일 업로드는 꼭 post 방식을 이용해야..
+
       const res = await axios.post(
         "http://localhost:8000/products/bidding/insert",
         formData
-        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??
+
+        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??    navigate("/products/list")추가 하면 될 것 같고
       );
       if (res.data.status === 200) {
         console.log(res.data);
@@ -87,6 +74,7 @@ const Bidding = () => {
         setBookIsbn(res.data.data.isbn);
         setBookPrice(res.data.data.auction_price);
         setBookImg(res.data.data.file_name);
+        navigate("/products/list");
       } else {
         console.error("입찰 실패");
       }
@@ -96,12 +84,7 @@ const Bidding = () => {
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
-        <form
-          id="form"
-          // method="post"
-          // action="/upload"
-          encType="multipart/form-data"
-        >
+        <form id="form" encType="multipart/form-data">
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
               <div className="row">
@@ -205,7 +188,6 @@ const Bidding = () => {
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                 </div>
-                {/* <button onClick={upload}>업로드</button> */}
               </div>
               {uploadImage ? (
                 <img src={`http://localhost:8000/upload/${uploadImage}`} />
@@ -331,7 +313,6 @@ const Bidding = () => {
                 <button className="btn_3" type="button" onClick={insertBidding}>
                   입찰하기
                 </button>
-                {/* 여기도 navigate 넣어서 detail화면으로 돌아가기?? 근데 onClick이 두 번이...?*/}
               </div>
             </div>
           </div>

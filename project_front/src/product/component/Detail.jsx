@@ -5,13 +5,12 @@ import Table from "./Table";
 import Timer from "./Timer";
 import React, { useCallback, useState, useEffect, useContext } from "react";
 import UserContext from "../../UserContext";
+import Update from "./Update";
 
 const Detail = () => {
   const context = useContext(UserContext);
   const loggedInUserEmail = context.state.userData.email;
-  // console.log(context);
-  // alert(loggedInUserEmail);
-  // const loggedInUserEmail = "";
+
   const navigate = useNavigate();
   const { product_id } = useParams();
   const [product, setProduct] = useState({
@@ -27,7 +26,6 @@ const Detail = () => {
     cnt: "",
     createAt: "",
     auctions: [],
-    // 여기 Table의 auctions
   });
 
   const getDetail = async () => {
@@ -48,7 +46,7 @@ const Detail = () => {
     seconds: 0,
   });
 
-  const [countDownFinished, setCountDownFinished] = useState(false); //disbled 속성 추가
+  const [countDownFinished, setCountDownFinished] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +59,6 @@ const Detail = () => {
         console.log("endtime...", endtime);
         setCountdownData(endtime);
 
-        //disbled 속성 추가
         const currentTime = new Date().getTime();
         if (currentTime > endtime) {
           setCountDownFinished(true);
@@ -72,6 +69,15 @@ const Detail = () => {
     };
     fetchData();
   }, [product_id]);
+
+  const goUpdate = () => {
+    navigate("/products/update", {
+      state: {
+        productId: product_id,
+        productData: product,
+      },
+    });
+  };
 
   return (
     <div>
@@ -98,22 +104,17 @@ const Detail = () => {
                     <span>구매희망자 : {product.email}</span>
                     <br />
                     <span>입찰시작일 : {product.createAt}</span>
+                    <br />
+                    <br />
                   </li>
                   <br />
+                  <br />
                 </ul>
-                <p></p>
-                {/* p태그에 라인 있음 */}
+
                 <h3>낙찰까지 남은 시간</h3>
                 <Timer endtime={countdownData} />
                 <br />
                 <br />
-                {/* <button
-                  className="btn_3"
-                  onClick={() => navigate("/products/bidding/")}
-                  disabled={countDownFinished}
-                >
-                  판매입찰하기
-                </button> */}
                 {loggedInUserEmail === product.email ? (
                   ""
                 ) : (
@@ -128,14 +129,21 @@ const Detail = () => {
 
                 <br />
                 <br />
-                <button
-                  className="btn_3"
-                  onClick={() => navigate("/products/pay")}
-                  // 02047 일단 기본 pay 페이지로 넘어가게끔...
-                >
-                  즉시구매가 {product.master_price} 원(₩)
-                  <br />
-                </button>
+
+                {loggedInUserEmail === product.email ? (
+                  <button
+                    className="btn_3"
+                    onClick={() => navigate("/products/pay")}
+                  >
+                    즉시구매가 {product.master_price} 원(₩)
+                    <br />
+                  </button>
+                ) : (
+                  <button className="btn_3" disabled>
+                    즉시구매가 {product.master_price} 원(₩)
+                    <br />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -148,6 +156,20 @@ const Detail = () => {
           <br />
           <br />
           <br />
+          {loggedInUserEmail === product.email ? (
+            <div className="d-grid gap-2 col-3 mx-auto">
+              <button
+                id="editButton"
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={goUpdate}
+              >
+                게시글수정
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </p>
       </div>
 
@@ -162,23 +184,7 @@ const Detail = () => {
             <div>
               <Table auctions={product.auctions} />
             </div>
-            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-              {/* {userEmail ? (
-                <button className="btn btn-warning" type="button">
-                  수정
-                </button>
-              ) : (
-                ""
-              )} */}
-              {loggedInUserEmail === product.email ? (
-                <button className="btn btn-warning" type="button">
-                  수정
-                </button>
-              ) : (
-                ""
-              )}
-              {/* 여기 onClick하면 update 페이지로가야됨(준영님 buy html 필요)  */}
-            </div>
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end"></div>
             <div className="col-lg-4 col-lx-4"></div>
             <div className="col-lg-4 col-lx-4"></div>
             <div className="row">

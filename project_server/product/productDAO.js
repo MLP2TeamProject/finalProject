@@ -57,24 +57,24 @@ const productDAO = {
   buy: async (item, callback) => {
     let conn = null;
     try {
-        conn = await getPool().getConnection();
-        // auction 테이블에 구매 정보 기록 하나씩 전부 받아야 하는건가..? 빈 배열은?
-        // 'product' 테이블의 상태 업데이트
-        await conn.query(sql.buy, [
-            item.product_id,
-            item.title,
-            item.email,
-            item.master_price,
-            item.auction_id,
-            item.isbn,
-        ]);
-        console.log("22222", resp)
-        // 콜백으로 성공 응답 전송
-        callback(null, { status: 200, message: "구매 신청 완료" });
+      conn = await getPool().getConnection();
+      // auction 테이블에 구매 정보 기록 하나씩 전부 받아야 하는건가..? 빈 배열은?
+      // 'product' 테이블의 상태 업데이트
+      await conn.query(sql.buy, [
+        item.product_id,
+        item.title,
+        item.email,
+        item.master_price,
+        item.auction_id,
+        item.isbn,
+      ]);
+      console.log("22222", resp);
+      // 콜백으로 성공 응답 전송
+      callback(null, { status: 200, message: "구매 신청 완료" });
     } catch (error) {
-        return { status: 500, message: '구매 실패', error: error }
+      return { status: 500, message: "구매 실패", error: error };
     } finally {
-        if (conn !== null) conn.release()
+      if (conn !== null) conn.release();
     }
   },
   
@@ -86,16 +86,13 @@ const productDAO = {
       console.log("dao detail", item.product_id);
       conn = await getPool().getConnection();
       const [resp] = await conn.query(sql.detail, [item.product_id]);
-      //바인딩할 변수가 필요 sql 쿼리에서 사용하는 ?자리를 채워놓음
-      // callback({ status: 200, message: "ok", data: Array.isArray(resp) ? resp[0] : resp })
       if (resp !== null && resp.length > 0) {
         const [auction_resp] = await conn.query(sql.detail_auction, [
           item.product_id,
         ]);
-        resp[0]["auctions"] = auction_resp; //??? 배열의 첫 번째 요소(상품정보)에 auctions라는 키로 경매 정보를 추가
+        resp[0]["auctions"] = auction_resp; 
         console.log(resp);
       }
-      // 여기 if문 추가
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
       console.log(error);
@@ -105,17 +102,18 @@ const productDAO = {
     }
   },
 
-  update: async (item, callback) => {
+  update: async (id, item, callback) => {
     let conn = null;
     try {
       conn = await getPool().getConnection();
       const [resp] = await conn.query(sql.update, [
         item.master_price,
         item.content,
-        item.product_id,
+        id,
       ]);
       callback({ status: 200, message: "ok" });
     } catch (error) {
+      console.log("dao error", error);
       return { status: 500, message: "게시글 수정 실패", error: error };
     } finally {
       if (conn !== null) conn.release();

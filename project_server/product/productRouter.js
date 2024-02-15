@@ -6,7 +6,7 @@ const path = require("path");
 const axios = require('axios')
 const xpath = require('xpath');
 const dom = require('@xmldom/xmldom').DOMParser;
-const { func } = require("prop-types");
+// const { func } = require("prop-types");
 
 // 상품, 준영님
 router.get("/productlist", function (req, res, next) {
@@ -31,24 +31,26 @@ router.get('/search', async function (req, res, next) {
   console.log("input:", input);
   try {
       //응답 성공
-      const response = await axios.get(`https://www.nl.go.kr/NL/search/openApi/searchKolisNet.do?key=39b4dd4a523f80ea24ba476b79fc50c968db9622ffd612dc415b4176e41ccadd&kwd=${input}&apiType=json&searchType=&sort=`);
-      console.log(response.status);
-      const doc = new dom().parseFromString(response.data, 'text/xml');
-      const nodes = xpath.select("/root/result/item", doc);
-      const result = [];
-      for (i = 0; i < nodes.length; i++) {
-          var title_node = xpath.select("title_info", nodes[i]);
-          const title = title_node[0].firstChild.data;
-          var isbn_node = xpath.select("isbn", nodes[i]);
-          var isbn = "";
-          if (isbn_node[0].firstChild) {
-              isbn = isbn_node[0].firstChild.data;
-          }
-          const result_item = { title: title, isbn: isbn };
-          console.log(result_item);
-          result.push(result_item);
+    const response = await axios.get(
+      `https://www.nl.go.kr/NL/search/openApi/searchKolisNet.do?key=39b4dd4a523f80ea24ba476b79fc50c968db9622ffd612dc415b4176e41ccadd&kwd=${input}&apiType=json&searchType=&sort=`
+    );
+    console.log(response.status);
+    const doc = new dom().parseFromString(response.data, "text/xml");
+    const nodes = xpath.select("/root/result/item", doc);
+    const result = [];
+    for (i = 0; i < nodes.length; i++) {
+      var title_node = xpath.select("title_info", nodes[i]);
+      const title = title_node[0].firstChild.data;
+      var isbn_node = xpath.select("isbn", nodes[i]);
+      var isbn = "";
+      if (isbn_node[0].firstChild) {
+        isbn = isbn_node[0].firstChild.data;
       }
-      res.send(result);
+      const result_item = { title: title, isbn: isbn };
+      console.log(result_item);
+      result.push(result_item);
+    }
+    res.send(result);
   } catch (error) {
       //응답 실패
       console.error(error);
@@ -82,6 +84,7 @@ router.post(
       const obj = JSON.parse(data.sendData);
       const filename = req.file.filename;
       const biddingData = { ...data, ...obj, filename };
+      //스프레드 연산자 사용해서 객체의 속성을 biddingData에 넣기~!
       productDAO.bidding(biddingData, (resp) => {
         res.json(resp);
       });
@@ -96,7 +99,6 @@ router.get("/detail/:id", function (req, res, next) {
   console.log("디테일 불러오기");
   const id = req.params.id;
   productDAO.detail({ product_id: id }, (resp) => {
-    //productDAO.detail 함수의 매개변수로는 객체를 받도록 정의되어 있으니까 객체 안에 담아야함
     res.json(resp);
   });
 });
@@ -109,13 +111,14 @@ router.get("/timer/:id", function (req, res, next) {
   });
 });
 
-router.post("/update", function (req, res, next) {
-  const data = req.body;
-  console.log("게시글 수정하기");
-  productDAO.update(data, (resp) => {
+router.post("/update/:id", function (req, res, next) {
+  const productId = req.params.id;
+  const data = req.body.product;
+  console.log("게시글 수정하기", data);
+  productDAO.update(productId, data, (resp) => {
     res.json(resp);
   });
-}); //0202 추가 buy 페이지랑 연결을 해야됨
+});
 
 
 // 마이페이지용 
