@@ -157,7 +157,7 @@ const ProductBuy = () => {
                     </form> */}
                     {/* 버튼관련 front 수정 */}
 
-                    <form className="form-inline-pds col-12 my-2 my-lg-0" onSubmit={executeSearch}>
+                    <div className="form-inline-pds col-12 my-2 my-lg-0">
                         {/* <img src="../img/bmic-img.png" width="40" height="40" className="d-inline-block align-top" alt=""/> */}
                         <img src="../img/bmic-img.png" width="40" height="40" className="search-visiable align-top" alt=""/>
                         <input className="form-control col-sm-10 mr-sm-2" 
@@ -168,8 +168,8 @@ const ProductBuy = () => {
                             onChange={changeData}
                             onFocus={(e) => e.target.placeholder = ''}
                             onBlur={(e) => e.target.placeholder = 'Search Keyword'} />
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={executeSearch}>Search</button>
+                    </div>
                     
                     {/* 검색 결과 */}
                     <div>
