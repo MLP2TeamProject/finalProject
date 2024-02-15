@@ -93,33 +93,6 @@ const productDAO = {
     },
 
 
-
-    // listpage: async (page, callback) => {
-    //     let conn = null
-    //     try {
-    //         conn = await getPool().getConnection()
-    //         const [items] = await conn.query(sql.productList)
-    //         // 한 페이지에 9개의 상품을 반환하도록 설정
-    //         const responseData = items.slice((page - 1) * 9, page * 9);
-    //         //totalItems : 항목 갯수
-    //         //perPage: 한 페이지당 항목 수
-    //         if (responseData) callback({ status: 200, totalItems: items.length, perPage: 9, data: responseData });
-    //         else callback({ status: 500, message: '결과없음' })
-    //     } catch (e) {
-    //         console.log(e)
-    //         return { status: 500, message: "상품조회실패", error: e }
-    //     } finally {
-    //         if (conn !== null) conn.release()
-    //     }
-    // },
-    // -------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
     detail: async (item, callback) => {
         //item 매개변수로 조회하고자 하는 상품의 정보가 담긴 객체를 받음
         let conn = null;
