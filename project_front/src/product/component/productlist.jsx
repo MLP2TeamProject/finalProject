@@ -9,7 +9,7 @@ const ProductList = () => {
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호 (0부터 시작)
     const [pageCount, setPageCount] = useState(0); // 총 페이지 수
 
-    const productsPerPage = 5; // 한 페이지당 상품 수
+    const productsPerPage = 6; // 한 페이지당 상품 수
     const [itemsCount, setItemsCount] = useState(0) // 총 상품 수
 
     const getProductList = useCallback(async () => {
@@ -17,12 +17,12 @@ const ProductList = () => {
             const resp = await axios.get(`http://localhost:8000/products/listpage1/${currentPage + 1}/${productsPerPage}`);
             console.log("데이터 확인", resp.data);
             setProductList(resp.data);
-            setPageCount(Math.ceil(itemsCount / productsPerPage)); // 총 페이지 수 계산 및 설정
-            setItemsCount(resp.data.totalCount)
+            setItemsCount(resp.data.totalCount); // 총 상품 수 업데이트
+            setPageCount(Math.ceil(resp.data.totalCount / productsPerPage)); // 총 페이지 수 계산 및 설정
         } catch (error) {
             console.error("데이터 가져오기 실패", error);
         }
-    }, [currentPage]);
+    }, [currentPage, productsPerPage]); // productsPerPage도 의존성 배열에 추가
 
     useEffect(() => {
         getProductList();
@@ -70,11 +70,11 @@ const ProductList = () => {
                                     <div className="single_product_menu">
                                         <p>총 {itemsCount} 상품 리스트</p>
                                     </div>
-                                    {/* <div className="single_product_menu d-flex">
-                                        <Link to="/products/buy" className="list-group-item list-group-item-action list-group-item-danger">상품 구매하기</Link>
+                                    <div className="single_product_menu d-flex">
+                                        <Link to="/products/buy" className="genric-btn primary small circle">상품 구매하기</Link>
                                         <div className="top_pageniation">
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ const ProductList = () => {
                                     breakLabel="..."
                                     nextLabel="다음 >"
                                     onPageChange={handlePageClick}
-                                    pageRangeDisplayed={5}
+                                    pageRangeDisplayed={6}
                                     pageCount={pageCount}
                                     previousLabel="< 이전"
                                     renderOnZeroPageCount={null}
