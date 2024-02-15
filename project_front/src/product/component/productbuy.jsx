@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 //검색 버튼 클릭하면, api랑 연결돼서 결과가 밑에 table에 뜨고
 //확인하기 누르면 오른쪽 책 정보에 저장이 되고
 //즉시거래희망가격은 입력시 detail에 적용되어야 하고
@@ -31,16 +30,19 @@ const ProductBuy = () => {
         [product]
     );
 
-    // 검색 실행 함수 (서버 검색 요청)
+    // 검색 실행 함수
     const executeSearch = async (e) => {
+        console.log('검색함수 실행1')
         e.preventDefault();
+        console.log('검색함수 실행2')
         try {
-            const response = await axios.get(
-                `http://localhost:8000/products/search?input=${product.title}`
-            );
-            setSearchResults(response.data);
+            console.log('검색함수 try 접근')
+            const response = await axios.get(`http://localhost:8000/products/search?input=${product.title}`);
+            console.log('검색함수 try 접근 - 데이터 접근 ')
+            setSearchResults(response.data)
+
         } catch (error) {
-            console.error("Search failed:", error);
+            console.error('Search failed:', error);
             window.alert("검색 중 오류가 발생했습니다.");
         }
     };
@@ -92,25 +94,43 @@ const ProductBuy = () => {
         );
     };
 
-    const handleBuyClick = (item) => {
+    const handleBuyClick = async (item) => {
         // 상품 정보를 설정하고 구매 요청을 보냄
         const confirmPurchase = window.confirm("구매하시겠습니까?");
         if (confirmPurchase) {
             // 사용자가 확인을 클릭한 경우 상품 정보를 설정하고 구매 요청을 보냄
-            setProduct({
-                ...product,
-                product_id: item.product_id,
-                title: item.title,
-                master_price: item.master_price,
-                isbn: item.isbn,
-            });
-            // 구매 요청 함수를 호출
-            buyProduct();
-            navigate("/products/list"); // 절대 경로 사용
+            try {
+                const response = await axios.post(
+                    "http://localhost:8000/products/buy",
+                    product
+                );
+                if (response.status === 500) {
+                    window.alert("상품이 존재하지 않습니다.");
+                } else {
+                    navigate("/products/list");
+                }
+            } catch (error) {
+                console.error("구매 실패", error);
+                window.alert("구매 중에 오류가 발생했습니다.");
+            }
         } else {
-            alert("취소 되었습니다.");
+            alert("구매가 취소되었습니다.");
         }
     };
+    //      setProduct({
+    //       ...product,
+    //       product_id: item.product_id,
+    //       title: item.title,
+    //       master_price: item.master_price,
+    //       isbn: item.isbn,
+    //     });
+    //     // 구매 요청 함수를 호출
+    //     buyProduct();
+    //     navigate("/products/list"); // 절대 경로 사용
+    //   } else {
+    //     alert("취소 되었습니다.");
+    //   }
+    // };
 
     const buyProduct = useCallback(async () => {
         try {
@@ -140,10 +160,10 @@ const ProductBuy = () => {
                                     <div className="form-item w-100"></div>
                                 </div>
                             </div>
-                            {/* <div className="form-item">
+                            <div className="form-item">
                                 <label className="form-label my-3"></label>
                                 <div className="input-group">
-                                    <form onSubmit={executeSearch}>
+                                    <div>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -154,25 +174,10 @@ const ProductBuy = () => {
                                             onFocus={(e) => (e.target.placeholder = "")}
                                             onBlur={(e) => (e.target.placeholder = "Search Keyword")}
                                         />
-                                    </form>
-                                    <button type="submit" className="btn btn-secondary">
-                                        검색
-                                    </button>
+                                    </div>
+                                    <button className="btn btn-secondary" onClick={executeSearch}>검색</button>
                                 </div>
-                            </div> */}
-                            <form className="form-inline-pds col-12 my-2 my-lg-0" onSubmit={executeSearch}>
-                                {/* <img src="../img/bmic-img.png" width="40" height="40" className="d-inline-block align-top" alt=""/> */}
-                                {/* <img src="../img/bmic-img.png" width="40" height="40" className="search-visiable align-top" alt="" /> */}
-                                <input className="form-control col-sm-10 mr-sm-2"
-                                    type="text"
-                                    placeholder="제목을 입력하세요."
-                                    name="title"
-                                    value={product.title}
-                                    onChange={changeData}
-                                    onFocus={(e) => e.target.placeholder = ''}
-                                    onBlur={(e) => e.target.placeholder = 'Search Keyword'} />
-                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                            </form>
+                            </div>
                             <br />
                             <div className="form-item">
                                 <label className="form-label my-3">책 정보 불러오기</label>
@@ -220,9 +225,6 @@ const ProductBuy = () => {
                                     <tbody>
                                         <tr>
                                             <td scope="row">
-                                                {/* <div className="d-flex align-items-center mt-2">
-                          사진
-                        </div> */}
                                             </td>
                                             <td className="py-5"></td>
                                             <td className="py-5"></td>

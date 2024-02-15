@@ -9,19 +9,21 @@ const ProductList = () => {
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호 (0부터 시작)
     const [pageCount, setPageCount] = useState(0); // 총 페이지 수
 
-    const productsPerPage = 9; // 한 페이지당 상품 수
-    const itemsCount = 12; // 총 상품 수 (예시로 12개 설정, 실제로는 서버에서 받아와야 함)
+    const productsPerPage = 5; // 한 페이지당 상품 수
+    const [itemsCount, setItemsCount] = useState(0) // 총 상품 수
 
     const getProductList = useCallback(async () => {
         try {
             const resp = await axios.get(`http://localhost:8000/products/listpage1/${currentPage + 1}/${productsPerPage}`);
             console.log("데이터 확인", resp.data);
             setProductList(resp.data);
-            setPageCount(Math.ceil(itemsCount / productsPerPage)); // 총 페이지 수 계산 및 설정
+            setItemsCount(resp.data.totalCount); // 총 상품 수 업데이트
+            setPageCount(Math.ceil(resp.data.totalCount / productsPerPage)); // 총 페이지 수 계산 및 설정
         } catch (error) {
             console.error("데이터 가져오기 실패", error);
         }
-    }, [currentPage]);
+    }, [currentPage, productsPerPage]); // productsPerPage도 의존성 배열에 추가
+
 
     useEffect(() => {
         getProductList();
@@ -64,66 +66,58 @@ const ProductList = () => {
                 <section className="cat_product_area section_padding">
                     <div className="container">
                         <div className="row">
-                            <div className="col-lg-3">
-                                <div className="left_sidebar_area">
-
+                            <div className="col-lg-12">
+                                <div className="product_top_bar d-flex justify-content-between align-items-center">
+                                    <div className="single_product_menu">
+                                        <p>총 {itemsCount} 상품 리스트</p>
+                                    </div>
+                                    <div className="single_product_menu d-flex">
+                                        <Link to="/products/buy" className="genric-btn primary small circle">상품 구매하기</Link>
+                                        <div className="top_pageniation">
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
-                            <div className="col-lg-9">
-                                <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="product_top_bar d-flex justify-content-between align-items-center">
-                                            <div className="single_product_menu">
-                                                <p><span>10000 </span> 상품 리스트</p>
-                                            </div>
-                                            <div className="single_product_menu d-flex">
-                                                <Link to="/products/buy" className="list-group-item list-group-item-action list-group-item-danger">상품 구매하기</Link>
-                                                <div className="top_pageniation">
-                                                </div>
-                                            </div>
+                        </div>
+                        <div className="row align-items-center latest_product_inner">
+                            {productList.data.map((product, index) => (
+                                <div className="col-lg-4 col-sm-6" key={index}>
+                                    <div className="single_product_item">
+                                        <div className="single_product_text">
+                                            {product.picture ? <img src={`http://localhost:8000/upload/${product.picture}`} alt="" style={{ height: '180px' }} /> :
+                                                <img src='/img/default-image.png' alt="" style={{ height: '180px' }} />}
+                                        </div>
 
+                                        <div className="single_product_text">
+                                            <h4>{product.title}</h4>
+                                            <h3>즉시구매가: {product.master_price} 원</h3>
+                                            <Link to={`/products/detail/${product.product_id}`} className="add_cart">+ 상품 자세히 보기<i className="ti-heart"></i></Link>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row align-items-center latest_product_inner">
-                                    {productList.data.map((product, index) => (
-                                        <div className="col-lg-4 col-sm-6" key={index}>
-                                            <div className="single_product_item">
-                                                <img src={product.image || '/img/default-image.png'} alt="" />
-                                                <div className="single_product_text">
-                                                    <h4>{product.title}</h4>
-                                                    <h3>가격: {product.price}원</h3>
-                                                    <h3>저자: {product.master_price}</h3>
-                                                    <Link to={`/products/detail/${product.id}`} className="add_cart">+ 상품 자세히 보기<i className="ti-heart"></i></Link>
+                            ))}
+                        </div>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="col-lg-12">
-                                    <div className="pagination justify-content-center">
-                                        <ReactPaginate
-                                            breakLabel="..."
-                                            nextLabel="다음 >"
-                                            onPageChange={handlePageClick}
-                                            pageRangeDisplayed={5}
-                                            pageCount={pageCount}
-                                            previousLabel="< 이전"
-                                            renderOnZeroPageCount={null}
-                                            containerClassName={"pagination"} // Bootstrap의 페이지네이션 컨테이너 클래스
-                                            pageClassName={"page-item"} // 각 페이지 항목에 대한 클래스
-                                            pageLinkClassName={"page-link"} // 페이지 번호 링크에 대한 클래스
-                                            previousClassName={"page-item"} // 이전 버튼 항목에 대한 클래스
-                                            previousLinkClassName={"page-link"} // 이전 버튼 링크에 대한 클래스
-                                            nextClassName={"page-item"} // 다음 버튼 항목에 대한 클래스
-                                            nextLinkClassName={"page-link"} // 다음 버튼 링크에 대한 클래스
-                                            activeClassName={"active"} // 현재 활성화된 페이지 항목에 대한 클래스
-                                        />
-                                    </div>
-                                </div>
+                        <div className="col-lg-12">
+                            <div className="pagination justify-content-center">
+                                <ReactPaginate
+                                    breakLabel="..."
+                                    nextLabel="다음 >"
+                                    onPageChange={handlePageClick}
+                                    pageRangeDisplayed={5}
+                                    pageCount={pageCount}
+                                    previousLabel="< 이전"
+                                    renderOnZeroPageCount={null}
+                                    containerClassName={"pagination"} // Bootstrap의 페이지네이션 컨테이너 클래스
+                                    pageClassName={"page-item"} // 각 페이지 항목에 대한 클래스
+                                    pageLinkClassName={"page-link"} // 페이지 번호 링크에 대한 클래스
+                                    previousClassName={"page-item"} // 이전 버튼 항목에 대한 클래스
+                                    previousLinkClassName={"page-link"} // 이전 버튼 링크에 대한 클래스
+                                    nextClassName={"page-item"} // 다음 버튼 항목에 대한 클래스
+                                    nextLinkClassName={"page-link"} // 다음 버튼 링크에 대한 클래스
+                                    activeClassName={"active"} // 현재 활성화된 페이지 항목에 대한 클래스
+                                />
                             </div>
                         </div>
                     </div>
