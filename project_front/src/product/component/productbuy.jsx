@@ -140,7 +140,7 @@ const ProductBuy = () => {
                                     <div className="form-item w-100"></div>
                                 </div>
                             </div>
-                            <div className="form-item">
+                            {/* <div className="form-item">
                                 <label className="form-label my-3"></label>
                                 <div className="input-group">
                                     <form onSubmit={executeSearch}>
@@ -159,7 +159,20 @@ const ProductBuy = () => {
                                         검색
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
+                            <form className="form-inline-pds col-12 my-2 my-lg-0" onSubmit={executeSearch}>
+                                {/* <img src="../img/bmic-img.png" width="40" height="40" className="d-inline-block align-top" alt=""/> */}
+                                {/* <img src="../img/bmic-img.png" width="40" height="40" className="search-visiable align-top" alt="" /> */}
+                                <input className="form-control col-sm-10 mr-sm-2"
+                                    type="text"
+                                    placeholder="제목을 입력하세요."
+                                    name="title"
+                                    value={product.title}
+                                    onChange={changeData}
+                                    onFocus={(e) => e.target.placeholder = ''}
+                                    onBlur={(e) => e.target.placeholder = 'Search Keyword'} />
+                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
                             <br />
                             <div className="form-item">
                                 <label className="form-label my-3">책 정보 불러오기</label>

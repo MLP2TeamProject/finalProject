@@ -1,30 +1,35 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import { parseString } from 'xml2js';
+import ReactPaginate from 'react-paginate';
 
 
 const ProductList = () => {
-    // const navigate = useNavigate();
-    // const [products, setProducts] = useState([]) // 상태 초기화를 빈 배열로 설정
-    const [productList, setProductList] = useState({
-        status: "", message: "", data: []
-    });
+    const [productList, setProductList] = useState({ status: "", message: "", data: [] });
+    const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호 (0부터 시작)
+    const [pageCount, setPageCount] = useState(0); // 총 페이지 수
 
-    // 서버연동?
+    const productsPerPage = 9; // 한 페이지당 상품 수
+    const itemsCount = 12; // 총 상품 수 (예시로 12개 설정, 실제로는 서버에서 받아와야 함)
+
     const getProductList = useCallback(async () => {
         try {
-            const resp = await axios.get('http://localhost:8000/products/productList');
+            const resp = await axios.get(`http://localhost:8000/products/listpage1/${currentPage + 1}/${productsPerPage}`);
             console.log("데이터 확인", resp.data);
             setProductList(resp.data);
+            setPageCount(Math.ceil(itemsCount / productsPerPage)); // 총 페이지 수 계산 및 설정
         } catch (error) {
             console.error("데이터 가져오기 실패", error);
         }
-    }, []);
+    }, [currentPage]);
 
     useEffect(() => {
         getProductList();
     }, [getProductList]);
+
+    const handlePageClick = (event) => {
+        setCurrentPage(event.selected); // 페이지 번호 업데이트
+    };
 
 
 
@@ -89,7 +94,7 @@ const ProductList = () => {
                                                 <div className="single_product_text">
                                                     <h4>{product.title}</h4>
                                                     <h3>가격: {product.price}원</h3>
-                                                    <h3>저자: {product.author}</h3>
+                                                    <h3>저자: {product.master_price}</h3>
                                                     <Link to={`/products/detail/${product.id}`} className="add_cart">+ 상품 자세히 보기<i className="ti-heart"></i></Link>
 
                                                 </div>
@@ -99,27 +104,24 @@ const ProductList = () => {
                                 </div>
 
                                 <div className="col-lg-12">
-                                    <div className="pageination">
-                                        <nav aria-label="Page navigation example">
-                                            <ul className="pagination justify-content-center">
-                                                <li className="page-item">
-                                                    <Link className="page-link" to="#" aria-label="Previous">
-                                                        <i className="ti-angle-double-left"></i>
-                                                    </Link>
-                                                </li>
-                                                <li className="page-item"><Link className="page-link" to="#">1</Link></li>
-                                                <li className="page-item"><Link className="page-link" to="#">2</Link></li>
-                                                <li className="page-item"><Link className="page-link" to="#">3</Link></li>
-                                                <li className="page-item"><Link className="page-link" to="#">4</Link></li>
-                                                <li className="page-item"><Link className="page-link" to="#">5</Link></li>
-                                                <li className="page-item"><Link className="page-link" to="#">6</Link></li>
-                                                <li className="page-item">
-                                                    <Link className="page-link" to="#" aria-label="Next">
-                                                        <i className="ti-angle-double-right"></i>
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                    <div className="pagination justify-content-center">
+                                        <ReactPaginate
+                                            breakLabel="..."
+                                            nextLabel="다음 >"
+                                            onPageChange={handlePageClick}
+                                            pageRangeDisplayed={5}
+                                            pageCount={pageCount}
+                                            previousLabel="< 이전"
+                                            renderOnZeroPageCount={null}
+                                            containerClassName={"pagination"} // Bootstrap의 페이지네이션 컨테이너 클래스
+                                            pageClassName={"page-item"} // 각 페이지 항목에 대한 클래스
+                                            pageLinkClassName={"page-link"} // 페이지 번호 링크에 대한 클래스
+                                            previousClassName={"page-item"} // 이전 버튼 항목에 대한 클래스
+                                            previousLinkClassName={"page-link"} // 이전 버튼 링크에 대한 클래스
+                                            nextClassName={"page-item"} // 다음 버튼 항목에 대한 클래스
+                                            nextLinkClassName={"page-link"} // 다음 버튼 링크에 대한 클래스
+                                            activeClassName={"active"} // 현재 활성화된 페이지 항목에 대한 클래스
+                                        />
                                     </div>
                                 </div>
                             </div>
