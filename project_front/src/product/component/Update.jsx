@@ -7,7 +7,6 @@ const Update = () => {
   const { product_id } = useParams();
   //해당 url에서 product_id 받아올거고
   const [product, setProduct] = useState({
-    product_id: "",
     master_price: "",
     content: "",
     //여기는 바꿀 수 있는 부분만 넣는건가? 변경될 내용? 초기값...
