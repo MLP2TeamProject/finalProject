@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext, useCallback } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import UserContext from "../../UserContext"
 
 const BidList = () => {
+    const navigate = useNavigate()
+
     // context에 공개된 전역 상태,함수를 이용하겠다면 useContext를 이용
     const context = useContext(UserContext)
 
@@ -150,7 +152,7 @@ const BidList = () => {
     <section className="cart_area mt-5">
         <div className="container">
             <div className="col-lg-12">
-                <h3>구매 희망 도서 목록</h3>
+                <h3>구매 신청 도서 목록</h3>
             </div>
             <div className="cart_inner">
                 <div className="table-responsive">
@@ -158,7 +160,7 @@ const BidList = () => {
                 <table className="table">
                     <thead className="table-light">
                         <tr>
-                            <th scope="col"><strong>구매희망도서</strong></th>
+                            <th scope="col"><strong>구매신청도서</strong></th>
                             <th scope="col"><strong>입찰현황</strong></th>
                             <th scope="col"><strong>낙찰</strong></th>
                         </tr>
@@ -190,7 +192,13 @@ const BidList = () => {
                                                             {subitem.split(',')[0]}, {subitem.split(',')[1]}, {subitem.split(',')[2]}원
                                                         </label>{' '}
                                                         <span className="text_select_auc">
-                                                            {item.auction_id === Number(subitem.split(',')[0]) ? '✔ 낙찰' : ''}
+                                                            {item.auction_id === Number(subitem.split(',')[0]) ? (
+                                                                <>
+                                                                    <span>✔ 낙찰 </span>
+                                                                    <button type='button' className='genric-btn info circle small' 
+                                                                    onClick={()=>navigate('/products/pay')}>결제</button>
+                                                                </>
+                                                            ) : ''}
                                                         </span>
                                                     </li>
                                                 ))}
@@ -294,7 +302,7 @@ const BidList = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        {item.auction_price}원 입찰 ({item.createAt.substr(0, 10)} {' '} {item.createAt.substr(11, 8)})
+                                        {Number(item.auction_price).toLocaleString()}원 입찰 ({item.createAt.substr(0, 10)} {' '} {item.createAt.substr(11, 8)})
                                     </td>
                                     <td>
                                         {item.auction_id !== null ? (

@@ -89,7 +89,7 @@ const Home = () => {
 									<a className="feature_btn" href={`/products/detail/${item.product_id}`}>
 										상품 상세 <i className="fas fa-play"></i>
 									</a>
-									<h4>{item.title}</h4>
+									<h4><strong>{item.title}</strong></h4>
 									<img src={`http://localhost:8000/upload/${item.picture}`} alt="" style={{height:'280px'}} />
 								</div>
 							</div>
@@ -119,8 +119,8 @@ const Home = () => {
 									<a className="feature_btn" href={`/products/detail/${item.product_id}`}>
 										상품 상세 <i className="fas fa-play"></i>
 									</a>
-									<h4>{item.title}</h4>
-									<p>입찰가: {item.auction_price}</p>
+									<h4><strong>{item.title}</strong></h4>
+									<p>입찰가: {Number(item.auction_price).toLocaleString()}원</p>
 									<img src={`http://localhost:8000/upload/${item.picture}`} alt="" style={{height:'280px'}} />
 								</div>
 							</div>
