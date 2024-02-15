@@ -1,5 +1,5 @@
 .mypage_breadcrumb {
-    background-image: url('../img/cta_bg.png') !important;
+    background-image: url('/img/cta_bg.png') !important;
 }
 
 .mypage_breadcrumb > .container > .row.justify-content-center > .col-lg-8 > .breadcrumb_iner {
