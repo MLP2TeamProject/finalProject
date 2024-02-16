@@ -23,7 +23,7 @@ const ProductBuy = () => {
     const sessionEmail = sessionStorage.getItem("email")
     // const contextEmail = context.state.userData.email
     userEmail = sessionEmail
-    // console.log('11 로그인유저',userEmail)
+    // console.log('1',userEmail)
     if (userEmail) setProduct((prevProduct)=> ({...prevProduct, email: userEmail}))
     else { 
       window.alert('로그인이 필요합니다.')
@@ -32,7 +32,7 @@ const ProductBuy = () => {
   }, [])
   
   // useEffect(()=>{
-  //   console.log('22', product)
+  //   console.log('2', product)
   // }, [product])
 
   const [author, setAuthor] = useState('')
@@ -71,13 +71,17 @@ const ProductBuy = () => {
 
   const searchISBN = async () => {
     // console.log(product.title, author)
-    const resp = await axios.get(`https://www.nl.go.kr/NL/search/openApi/search.do?key=39b4dd4a523f80ea24ba476b79fc50c968db9622ffd612dc415b4176e41ccadd&kwd=${product.title}&authorInfo=${author}&apiType=json`)
-    if(resp.data.result[0].isbn) {
-      const isbnNumber = resp.data.result[0].isbn
-      setProduct((product)=> ({...product, isbn: isbnNumber}))
+    if (product.title && author) {
+      const resp = await axios.get(`https://www.nl.go.kr/NL/search/openApi/search.do?key=39b4dd4a523f80ea24ba476b79fc50c968db9622ffd612dc415b4176e41ccadd&kwd=${product.title}&authorInfo=${author}&apiType=json`)
+      if(resp.data.result[0].isbn) {
+        const isbnNumber = resp.data.result[0].isbn
+        setProduct((product)=> ({...product, isbn: isbnNumber}))
+      } else {
+        console.log(resp.statusText)
+        setProduct((product)=> ({...product, isbn: 'no isbn'}))
+      }
     } else {
-      console.log(resp.statusText)
-      setProduct((product)=> ({...product, isbn: 'no isbn'}))
+      alert("책 제목과 저자명을 입력하세요.")
     }
   }
 
