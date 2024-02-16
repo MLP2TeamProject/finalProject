@@ -266,21 +266,18 @@ const productDAO = {
             if (conn !== null) conn.release();
         }
     },
-    apiDataInsert: async (item)=> {
+    apiDataInsert: async (item)=> { 
         let conn = null;
         let returnValue = false;
         try {
             conn = await getPool().getConnection();
-            
             const [selectedResult] = await conn.query(sql.insertApiData, [
-                item.id,
+                item.id, // 아이템의 id와 title을 매개변수로 사용
                 item.title,
             ]);
-        
-            
-            returnValue = true
+            returnValue = true // 쿼리가 성공적으로 실행되면, 반환 값을 true로 설정
         } catch (e) {
-            console.log(e); // sql query를 날린 후 정상동작이 안된다면 여기서 로그 확인해보기
+            console.log(e); // 오류가 발생하면 반환 값을 false로 설정
             returnValue = false;
         } finally {
             if (conn !== null) conn.release();

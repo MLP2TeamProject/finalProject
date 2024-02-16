@@ -44,8 +44,8 @@ router.get('/search', async function (req, res, next) {
                 }
                 const result_item = { title: title, id: id };
                 console.log(result_item);
-                let dbResult = await productDAO.apiDataInsert(result_item)
-                console.log('dbResult', dbResult)
+                let dbResult = await productDAO.apiDataInsert(result_item) // 결과 객체를 데이터베이스에 저장
+                console.log('dbResult', dbResult) // 데이터베이스 저장 결과를 콘솔에 출력
                 result.push(result_item);
             }
             res.send(result);
