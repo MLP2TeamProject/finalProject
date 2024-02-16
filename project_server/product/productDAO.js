@@ -33,6 +33,8 @@ const sql = {
     GROUP BY P.product_id, P.title, P.picture, P.auction_id`,
     selectBidd: "UPDATE product SET auction_id = ?, auction_status = 'Y' WHERE product_id = ?",
 
+    insertApiData: 'INSERT INTO books VALUES (?,?)',
+
 };
 
 const productDAO = {
@@ -91,7 +93,6 @@ const productDAO = {
             if (conn !== null) conn.release()
         }
     },
-
 
     detail: async (item, callback) => {
         //item 매개변수로 조회하고자 하는 상품의 정보가 담긴 객체를 받음
@@ -265,6 +266,27 @@ const productDAO = {
             if (conn !== null) conn.release();
         }
     },
+    apiDataInsert: async (item)=> {
+        let conn = null;
+        let returnValue = false;
+        try {
+            conn = await getPool().getConnection();
+            
+            const [selectedResult] = await conn.query(sql.insertApiData, [
+                item.id,
+                item.title,
+            ]);
+        
+            
+            returnValue = true
+        } catch (e) {
+            console.log(e); // sql query를 날린 후 정상동작이 안된다면 여기서 로그 확인해보기
+            returnValue = false;
+        } finally {
+            if (conn !== null) conn.release();
+        }
+        return returnValue
+    }
 };
 
 module.exports = productDAO;

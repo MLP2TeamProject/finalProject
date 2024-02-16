@@ -172,8 +172,8 @@ return (
                                         value={product.title}
                                         onChange={changeData}
                                         placeholder="제목을 입력하세요"
-                                        onFocus={(e) => (e.target.placeholder = "")}
-                                        onBlur={(e) => (e.target.placeholder = "Search Keyword")}
+                                        // onFocus={(e) => (e.target.placeholder = "")}
+                                        // onBlur={(e) => (e.target.placeholder = "Search Keyword")}
                                     />
                                 </div>
                                 <button className="btn btn-secondary" onClick={executeSearch}>검색</button>
