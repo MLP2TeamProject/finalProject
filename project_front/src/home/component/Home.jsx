@@ -1,9 +1,15 @@
 /* eslint-disable */
 
 import React, {useCallback, useState, useEffect} from 'react';
+import { useNavigate } from "react-router";
 import axios from "axios"
 
 const Home = () => {
+
+	const navigate = useNavigate();
+	const handleClick = () => {
+		navigate("/user/signup");
+	};
 
 	// New Buy 상태
 	const [newBuy, setNewBuy] = useState([{}])
@@ -45,30 +51,9 @@ const Home = () => {
         - style : inline style, jsx - javascript 표현식으로..
         - 이미지 경로 public 의 images 로 변경..
        */}
-			{/* <!--::banner_part start::--> */}
-			<section className="banner_part">
-				<div className="container">
-					<div className="row align-items-center">
-						<div className="col-lg-12">
-							<div className="single_banner_slider">
-								<div className="row">
-									{/* <div className="col-lg-5 col-md-8"> */}
-									<div className="banner_text">
-										<div className="banner_text_iner">
-											<img
-												src="img/banner_img1.png"
-												alt="banner0"
-											/>
-										</div>
-									</div>
-									{/* </div> */}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-			{/* <!-- banner_part  end--> */}
+			<section className="breadcrumb">
+        		<img src="/img/banner_img1.png" />
+      		</section>
 
 			{/* <!-- feature_part1 start--> */}
 			<section className="feature_part padding_top">
@@ -98,6 +83,10 @@ const Home = () => {
 				</div>
 			</section>
 			{/* <!-- feature_part1 end--> */}
+
+			<section className="mt-5">
+				<img src="/img/event.png" onClick={handleClick} style={{cursor:'pointer'}} />
+			</section>
 
 			{/* <!-- feature_part2 start--> */}
 			<section className="feature_part padding_top">
