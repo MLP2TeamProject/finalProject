@@ -62,7 +62,7 @@ const ProductList = () => {
                 {/* <!-- breadcrumb start--> */}
 
                 {/* <!--================Category Product Area =================--> */}
-                <section className="cat_product_area section_padding">
+                <section className="cat_product_area mt-5">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12">
@@ -97,7 +97,7 @@ const ProductList = () => {
                             ))}
                         </div>
 
-                        <div className="col-lg-12">
+                        <div className="col-lg-12 mb-5">
                             <div className="pagination justify-content-center">
                                 <ReactPaginate
                                     breakLabel="..."

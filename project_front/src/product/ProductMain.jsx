@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 
-// 준영님
+// 상품, 구매신청
 import ProductList from './component/ProDuctList'
 import ProductBuy from './component/ProDuctBuy'
 
-// 유경님
+// 상품상세, 입찰
 import Detail from "./component/Detail";
 import Bidding from "./component/Bidding";
 import Update from "./component/Update";
@@ -22,7 +22,6 @@ const ProductMain = () => {
         <Route path='/list' element={<ProductList />} />
         <Route path='/buy' element={<ProductBuy />} />
         <Route path="/detail/:product_id" element={<Detail />} />
-        {/* 여기를 detail쪽에서 설정한 변수랑 똑같이 맞춰야되니까 product_id로 */}
         <Route path="/bidding/:product_id" element={<Bidding />} />
         <Route path="/update" element={<Update />} />
         <Route path="/pay" element={<Pay />} />

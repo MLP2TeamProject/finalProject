@@ -4,12 +4,13 @@ const sql = {
   // sql구문
   // ? 는 프로그램 데이터가 들어갈 자리
 
-  // 상품, 준영님
+  // 상품리스트, 구매신청
   productList: "select * from product",
   buy: "update product set auction_status = '?' where product_id = ?",
+  insertProduct: `insert into product (title, email, picture, master_price, endtime, auction_status, isbn, content) 
+  values (?, ?, ?, ?, ?, ?, ?, ?)`,
 
-
-  // 상품, 유경님
+  // 상품상세, 입찰
   detail: "select * from product where product_id = ?",
   detail_auction: "select * from auction where product_id = ?",
   update:
@@ -32,14 +33,14 @@ const sql = {
   
   // 페이지네이션 
   totalProducts: "SELECT COUNT(product_id) as TOTALCOUNT FROM product",
-  listOnepage: "SELECT * FROM product LIMIT ?, ?",
+  listOnepage: "SELECT * FROM product ORDER BY product_id DESC LIMIT ?, ?",
 
   // 키워드검색
   searchKeyword: "SELECT * FROM product WHERE title LIKE '%' ? '%'"
 };
 
 const productDAO = {
-  // 상품, 준영님
+  // 상품리스트
   productList: async (callback) => {
     let conn = null
     try {
@@ -77,9 +78,29 @@ const productDAO = {
       if (conn !== null) conn.release();
     }
   },
+
+  // 구매신청
+  buyInsert: async (obj, filename, callback) => {
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      const [result] = await conn.query(sql.insertProduct, 
+        [obj.title, obj.email, filename, obj.master_price, obj.endtime, obj.auction_status, obj.isbn, obj.content])
+      if (result) {
+        callback({ status: 200, message: '상품 등록 성공' });
+      } else {
+        callback({ status: 200, message: "상품 등록 실패" });
+      }
+    } catch (e) {
+      console.log(e)
+      return { status: 500, message: "상품 등록 실패", error: e }
+    } finally {
+      if (conn !== null) conn.release()
+    }
+  },
   
 
-  // 상품, 유경님
+  // 상품상세
   detail: async (item, callback) => {
     let conn = null;
     try {
@@ -102,6 +123,7 @@ const productDAO = {
     }
   },
 
+  // 상품상세 수정
   update: async (id, item, callback) => {
     let conn = null;
     try {
@@ -120,6 +142,7 @@ const productDAO = {
     }
   },
 
+  // 상품상세 입찰
   bidding: async (data, callback) => {
     let conn = null;
     try {
@@ -217,6 +240,7 @@ const productDAO = {
     }
   },
 
+  // 마이페이지 : 낙찰
   bidWrite: async (pId, selectedAucId, callback) => {
     let conn = null;
     try {
@@ -272,6 +296,7 @@ const productDAO = {
     } 
   },
 
+  // 헤더 검색
   keyword: async (keyword, callback) => {
     let conn = null
     try {      

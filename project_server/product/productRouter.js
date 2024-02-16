@@ -8,7 +8,7 @@ const xpath = require('xpath');
 const dom = require('@xmldom/xmldom').DOMParser;
 // const { func } = require("prop-types");
 
-// 상품, 준영님
+// 상품리스트
 router.get("/productlist", function (req, res, next) {
   console.log("상품 페이지");
   productDAO.productList((resp) => {
@@ -57,7 +57,7 @@ router.get('/search', async function (req, res, next) {
   }
 })
 
-// 상품, 유경님 
+// 상품상세  
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
@@ -71,6 +71,7 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
+// 상품상세 입찰하기
 router.post(
   "/bidding/insert",
   upload.single("file1"),
@@ -95,6 +96,27 @@ router.post(
   }
 );
 
+// 상품 구매신청
+router.post("/buyinsert",
+  upload.single("file1"),
+  async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.json({ status: 500, message: "파일 업로드 실패" });
+      }
+      const obj = JSON.parse(req.body.sendData);
+      const filename = req.file.filename;
+      productDAO.buyInsert(obj, filename, (resp) => {
+        res.json(resp);
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: 500, message: "서버 에러" });
+    }
+  }
+);
+
+// 상품상세 
 router.get("/detail/:id", function (req, res, next) {
   console.log("디테일 불러오기");
   const id = req.params.id;
