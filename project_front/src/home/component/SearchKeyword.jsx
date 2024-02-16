@@ -57,7 +57,7 @@ const SearchKeyword = () => {
     }, [resultList])
 
     return (
-        <section className="cart_area" style={{marginTop:'140px'}}>
+        <section className="cart_area mt-5">
             <div className="container">
                 <div className="col-lg-12">
                     <h3>검색결과 목록</h3>

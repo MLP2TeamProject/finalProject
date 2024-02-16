@@ -7,7 +7,7 @@ const NoticeBoardList = () => {
 	// 관리자인가 확인하기 위하여 공개된 전역상태 함수를 이용.
 	const context = useContext(UserContext);
 	const isadmin = context.state.userData.isadmin;
-	console.log("000", isadmin);
+	// console.log("000", isadmin);
 
 	// pagination
 	const perPageItemNum = 13 // 한 페이지에 보여줄 항목 개수
@@ -28,7 +28,7 @@ const NoticeBoardList = () => {
 		const resp = await axios.get("http://localhost:8000/boards/listpage1/" + pageNum + "/" + perPageItemNum)
 		if (resp.data.status === 500) console.log("notice board 리스트 조회 실패")
 		else {
-			console.log("항목", resp.data.data, "총개수", resp.data.totalCount)
+			// console.log("항목", resp.data.data, "총개수", resp.data.totalCount)
 			const totalCount = resp.data.totalCount
 			const totalPageCount = Math.ceil(totalCount / perPageItemNum)
 			const totalGroupCount = Math.ceil(totalPageCount / perGroupPageNum)
@@ -41,7 +41,7 @@ const NoticeBoardList = () => {
 				pageArray = Array.from({ length: perGroupPageNum }, (_, index) => index + 1 + (group * perGroupPageNum))
 			}
 
-			console.log(totalCount, totalPageCount, totalGroupCount, serverData, pageArray)
+			// console.log(totalCount, totalPageCount, totalGroupCount, serverData, pageArray)
 			setPageState({ ...pageState, totalCount, totalPageCount, totalGroupCount, serverData, pageArray, currentPage: pageNum, currentPageGroup: group })
 		}
 	}

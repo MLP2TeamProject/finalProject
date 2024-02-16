@@ -51,7 +51,7 @@ const Home = () => {
         - style : inline style, jsx - javascript 표현식으로..
         - 이미지 경로 public 의 images 로 변경..
        */}
-			<section className="breadcrumb">
+			<section>
         		<img src="/img/banner_img1.png" />
       		</section>
 

@@ -54,9 +54,9 @@ const Detail = () => {
         const response = await axios.get(
           `http://localhost:8000/products/timer/${product_id}`
         );
-        console.log("11", response.data);
+        // console.log("11", response.data);
         const { endtime } = response.data.countdown;
-        console.log("endtime...", endtime);
+        // console.log("endtime...", endtime);
         setCountdownData(endtime);
 
         const currentTime = new Date().getTime();
@@ -81,7 +81,7 @@ const Detail = () => {
 
   return (
     <div>
-      <div className="product_image_area section_padding">
+      <div className="product_image_area mt-5">
         <div className="container">
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">

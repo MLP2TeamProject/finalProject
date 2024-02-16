@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
@@ -15,7 +15,7 @@ const ProductList = () => {
     const getProductList = useCallback(async () => {
         try {
             const resp = await axios.get(`http://localhost:8000/products/listpage1/${currentPage + 1}/${productsPerPage}`);
-            console.log("데이터 확인", resp.data);
+            // console.log("데이터 확인", resp.data);
             setProductList(resp.data);
             setItemsCount(resp.data.totalCount); // 총 상품 수 업데이트
             setPageCount(Math.ceil(resp.data.totalCount / productsPerPage)); // 총 페이지 수 계산 및 설정
