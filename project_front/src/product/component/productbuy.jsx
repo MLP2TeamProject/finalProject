@@ -6,9 +6,8 @@ import UserContext from "../../UserContext"
 const ProductBuy = () => {
 
   const navigate = useNavigate()
-
   const context = useContext(UserContext)
-  const userEmail = context.state.userData.email
+  let userEmail = ''
 
   const [product, setProduct] = useState({
     title: "",
@@ -21,12 +20,20 @@ const ProductBuy = () => {
   })
 
   useEffect(() => {
-    if (userEmail) setProduct((product)=> ({...product, email: userEmail}))  
+    const sessionEmail = sessionStorage.getItem("email")
+    // const contextEmail = context.state.userData.email
+    userEmail = sessionEmail
+    // console.log('11 로그인유저',userEmail)
+    if (userEmail) setProduct((prevProduct)=> ({...prevProduct, email: userEmail}))
     else { 
       window.alert('로그인이 필요합니다.')
       navigate('/user/signin')
     }
-  }, [])  
+  }, [])
+  
+  // useEffect(()=>{
+  //   console.log('22', product)
+  // }, [product])
 
   const [author, setAuthor] = useState('')
 
@@ -48,7 +55,6 @@ const ProductBuy = () => {
       return 
     }
     if (fileUpload) {
-      console.log(product)
       const formData = new FormData()
       formData.append("file1", fileUpload)
       const strData = JSON.stringify(product)
@@ -64,14 +70,15 @@ const ProductBuy = () => {
   }
 
   const searchISBN = async () => {
-    console.log(product.title, author)
+    // console.log(product.title, author)
     const resp = await axios.get(`https://www.nl.go.kr/NL/search/openApi/search.do?key=39b4dd4a523f80ea24ba476b79fc50c968db9622ffd612dc415b4176e41ccadd&kwd=${product.title}&authorInfo=${author}&apiType=json`)
-    if(resp) {
-      console.log(resp.data.result[0])
+    if(resp.data.result[0].isbn) {
       const isbnNumber = resp.data.result[0].isbn
       setProduct((product)=> ({...product, isbn: isbnNumber}))
+    } else {
+      console.log(resp.statusText)
+      setProduct((product)=> ({...product, isbn: 'no isbn'}))
     }
-    else console.log(resp.statusText)
   }
 
   const insertCancle = () => {
@@ -79,7 +86,7 @@ const ProductBuy = () => {
     setIsChecked(false)
     setAuthor('')
     fileRef.current.value = ''
-  }  
+  }   
 
   return (
     <div className="container-fluid">
