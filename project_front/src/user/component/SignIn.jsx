@@ -11,12 +11,12 @@ const SignIn = () => {
     const [data, setData] = useState({ email: '', pwd: '' })
 
     const changeData = useCallback((e) => {
-        console.log(e);
+        // console.log(e);
         setData((data) => ({ ...data, [e.target.name]: e.target.value }))
     }, [])
 
     const login = useCallback(async (e) => {
-        console.log("Run event?...")
+        // console.log("Run event?...")
         e.preventDefault()
         const resp = await axios.post('http://localhost:8000/users/signin', data)
         if (resp.data.status === 500) window.alert(resp.data.message)
@@ -27,7 +27,7 @@ const SignIn = () => {
             sessionStorage.setItem("isadmin", resp.data.data.isadmin)
             navigate('/')
         }
-        console.log({resp})
+        // console.log({resp})
     }, [data, navigate])
     return (
         <main>
@@ -55,7 +55,7 @@ const SignIn = () => {
                                                 onChange={changeData}/>
                                         </div>
                                         <div className="col-md-12 form-group p_star">
-                                            <input type="pwd" className="form-control" id="pwd" name="pwd" value={data.pwd} placeholder="Password"
+                                            <input type="password" className="form-control" id="pwd" name="pwd" value={data.pwd} placeholder="Password"
                                                 onChange={changeData}/>
                                         </div>
                                         <div className="col-md-12 form-group">

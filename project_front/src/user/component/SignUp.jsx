@@ -53,7 +53,7 @@ const SignUp = () => {
                                             onChange={changeData}/>
                                     </div>
                                     <div className="col-md-12 form-group p_star">
-                                        <input type="pwd" className="form-control" id="pwd" name="pwd" value={data.pwd} placeholder="Password"
+                                        <input type="password" className="form-control" id="pwd" name="pwd" value={data.pwd} placeholder="Password"
                                             onChange={changeData}/>
                                     </div>
                                     <div className="col-md-12 form-group p_star">
