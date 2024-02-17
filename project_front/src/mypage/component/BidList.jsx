@@ -195,7 +195,7 @@ const BidList = () => {
                                                             {item.auction_id === Number(subitem.split(',')[0]) ? (
                                                                 <>
                                                                     <span>✔ 낙찰 </span>
-                                                                    <button type='button' className='genric-btn info circle small' 
+                                                                    <button type='button' className='genric-btn primary circle small' 
                                                                     onClick={()=>navigate('/products/pay')}>결제</button>
                                                                 </>
                                                             ) : ''}
@@ -213,7 +213,7 @@ const BidList = () => {
                                         {new Date(item.endtime).getTime() > new Date().getTime() ? (
                                             <>
                                                 {item.auction_info && item.auction_id === null ? (
-                                                    <button type='button' className='genric-btn info circle small' 
+                                                    <button type='button' className='genric-btn primary circle small' 
                                                     onClick={()=>selectBiddWrite(item.product_id)}>낙찰</button>
                                                 ) : ''}
                                             </>

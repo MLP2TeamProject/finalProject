@@ -70,6 +70,18 @@ const Detail = () => {
     fetchData();
   }, [product_id]);
 
+  const handleBiddingButtonClick = () => {
+    if (!loggedInUserEmail) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    if (loggedInUserEmail === product.email) {
+      alert("글 작성자는 입찰 참여가 불가능합니다.");
+      return;
+    }
+    navigate("/products/bidding/" + product_id);
+  };  
+
   const goUpdate = () => {
     navigate("/products/update", {
       state: {
@@ -120,7 +132,7 @@ const Detail = () => {
                 ) : (
                   <button
                     className="btn_3"
-                    onClick={() => navigate("/products/bidding/" + product_id)} //0208
+                    onClick={handleBiddingButtonClick}
                     disabled={countDownFinished}
                   >
                     판매입찰하기
@@ -160,7 +172,7 @@ const Detail = () => {
             <div className="d-grid gap-2 col-3 mx-auto">
               <button
                 id="editButton"
-                className="btn btn-outline-secondary"
+                className="btn btn-light"
                 type="button"
                 onClick={goUpdate}
               >
