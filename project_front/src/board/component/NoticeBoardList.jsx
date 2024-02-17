@@ -156,7 +156,7 @@ const NoticeBoardList = () => {
 					</li>
 					{pageState.pageArray.map((item, index) => (
 						<li className={pageState.pageArray[index] === pageState.currentPage ? "page-item active" : "page-item"} key={index}>
-							<a href="#N" className="page-link" onClick={(e) => onClickPage(Number(e.target.text))}>
+							<a href="#" className="page-link" onClick={(e) => onClickPage(Number(e.target.text))}>
 								{item}
 							</a>
 						</li>
