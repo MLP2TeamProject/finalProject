@@ -1,32 +1,26 @@
 import axios from "axios";
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom"; //0208
 import PropTypes from "prop-types"; //prop-types install
+import UserContext from "../../UserContext";
 
-const Bidding = (props) => {
-  console.log(props);
+const Bidding = () => {
   const navigate = useNavigate();
-  const { product_id } = props;
-  const { email } = props;
+
+  const { product_id } = useParams(); //0208
+
+  //userContext에서 정보 갖고 오기
+  const userContext = useContext(UserContext);
 
   Bidding.propTypes = {
     product_id: PropTypes.number.isRequired,
-    email: PropTypes.string.isRequired,
   };
 
   //입찰 데이터 상태
-  // const [data, setData] = useState({
-  //   email: email,
-  //   product_id: product_id,
-  //   isbn: "",
-  //   auctionPrice: 0,
-  //   quality: "",
-  //   additional: "",
-  // });
   const [data, setData] = useState({
-    email: "happy@happy.happy",
-    product_id: 1,
-    isbn: "23541658",
+    email: userContext.state.userData.email,
+    product_id: product_id,
+    isbn: "",
     auctionPrice: 0,
     quality: "",
     additional: "",
@@ -61,17 +55,18 @@ const Bidding = (props) => {
       return;
     }
     if (file) {
-      //파일업로드는 항상 FormData 로 구성해서 서버에 전달해야..
       const formData = new FormData();
       formData.append("file1", file);
       console.log("넘어가는 data 확인", data, file);
-      //FormData 로 json 을 넘기려면 문자열로 바꾸어서 넘겨야 한다.
+
       const strData = JSON.stringify(data);
       formData.append("sendData", strData);
-      //파일 업로드는 꼭 post 방식을 이용해야..
+
       const res = await axios.post(
         "http://localhost:8000/products/bidding/insert",
         formData
+
+        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??    navigate("/products/list")추가 하면 될 것 같고
       );
       if (res.data.status === 200) {
         console.log(res.data);
@@ -79,6 +74,7 @@ const Bidding = (props) => {
         setBookIsbn(res.data.data.isbn);
         setBookPrice(res.data.data.auction_price);
         setBookImg(res.data.data.file_name);
+        navigate(`/products/detail/${product_id}`);
       } else {
         console.error("입찰 실패");
       }
@@ -88,12 +84,7 @@ const Bidding = (props) => {
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
-        <form
-          id="form"
-          // method="post"
-          // action="/upload"
-          encType="multipart/form-data"
-        >
+        <form id="form" encType="multipart/form-data">
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
               <div className="row">
@@ -113,12 +104,12 @@ const Bidding = (props) => {
                     name="auctionPrice"
                     id="auctionPrice"
                     required
-                    value={data.auctionPrice}
+                    defaultValue={data.auctionPrice} //0202 defaultValue로 수정 원래 value
                     // onChange={changeData}
-                    // onChange={(e) => {
-                    //   changeData(e);
-                    //   setFinalAuctionPrice(e.target.value);
-                    // }}
+                    onChange={(e) => {
+                      changeData(e);
+                      setFinalAuctionPrice(e.target.value);
+                    }}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>
@@ -188,7 +179,7 @@ const Bidding = (props) => {
                   <input
                     type="text"
                     name="fileName"
-                    value={fileName}
+                    defaultValue={fileName}
                     onChange={(e) => setFileName(e.target.value)}
                   />
                   <input
@@ -197,7 +188,6 @@ const Bidding = (props) => {
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                 </div>
-                {/* <button onClick={upload}>업로드</button> */}
               </div>
               {uploadImage ? (
                 <img src={`http://localhost:8000/upload/${uploadImage}`} />
@@ -284,7 +274,7 @@ const Bidding = (props) => {
                       className="form-check-input"
                       id="isChecked"
                       name="isChecked"
-                      value={isChecked}
+                      defaultValue={isChecked}
                       // onChange={() => setIsChecked(!isChecked)}
                       onChange={(e) => setIsChecked(e.target.checked)}
                     />
@@ -293,7 +283,7 @@ const Bidding = (props) => {
                     </label>
                   </div>
                   {!isChecked ? (
-                    <div className="alert alert-warning">
+                    <div className="alert alert-danger">
                       최종 입찰을 위해 체크박스를 선택하세요.
                     </div>
                   ) : (
@@ -316,7 +306,7 @@ const Bidding = (props) => {
                 <button
                   className="btn_3"
                   type="button"
-                  onClick={() => navigate(`/detail/${product_id}`)}
+                  onClick={() => navigate("/products/list")}
                 >
                   취소하기
                 </button>
