@@ -3,6 +3,7 @@
 import React, {useCallback, useState, useEffect} from 'react';
 import { useNavigate } from "react-router";
 import axios from "axios"
+import { Link } from "react-router-dom";
 
 const Home = () => {
 
@@ -71,9 +72,9 @@ const Home = () => {
 						{newBuy.map((item)=> (
 							<div className="col-lg-5 col-sm-6" key={item.product_id}>
 								<div className="single_feature_post_text">
-									<a className="feature_btn" href={`/products/detail/${item.product_id}`}>
+									<Link className="feature_btn" to={`/products/detail/${item.product_id}`}>
 										상품 상세 <i className="fas fa-play"></i>
-									</a>
+									</Link>
 									<h4><strong>{item.title}</strong></h4>
 									<img src={`http://localhost:8000/upload/${item.picture}`} alt="" style={{height:'280px'}} />
 								</div>
@@ -105,9 +106,9 @@ const Home = () => {
 						{auctionBuy.map((item) => (
 							<div className="col-lg-5 col-sm-6" key={item.auction_id}>
 								<div className="single_feature_post_text">
-									<a className="feature_btn" href={`/products/detail/${item.product_id}`}>
+									<Link className="feature_btn" to={`/products/detail/${item.product_id}`}>
 										상품 상세 <i className="fas fa-play"></i>
-									</a>
+									</Link>
 									<h4><strong>{item.title}</strong></h4>
 									<p>입찰가: {Number(item.auction_price).toLocaleString()}원</p>
 									<img src={`http://localhost:8000/upload/${item.picture}`} alt="" style={{height:'280px'}} />
