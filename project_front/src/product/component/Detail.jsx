@@ -70,6 +70,18 @@ const Detail = () => {
     fetchData();
   }, [product_id]);
 
+  const handleBiddingButtonClick = () => {
+    if (!loggedInUserEmail) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    if (loggedInUserEmail === product.email) {
+      alert("글 작성자는 입찰 참여가 불가능합니다.");
+      return;
+    }
+    navigate("/products/bidding/" + product_id);
+  };
+
   const goUpdate = () => {
     navigate("/products/update", {
       state: {
@@ -85,10 +97,10 @@ const Detail = () => {
         <div className="container">
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">
-              <div className="product_slider_img">
+              <div className="product_slider_img text-center">
                 <img
                   src={`http://localhost:8000/static/upload/${product.picture}`}
-                  style={{ width: "80px" }}
+                  style={{ width: "400px" }}
                   alt="boookImage"
                 />
               </div>
@@ -115,17 +127,15 @@ const Detail = () => {
                 <Timer endtime={countdownData} />
                 <br />
                 <br />
-                {loggedInUserEmail === product.email ? (
-                  ""
-                ) : (
+                {!loggedInUserEmail || loggedInUserEmail !== product.email ? (
                   <button
                     className="btn_3"
-                    onClick={() => navigate("/products/bidding/" + product_id)} //0208
+                    onClick={handleBiddingButtonClick}
                     disabled={countDownFinished}
                   >
                     판매입찰하기
                   </button>
-                )}
+                ) : null}
 
                 <br />
                 <br />
@@ -160,7 +170,7 @@ const Detail = () => {
             <div className="d-grid gap-2 col-3 mx-auto">
               <button
                 id="editButton"
-                className="btn btn-outline-secondary"
+                className="btn btn-light"
                 type="button"
                 onClick={goUpdate}
               >
