@@ -78,8 +78,8 @@ const ProductList = () => {
             <div>
                 <section className="breadcrumb" style={{
                     // 파일과 사이즈 수정
-                    backgroundImage: "url('/img/bmic-page.png')",
-                    backgroundSize: "auto",
+                    backgroundImage: "url('/img/b-mic.png')",
+                    backgroundSize: "300px",
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center'
                 }}>
@@ -88,10 +88,10 @@ const ProductList = () => {
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
                                 <div className="breadcrumb_iner">
-                                    {/* <div className="breadcrumb_iner_item">
+                                    <div className="breadcrumb_iner_item">
                                         <h2>ProDuct List</h2>
                                         <p>Home <span>-</span> ProDuct List</p>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
