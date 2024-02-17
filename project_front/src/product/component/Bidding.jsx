@@ -171,7 +171,7 @@ const Detail = () => {
             <div className="d-grid gap-2 col-2 mx-auto">
               <button
                 id="editButton"
-                className="btn btn-outline-secondary"
+                className="btn btn-warning"
                 type="button"
                 onClick={goUpdate}
               >
