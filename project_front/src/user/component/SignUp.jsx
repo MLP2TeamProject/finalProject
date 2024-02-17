@@ -34,8 +34,8 @@ const SignUp = () => {
                             <h2>BMIC에 처음 방문하셨나요?</h2>
                             <p>
                                 회원가입 후 다양한 혜택을 누려보세요. <br />
-                                BMIC에서는 다양한 절판희귀도서를 역경매 방식으로 구매하고
-                                판매할 수 있습니다.
+                                BMIC에서는 다양한 절판희귀도서를 역경매 방식으로 <br />
+                                구매하고 판매할 수 있습니다.
                             </p>
                                 {/* <h2>New to our Shop?</h2>
                                 <p>There are advances being made in science and technology

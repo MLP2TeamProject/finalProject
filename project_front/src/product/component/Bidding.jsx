@@ -82,7 +82,7 @@ const Bidding = () => {
   };
 
   return (
-    <div className="container-fluid py-5">
+    <div className="container-fluid">
       <div className="container py-5">
         <form id="form" encType="multipart/form-data">
           <div className="row g-5">
@@ -217,7 +217,7 @@ const Bidding = () => {
             <div className="col-md-12 col-lg-6 col-xl-5">
               <div className="table-responsive">
                 <table className="table">
-                  <thead>
+                  {/* <thead>
                     <tr>
                       <th scope="col"></th>
                       <th scope="col">ISBN </th>
@@ -225,9 +225,9 @@ const Bidding = () => {
                       <th scope="col"></th>
                       <th scope="col">저자</th>
                     </tr>
-                  </thead>
+                  </thead> */}
                   <tbody>
-                    <tr>
+                    {/* <tr>
                       <td scope="row">
                         <div className="d-flex align-items-center mt-2">
                           {bookImg ? (
@@ -244,7 +244,7 @@ const Bidding = () => {
                       <td className="py-5">{bookTitle}</td>
                       <td className="py-5"></td>
                       <td className="py-5"></td>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <th scope="row"></th>
                       <td className="py-5">

@@ -51,10 +51,7 @@ const ProductBuy = () => {
     setProduct((product)=> ({...product, [e.target.name]: e.target.value, endtime: endDate}))
   }, [])
 
-  // useState 는 비동기 방식이기 때문에 동기적으로 하려면 따로 함수(동기적실행)를 빼거나, useEffect 로 관리를 하거나 
-  // useEffect(()=> {
-
-  // }, [date])
+  // useState 는 비동기 방식이기 때문에 동기적으로 처리하려면 따로 함수(동기적실행)를 빼거나, useEffect로 관리를 하거나...
 
   const insertProduct = async (e) => {
     e.preventDefault()
@@ -102,7 +99,7 @@ const ProductBuy = () => {
   }   
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid mt-5">
       <div className="container mb-5">
         <form encType="multipart/form-data">
           <div className="row g-5">
