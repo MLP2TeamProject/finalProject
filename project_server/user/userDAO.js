@@ -82,7 +82,8 @@ const userDAO = {
                         console.log('44')
                         callback({
                             status: 200, message: 'OK',
-                            data: { name: users[0].user_name , email: users[0].email }
+                            //로그인시에 클라이언트에서 name, email 이외에 isAdmin 정보까지 같이 넘어가는게 좋을듯... 
+                            data: { name: users[0].user_name , email: users[0].email, isadmin: users[0].isadmin }
                         })
                     } else {
                         callback({ status: 500, message: '아이디, 패스워드를 확인해 주세요' })

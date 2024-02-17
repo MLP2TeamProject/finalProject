@@ -1,14 +1,19 @@
 import { Route, Routes } from "react-router-dom";
 
 // 준영님
-import ProductList from './component/productlist'
-import ProductBuy from './component/productbuy'
+import ProductList from './component/ProDuctList'
+import ProductBuy from './component/ProDuctBuy'
 
 // 유경님
 import Detail from "./component/Detail";
 import Bidding from "./component/Bidding";
 import Update from "./component/Update";
 //Timer랑 Table은 Detail 안에 있음
+
+// import ProductBuy from './component/productbuy(yg)'
+
+//product.css 파일 추가
+import "./product.css"
 
 const ProductMain = () => {
   return (

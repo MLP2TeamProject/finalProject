@@ -1,0 +1,18 @@
+/* search bar css 추가 */
+.form-inline-pds {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    justify-content: center
+}
+
+.product-margin{
+    margin-top: 30px; 
+}
+
+@media screen and (max-width: 575px) {
+    .search-visiable {display:none;}
+}

@@ -36,7 +36,7 @@ const ProductBuy = () => {
     // 검색 결과를 렌더링하는 함수
     const renderSearchResults = () => {
         return (
-            <table className="table">
+            <table className="table  product-margin">
                 <thead>
                     <tr>
                         {/* 각 열의 제목들 몇개는 삭제? */}
@@ -112,8 +112,14 @@ const ProductBuy = () => {
             {/* // <!--================Home Banner Area =================-->
         // <!-- breadcrumb start--> */}
             <div>
-                <section className="breadcrumb breadcrumb_bg" style={{ backgroundSize: "300px" }}>
-                    <div className="container">
+                <section className="breadcrumb" style={{
+                    // 파일과 사이즈 수정
+                    backgroundImage: "url('/img/b-mic.png')",
+                    backgroundSize: "300px",
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center'
+                }}>
+                    <div className="container product-margin">
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
                                 <div className="breadcrumb_iner">
@@ -128,16 +134,17 @@ const ProductBuy = () => {
                 </section>
                 {/* // <!-- breadcrumb start End-->  */}
                 <br />
-                <aside className="single_sidebar_widget search_widget p-5">
-                    <form onSubmit={executeSearch}>
+                <aside className="single_sidebar_widget search_widget">
+                    {/* 버튼과 관련된 front */}
+                    {/* <form onSubmit={executeSearch}>
                         <div className="form-group">
                             <div className="input-group mb-3">
-                                <input type="text"
-                                    className="form-control"
+                                <input className="form-control"
+                                    type="text"
+                                    placeholder='제목을 입력하세요'
                                     name="title"
                                     value={product.title}
                                     onChange={changeData}
-                                    placeholder='제목을 입력하세요'
                                     onFocus={(e) => e.target.placeholder = ''}
                                     onBlur={(e) => e.target.placeholder = 'Search Keyword'} />
                                 <div className="input-group-append">
@@ -147,7 +154,23 @@ const ProductBuy = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form> */}
+                    {/* 버튼관련 front 수정 */}
+
+                    <div className="form-inline-pds col-12 my-2 my-lg-0">
+                        {/* <img src="../img/bmic-img.png" width="40" height="40" className="d-inline-block align-top" alt=""/> */}
+                        <img src="../img/bmic-img.png" width="40" height="40" className="search-visiable align-top" alt=""/>
+                        <input className="form-control col-sm-10 mr-sm-2" 
+                            type="text" 
+                            placeholder="제목을 입력하세요."
+                            name="title"
+                            value={product.title}
+                            onChange={changeData}
+                            onFocus={(e) => e.target.placeholder = ''}
+                            onBlur={(e) => e.target.placeholder = 'Search Keyword'} />
+                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={executeSearch}>Search</button>
+                    </div>
+                    
                     {/* 검색 결과 */}
                     <div>
                         {renderSearchResults()}

@@ -8,15 +8,17 @@ const UserContext = React.createContext(null)
 // 앱전역에서 사용하고자 하는 상태, 상태변경함수 등을 가지는 컴포넌트 선언
 export const UserProvider = (props) => {
 
-    const [userData, setUserData] = useState({email:'', user_name:''}) 
+    //컨텍스트 정보에.. isadmin 정보까지 유지하는게 맞을듯 하여.. 
+    const [userData, setUserData] = useState({email:'', user_name:'', isadmin:'N'}) 
 
     useEffect(()=>{
         // console.log('페이지 진입')
         const sessionEmail = sessionStorage.getItem("email")
         const sessionUserName = sessionStorage.getItem("user_name")
+        const sessionIsadmin = sessionStorage.getItem("isadmin")
         if (sessionEmail && sessionUserName) {
             // console.log('마이세션', sessionEmail, sessionUserName)
-            setUserData({email:sessionEmail, user_name:sessionUserName})
+            setUserData({email:sessionEmail, user_name:sessionUserName, isadmin: sessionIsadmin})
         }
     }, [])
 
@@ -31,11 +33,11 @@ export const UserProvider = (props) => {
         // })
         // console.log(11, newUserData)
         // setUserData(newUserData)
-        setUserData({email:user.email, user_name:user.user_name})
+        setUserData({email:user.email, user_name:user.user_name, isadmin: user.isadmin})
     }
 
     const logoutUser = () => {
-        setUserData({email:'', user_name:''})
+        setUserData({email:'', user_name:'', isadmin: 'N'})
     }
 
     // 자신들이 가지고 있는 상태 데이터,상태변경함수 등을 하위에 공개하기 위해서 context에 추가할 정보

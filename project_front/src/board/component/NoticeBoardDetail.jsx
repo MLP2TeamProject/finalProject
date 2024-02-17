@@ -3,11 +3,16 @@
 // 글 삭제 기능은 이곳에서 구현.
 
 import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import UserContext from "../../UserContext";
 
 const NoticeBoardDetail = () => {
 	const navigate = useNavigate();
+
+	// 관리자인가 확인하기 위하여 공개된 전역상태 함수를 이용.
+	const context = useContext(UserContext);
+	const isadmin = context.state.userData.isadmin;
 
 	const { id } = useParams();
 
@@ -31,20 +36,19 @@ const NoticeBoardDetail = () => {
 		getNoticeBoardDetail();
 	}, []);
 
-    const noticeDeleteBoard = async (id) => {
-        console.log('00')
-        await axios.post('http://localhost:8000/boards/noticeDelete/'+id)
-        console.log('11')
-        navigate('/board/noticelist')
-    }
-
+	const noticeDeleteBoard = async (id) => {
+		console.log("00");
+		await axios.post("http://localhost:8000/boards/noticeDelete/" + id);
+		console.log("11");
+		navigate("/board/noticelist");
+	};
 
 	return (
 		<div>
-			<section className="contact-section padding_top">
+			<section className="contact-section padding_top bmic-padding">
 				<div className="container">
 					<div className="row col-12">
-						<div className="col-lg-2">
+						<div className="col-lg-2 bmic-visiable">
 							<div>
 								<h2>고객센터</h2>
 							</div>
@@ -55,8 +59,7 @@ const NoticeBoardDetail = () => {
 								<Link to={"/board/faqlist"}>
 									<p className="text-muted">FAQ</p>
 								</Link>
-                                <hr/>
-                                
+								<hr />
 							</div>
 						</div>
 
@@ -79,19 +82,24 @@ const NoticeBoardDetail = () => {
 													</tr>
 													<tr>
 														<td className="col-sm-2">내용</td>
-														<td>
-															{noticeBoard.content}
-														</td>
+														<td>{noticeBoard.content}</td>
 													</tr>
 												</tbody>
 											</table>
-											<hr />
-											<div className="container">
-												<div className="col-auto">
-													<button type="button" className="btn btn-primary btn-sm float-right" onClick={() => navigate('/board/noticelist')}>목록</button>
-                                                    <button type="button" className="btn btn-warning btn-sm float-right bnt-space" onClick={() => navigate('/board/noticeupdate/'+id)}>수정</button>
-                                                    <button type="button" className="btn btn-danger btn-sm float-right bnt-space" onClick={()=> noticeDeleteBoard(noticeBoard.notice_id)} >삭제</button>
-												</div>
+
+											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                {
+                                                    isadmin === "Y"
+                                                    //  관리자인 경우 버튼이 나타남 
+                                                    ?
+                                                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                        <button className="btn btn-danger btn-sm" type="button" onClick={()=> noticeDeleteBoard(noticeBoard.notice_id)} >삭제</button>
+                                                        <button className="btn btn-warning btn-sm" type="button" onClick={() => navigate('/board/noticeupdate/'+id)}>수정</button>
+                                                        </div>
+                                                        :
+                                                        ""
+                                                    }
+                                            <button className="btn btn-primary btn-sm" type="button" onClick={() => navigate('/board/noticelist')}>목록</button>
 											</div>
 										</div>
 									</div>

@@ -1,7 +1,7 @@
 // 공지 내용을 수정할 수 있는 버튼을 누르면 나오는 페이지. (관리자만 가능)
 
 import axios from 'axios'
-import React, {useCallback, useState, useEffect}  from 'react'
+import { useState, useEffect}  from 'react'
 import {useNavigate, useParams, Link}  from 'react-router-dom'
 
 const NoticeBoardUpdate = () =>{
@@ -34,10 +34,10 @@ const NoticeBoardUpdate = () =>{
     return (
 
         <div>
-			<section className="contact-section padding_top">
+			<section className="contact-section padding_top bmic-padding">
 				<div className="container">
 					<div className="row col-12">
-						<div className="col-lg-2">
+						<div className="col-lg-2 bmic-visiable">
 							<div>
 								<h2>고객센터</h2>
 							</div>
@@ -77,11 +77,9 @@ const NoticeBoardUpdate = () =>{
 												</tbody>
 											</table>
 											<hr />
-											<div className="container">
-												<div className="col-auto">
-													<button type="button" className="btn btn-primary btn-sm float-right" onClick={updateNoticeBoard}>저장</button>
-                                                    <button type="button" className="btn btn-warning btn-sm float-right bnt-space" onClick={() => navigate('/board/noticedetail/'+ noticeBoard.notice_id)}>취소</button>
-												</div>
+											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
+												<button type="button" class="btn btn-danger btn-sm me-md-2" onClick={() => navigate('/board/noticedetail/'+ noticeBoard.notice_id)}>취소</button>
+												<button type="button" class="btn btn-primary btn-sm" onClick={updateNoticeBoard}>저장</button>
 											</div>
 										</div>
 									</div>
