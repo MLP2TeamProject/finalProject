@@ -74,7 +74,7 @@ const Bidding = () => {
         setBookIsbn(res.data.data.isbn);
         setBookPrice(res.data.data.auction_price);
         setBookImg(res.data.data.file_name);
-        navigate("/products/list");
+        navigate(`/products/detail/${product_id}`);
       } else {
         console.error("입찰 실패");
       }

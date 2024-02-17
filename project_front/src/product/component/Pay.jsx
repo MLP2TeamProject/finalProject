@@ -1,7 +1,7 @@
 const Pay = () => {
   return (
-    <section className="checkout_area padding_top">
-      <div className="container">
+    <section className="checkout_area">
+      <div className="container mb-5">
         <div className="returning_customer">
           <div className="check_title"></div>
 

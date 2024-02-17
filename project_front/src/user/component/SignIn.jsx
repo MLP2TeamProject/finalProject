@@ -31,7 +31,7 @@ const SignIn = () => {
     }, [data, navigate])
     return (
         <main>
-            <section className="login_part padding_top">
+            <section className="login_part padding_top mb-5">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-lg-6 col-md-6">
