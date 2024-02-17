@@ -55,16 +55,24 @@ const ProductBuy = () => {
       return 
     }
     if (fileUpload) {
-      const formData = new FormData()
-      formData.append("file1", fileUpload)
-      const strData = JSON.stringify(product)
-      formData.append("sendData", strData)
+      let date = new Date()
+      date.setDate(date.getDate() + 30)
+      const endDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ')
+      console.log('종료일',endDate)
+      setProduct((product)=> ({...product, endtime: endDate}))
+      if(endDate) {
+        console.log(product)
+        const formData = new FormData()
+        formData.append("file1", fileUpload)
+        const strData = JSON.stringify(product)
+        formData.append("sendData", strData)
 
-      const resp = await axios.post("http://localhost:8000/products/buyinsert", formData)
-      if(resp.data.status === 500) window.alert(resp.data.message)
-      else {
-          // console.log('구매등록데이터', resp.data.message)
-          navigate('/products/list')
+        const resp = await axios.post("http://localhost:8000/products/buyinsert", formData)
+        if(resp.data.status === 500) window.alert(resp.data.message)
+        else {
+            // console.log('구매등록데이터', resp.data.message)
+            navigate('/products/list')
+        }
       }
     }
   }
@@ -137,11 +145,11 @@ const ProductBuy = () => {
                 onChange={changeData} placeholder="예)50000 (원 단위로 숫자만 입력)" />
               </div>
 
-              <div className="form-item">
+              {/* <div className="form-item">
                 <label className="form-label my-3">경매 종료일 <sup>*</sup></label>
                 <input type="datetime-local" className="form-control" name="endtime" value={product.endtime} 
                 onChange={changeData} placeholder="예)50000 (원 단위로 숫자만 입력)" />
-              </div>
+              </div> */}
 
               <div className="form-item">
                 <label className="form-label my-3">요청사항 (선택사항)</label>
@@ -166,6 +174,7 @@ const ProductBuy = () => {
                       입력한 내용으로 구매 신청하시겠습니까?
                     </label>
                   </div>
+                  <div className="alert alert-danger">최종 구매신청을 위해 체크박스를 선택하세요.</div>
 
                   <p className="text-start text-dark font-small">
                     낙찰기한은 구매를 신청한 시간을 기준으로 30일간 진행됩니다.
