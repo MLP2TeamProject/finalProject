@@ -44,9 +44,17 @@ const ProductBuy = () => {
   const [isChecked, setIsChecked] = useState(false)
 
   const changeData = useCallback((e) => {
-    setProduct((product)=> ({...product, [e.target.name]: e.target.value}))
+    let date = new Date()
+    date.setDate(date.getDate() + 30)
+    const endDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ')
+    // console.log('종료일',endDate)
+    setProduct((product)=> ({...product, [e.target.name]: e.target.value, endtime: endDate}))
   }, [])
 
+  // useState 는 비동기 방식이기 때문에 동기적으로 하려면 따로 함수(동기적실행)를 빼거나, useEffect 로 관리를 하거나 
+  // useEffect(()=> {
+
+  // }, [date])
 
   const insertProduct = async (e) => {
     e.preventDefault()
@@ -55,24 +63,17 @@ const ProductBuy = () => {
       return 
     }
     if (fileUpload) {
-      let date = new Date()
-      date.setDate(date.getDate() + 30)
-      const endDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ')
-      console.log('종료일',endDate)
-      setProduct((product)=> ({...product, endtime: endDate}))
-      if(endDate) {
-        console.log(product)
-        const formData = new FormData()
-        formData.append("file1", fileUpload)
-        const strData = JSON.stringify(product)
-        formData.append("sendData", strData)
+      // console.log(product)
+      const formData = new FormData()
+      formData.append("file1", fileUpload)
+      const strData = JSON.stringify(product)
+      formData.append("sendData", strData)
 
-        const resp = await axios.post("http://localhost:8000/products/buyinsert", formData)
-        if(resp.data.status === 500) window.alert(resp.data.message)
-        else {
-            // console.log('구매등록데이터', resp.data.message)
-            navigate('/products/list')
-        }
+      const resp = await axios.post("http://localhost:8000/products/buyinsert", formData)
+      if(resp.data.status === 500) window.alert(resp.data.message)
+      else {
+          // console.log('구매등록데이터', resp.data.message)
+          navigate('/products/list')
       }
     }
   }
