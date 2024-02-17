@@ -20,10 +20,6 @@ const Table = (props) => {
           {auctionDatas.map((auction) => (
             <tr key={auction.auction_id}>
               <td>{auction.auction_id}</td>
-              {/* <td>
-                <Link to={`/products/detail/${auction.product_id}`}></Link>
-              </td> */}
-              {/* 상품 상세페이지로 이동하는 링크가 필요없지 않나? */}
               <td>{auction.email}</td>
               <td> {auction.auction_price}</td>
               <td> {auction.product_status}</td>
