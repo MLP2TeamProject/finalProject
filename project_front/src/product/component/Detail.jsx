@@ -73,7 +73,7 @@ const Detail = () => {
   const handleBiddingButtonClick = () => {
     if (!loggedInUserEmail) {
       alert("로그인이 필요합니다.");
-      return;
+      return navigate("/user/signin");
     }
     if (loggedInUserEmail === product.email) {
       alert("글 작성자는 입찰 참여가 불가능합니다.");
@@ -132,6 +132,7 @@ const Detail = () => {
                     className="btn_3"
                     onClick={handleBiddingButtonClick}
                     disabled={countDownFinished}
+                    style={{ width: "350px" }}
                   >
                     판매입찰하기
                   </button>
@@ -139,21 +140,15 @@ const Detail = () => {
 
                 <br />
                 <br />
-
-                {loggedInUserEmail === product.email ? (
-                  <button
-                    className="btn_3"
-                    onClick={() => navigate("/products/pay")}
-                  >
-                    즉시구매가 {product.master_price} 원(₩)
-                    <br />
-                  </button>
-                ) : (
-                  <button className="btn_3" disabled>
-                    즉시구매가 {product.master_price} 원(₩)
-                    <br />
-                  </button>
-                )}
+                <button className="btn_3" disabled style={{ width: "350px" }}>
+                  즉시구매가 {product.master_price}원
+                </button>
+                <br />
+                <br />
+                <div className="alert alert-danger" role="alert">
+                  즉시구매가는 구매자가 정한 금액입니다. 즉시구매가로 입찰에
+                  참여할시 낙찰 가능성이 높아집니다.
+                </div>
               </div>
             </div>
           </div>
@@ -167,10 +162,10 @@ const Detail = () => {
           <br />
           <br />
           {loggedInUserEmail === product.email ? (
-            <div className="d-grid gap-2 col-3 mx-auto">
+            <div className="d-grid gap-2 col-2 mx-auto">
               <button
                 id="editButton"
-                className="btn btn-light"
+                className="btn btn-warning"
                 type="button"
                 onClick={goUpdate}
               >
