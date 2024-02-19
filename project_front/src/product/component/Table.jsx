@@ -13,7 +13,7 @@ const Table = (props) => {
             <th scope="col">#</th>
             <th scope="col">입찰자</th>
             <th scope="col">입찰금액(원)</th>
-            <th scope="col">상품상태</th>
+            <th scope="col">상품상태 (1-상, 2-중, 3-하)</th>
           </tr>
         </thead>
         <tbody>

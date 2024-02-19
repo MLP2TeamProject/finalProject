@@ -115,7 +115,6 @@ const Update = () => {
           </div>
           <div className="col-md-12 col-lg-6 col-xl-5">
             <div className="table-responsive">
-              <handleCheckboxChanger />
               <br />
               <br />
               <br />
