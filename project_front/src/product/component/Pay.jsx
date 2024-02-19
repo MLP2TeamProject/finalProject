@@ -110,14 +110,10 @@ const Pay = () => {
                       상품금액
                       <span>40,000원</span>
                     </a>
-                  </li>
-                  <li>
                     <a href="#">
                       배송비
                       <span>2,000원</span>
                     </a>
-                  </li>
-                  <li>
                     <a href="#">
                       최종결제금액
                       <span>42,000원</span>
