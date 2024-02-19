@@ -1,7 +1,7 @@
 const getPool = require('../common/pool')
 
 const sql = {
-    checkMyBidding: `SELECT A.picture, A.auction_price, A.createAt, A.product_id, P.title, P.auction_id, 
+    checkMyBidding: `SELECT A.picture, A.auction_price, A.createAt, A.product_id, P.title, P.auction_id, P.endtime,
     (SELECT email FROM auction AS A2 WHERE A2.auction_id = P.auction_id) AS selectedEmail 
     FROM auction AS A INNER JOIN product AS P 
     ON A.product_id = P.product_id  WHERE A.email = ?`,

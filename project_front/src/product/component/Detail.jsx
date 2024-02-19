@@ -54,9 +54,9 @@ const Detail = () => {
         const response = await axios.get(
           `http://localhost:8000/products/timer/${product_id}`
         );
-        console.log("11", response.data);
+        // console.log("11", response.data);
         const { endtime } = response.data.countdown;
-        console.log("endtime...", endtime);
+        // console.log("endtime...", endtime);
         setCountdownData(endtime);
 
         const currentTime = new Date().getTime();
@@ -73,7 +73,7 @@ const Detail = () => {
   const handleBiddingButtonClick = () => {
     if (!loggedInUserEmail) {
       alert("로그인이 필요합니다.");
-      return navigate("/user/signin");
+      return;
     }
     if (loggedInUserEmail === product.email) {
       alert("글 작성자는 입찰 참여가 불가능합니다.");
@@ -93,7 +93,7 @@ const Detail = () => {
 
   return (
     <div>
-      <div className="product_image_area section_padding">
+      <div className="product_image_area mt-5">
         <div className="container">
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">
@@ -125,8 +125,6 @@ const Detail = () => {
 
                 <h3>낙찰까지 남은 시간</h3>
                 <Timer endtime={countdownData} />
-                <br />
-
                 <hr />
                 <br />
                 <h3>즉시구매가 {product.master_price}원</h3>
@@ -137,19 +135,36 @@ const Detail = () => {
                 </div>
                 <br />
                 <br />
-                {!loggedInUserEmail || loggedInUserEmail !== product.email ? (
+                {loggedInUserEmail === product.email ? (
+                  ""
+                ) : (
                   <button
                     className="btn_3"
                     onClick={handleBiddingButtonClick}
                     disabled={countDownFinished}
-                    style={{ width: "350px" }}
+                    style={{ width: "360px" }}
                   >
                     판매입찰하기
                   </button>
-                ) : null}
+                )}
 
+                {/* <br />
                 <br />
-                <br />
+
+                {loggedInUserEmail === product.email ? (
+                  <button
+                    className="btn_3"
+                    onClick={() => navigate("/products/pay")}
+                  >
+                    즉시구매가 {product.master_price} 원(₩)
+                    <br />
+                  </button>
+                ) : (
+                  <button className="btn_3" disabled>
+                    즉시구매가 {product.master_price} 원(₩)
+                    <br />
+                  </button>
+                )} */}
               </div>
             </div>
           </div>
@@ -163,10 +178,10 @@ const Detail = () => {
           <br />
           <br />
           {loggedInUserEmail === product.email ? (
-            <div className="d-grid gap-2 col-2 mx-auto">
+            <div className="d-grid gap-2 col-3 mx-auto">
               <button
                 id="editButton"
-                className="btn btn-warning"
+                className="btn btn-light"
                 type="button"
                 onClick={goUpdate}
               >

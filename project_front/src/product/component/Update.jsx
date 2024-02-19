@@ -18,9 +18,7 @@ const Update = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const changeData = (e) => {
-    //input 요소값이 변경될 때 호출하는 함수
     const fieldName = e.target.name;
-    //이벤트가 발생한 input 요소의 name 속성 값 가져오기. input 요소 구분을 위한 key로 사용.
     if (fieldName === "master_price" || fieldName === "content") {
       setProduct({ ...product, [fieldName]: e.target.value });
     }
@@ -34,7 +32,6 @@ const Update = () => {
     if (!isChecked) {
       alert("체크 박스를 선택하세요.");
       return;
-      //함수 즉시 종료 else 필요없음
     }
     console.log("변경하기 직전", productId, product);
     await axios.post("http://localhost:8000/products/update/" + productId, {
@@ -118,7 +115,7 @@ const Update = () => {
           </div>
           <div className="col-md-12 col-lg-6 col-xl-5">
             <div className="table-responsive">
-              {/* <table className="table">
+              <table className="table">
                 <thead>
                   <tr>
                     <th scope="col"></th>
@@ -137,15 +134,8 @@ const Update = () => {
                     <td className="py-5"></td>
                   </tr>
                 </tbody>
-              </table> */}
+              </table>
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
             <div className="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
               <div className="col-12">
                 <div className="form-check text-start my-3">

@@ -34,7 +34,7 @@ const SignUp = () => {
   );
   return (
     <main>
-      <section className="login_part padding_top">
+      <section className="login_part padding_top mb-5">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6 col-md-6">
@@ -43,12 +43,13 @@ const SignUp = () => {
                   <h2>BMIC에 처음 방문하셨나요?</h2>
                   <p>
                     회원가입 후 다양한 혜택을 누려보세요. <br />
-                    BMIC에서는 다양한 절판희귀도서를 역경매 방식으로 구매하고
-                    판매할 수 있습니다.
+                    BMIC에서는 다양한 절판희귀도서를 역경매 방식으로 <br />
+                    구매하고 판매할 수 있습니다.
                   </p>
-                  {/* <a href="#" className="btn_3">
-                    Create an Account
-                  </a> */}
+                  {/* <h2>New to our Shop?</h2>
+                                <p>There are advances being made in science and technology
+                                    everyday, and a good example of this is the</p>
+                                <a href="#" className="btn_3">Create an Account</a> */}
                 </div>
               </div>
             </div>
@@ -89,7 +90,7 @@ const SignUp = () => {
                     </div>
                     <div className="col-md-12 form-group p_star">
                       <input
-                        type="pwd"
+                        type="password"
                         className="form-control"
                         id="pwd"
                         name="pwd"
@@ -105,7 +106,7 @@ const SignUp = () => {
                         id="phone"
                         name="phone"
                         value={data.phone}
-                        placeholder="휴대폰번호"
+                        placeholder="핸드폰 번호"
                         onChange={changeData}
                       />
                     </div>
