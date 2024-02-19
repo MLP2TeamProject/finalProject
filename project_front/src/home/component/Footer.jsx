@@ -24,7 +24,7 @@ const Footer = () => {
 									<li>LUNCH 12:00 ~ 13:00</li>
 									<li>토, 일, 공휴일은 휴무</li>
 									<br></br>
-									<li>대표자 최아별 book-mimic@daum.net</li>
+									<li>대표자 최아별 bmic@bmic.com</li>
 									<li>사업자등록번호 : 402-86-03809</li>
 									<li>
 										통신판매업신고번호 제
@@ -59,7 +59,7 @@ const Footer = () => {
 									<li>국민 22222-22222</li>
 									<li>우체국 33333-33-333333</li>
 									<li>우리 4444-444-444444</li>
-									<li>예금주: ㈜북믹</li>
+									<li>예금주: ㈜BMIC</li>
 								</ul>
 							</div>
 						</div>
@@ -76,7 +76,7 @@ const Footer = () => {
 										우체국 물류센터
 									</li>
 									<br></br>
-									<li>북믹 앞</li>
+									<li>BMIC 앞</li>
 								</ul>
 							</div>
 						</div>
@@ -89,7 +89,7 @@ const Footer = () => {
 							<div className="col-lg-8">
 								<div className="copyright_text">
 									<p>
-										Copyright &copy;{new Date().getFullYear()}{' '}
+										Copyright BMIC &copy;{new Date().getFullYear()}{' '}
 										{/* <script>
 											document.write(new
 											Date().getFullYear());

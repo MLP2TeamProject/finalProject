@@ -125,6 +125,14 @@ const Detail = () => {
 
                 <h3>낙찰까지 남은 시간</h3>
                 <Timer endtime={countdownData} />
+                <hr />
+                <br />
+                <h3>즉시구매가 {product.master_price}원</h3>
+                <br />
+                <div className="alert alert-danger" role="alert">
+                  즉시구매가는 구매자가 정한 금액입니다. 즉시구매가로 입찰에
+                  참여할시 낙찰 가능성이 높아집니다.
+                </div>
                 <br />
                 <br />
                 {loggedInUserEmail === product.email ? (
@@ -134,12 +142,13 @@ const Detail = () => {
                     className="btn_3"
                     onClick={handleBiddingButtonClick}
                     disabled={countDownFinished}
+                    style={{ width: "360px" }}
                   >
                     판매입찰하기
                   </button>
                 )}
 
-                <br />
+                {/* <br />
                 <br />
 
                 {loggedInUserEmail === product.email ? (
@@ -155,7 +164,7 @@ const Detail = () => {
                     즉시구매가 {product.master_price} 원(₩)
                     <br />
                   </button>
-                )}
+                )} */}
               </div>
             </div>
           </div>
