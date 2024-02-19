@@ -115,26 +115,13 @@ const Update = () => {
           </div>
           <div className="col-md-12 col-lg-6 col-xl-5">
             <div className="table-responsive">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">ISBN </th>
-                    <th scope="col">제목</th>
-                    <th scope="col"></th>
-                    <th scope="col">저자</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td scope="row"></td>
-                    <td className="py-5"></td>
-                    <td className="py-5"></td>
-                    <td className="py-5"></td>
-                    <td className="py-5"></td>
-                  </tr>
-                </tbody>
-              </table>
+              <handleCheckboxChanger />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
             </div>
             <div className="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
               <div className="col-12">
