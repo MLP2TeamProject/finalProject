@@ -21,7 +21,6 @@ const sql = {
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
   biddingCountDown: "SELECT createAt from product WHERE product_id = ?",
 
-  
   // 마이페이지
   checkProductAuction: `SELECT P.product_id, P.title, P.picture, P.auction_id, P.endtime, 
     GROUP_CONCAT(CONCAT(A.auction_id, ',', A.email, ',', A.auction_price, ',', A.picture) 
@@ -29,29 +28,30 @@ const sql = {
     FROM product AS P  LEFT JOIN auction AS A 
     ON A.product_id = P.product_id WHERE P.email = ? 
     GROUP BY P.product_id, P.title, P.picture, P.auction_id`,
-  selectBidd: "UPDATE product SET auction_id = ?, auction_status = 'Y' WHERE product_id = ?",
-  
-  // 페이지네이션 
+  selectBidd:
+    "UPDATE product SET auction_id = ?, auction_status = 'Y' WHERE product_id = ?",
+
+  // 페이지네이션
   totalProducts: "SELECT COUNT(product_id) as TOTALCOUNT FROM product",
   listOnepage: "SELECT * FROM product ORDER BY product_id DESC LIMIT ?, ?",
 
   // 키워드검색
-  searchKeyword: "SELECT * FROM product WHERE title LIKE '%' ? '%'"
+  searchKeyword: "SELECT * FROM product WHERE title LIKE '%' ? '%'",
 };
 
 const productDAO = {
   // 상품리스트
   productList: async (callback) => {
-    let conn = null
+    let conn = null;
     try {
-        conn = await getPool().getConnection()
-        const [resp] = await conn.query(sql.productList, [])
-        console.log('1010', resp)
-        callback({ status: 200, message: 'OK', data: resp })
+      conn = await getPool().getConnection();
+      const [resp] = await conn.query(sql.productList, []);
+      console.log("1010", resp);
+      callback({ status: 200, message: "OK", data: resp });
     } catch (error) {
-        return { status: 500, message: '조회 실패', error: error }
+      return { status: 500, message: "조회 실패", error: error };
     } finally {
-        if (conn !== null) conn.release()
+      if (conn !== null) conn.release();
     }
   },
 
@@ -84,21 +84,28 @@ const productDAO = {
     let conn = null;
     try {
       conn = await getPool().getConnection();
-      const [result] = await conn.query(sql.insertProduct, 
-        [obj.title, obj.email, filename, obj.master_price, obj.endtime, obj.auction_status, obj.isbn, obj.content])
+      const [result] = await conn.query(sql.insertProduct, [
+        obj.title,
+        obj.email,
+        filename,
+        obj.master_price,
+        obj.endtime,
+        obj.auction_status,
+        obj.isbn,
+        obj.content,
+      ]);
       if (result) {
-        callback({ status: 200, message: '상품 등록 성공' });
+        callback({ status: 200, message: "상품 등록 성공" });
       } else {
         callback({ status: 200, message: "상품 등록 실패" });
       }
     } catch (e) {
-      console.log(e)
-      return { status: 500, message: "상품 등록 실패", error: e }
+      console.log(e);
+      return { status: 500, message: "상품 등록 실패", error: e };
     } finally {
-      if (conn !== null) conn.release()
+      if (conn !== null) conn.release();
     }
   },
-  
 
   // 상품상세
   detail: async (item, callback) => {
@@ -111,7 +118,7 @@ const productDAO = {
         const [auction_resp] = await conn.query(sql.detail_auction, [
           item.product_id,
         ]);
-        resp[0]["auctions"] = auction_resp; 
+        resp[0]["auctions"] = auction_resp;
         console.log(resp);
       }
       callback({ status: 200, message: "ok", data: resp });
@@ -219,7 +226,6 @@ const productDAO = {
     }
   },
 
-
   // 마이페이지 : 회원 구매 등록, 입찰 정보 조회
   buyBooks: async (email, callback) => {
     let conn = null;
@@ -263,55 +269,69 @@ const productDAO = {
 
   // 페이지네이션
   listpage1: async (page, count, callback) => {
-    let conn = null
+    let conn = null;
     try {
-      conn = await getPool().getConnection()
-      const [totalCount] = await conn.query(sql.totalProducts)
-      const [result] = await conn.query(sql.listOnepage, [(page-1)*count, count])
-      if(result) callback({status:200, data: result, totalCount: totalCount[0].TOTALCOUNT})
-      else callback({status:500, message:'결과없음'})
-    } catch(e) {
-      console.log(e)
-      return { status: 500, message: "상품조회실패", error: e }
+      conn = await getPool().getConnection();
+      const [totalCount] = await conn.query(sql.totalProducts);
+      const [result] = await conn.query(sql.listOnepage, [
+        (page - 1) * count,
+        count,
+      ]);
+      if (result)
+        callback({
+          status: 200,
+          data: result,
+          totalCount: totalCount[0].TOTALCOUNT,
+        });
+      else callback({ status: 500, message: "결과없음" });
+    } catch (e) {
+      console.log(e);
+      return { status: 500, message: "상품조회실패", error: e };
     } finally {
-      if (conn !== null) conn.release()
-    } 
+      if (conn !== null) conn.release();
+    }
   },
   listpage: async (page, callback) => {
-    let conn = null
-    try {      
-      conn = await getPool().getConnection()
-      const [items] = await conn.query(sql.productList)
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      const [items] = await conn.query(sql.productList);
       //한페이지에 2개 item 가정
-      const responseData = items.slice((page-1)*2, page*2)
+      const responseData = items.slice((page - 1) * 2, page * 2);
       //totalItems : 항목 갯수
       //perPage: 한 페이지당 항목 수
-      if(responseData) callback({status: 200, totalItems : items.length, perPage: 2, data: responseData})
-      else callback({status:500, message:'결과없음'})
-    } catch(e) {
-      console.log(e)
-      return { status: 500, message: "상품조회실패", error: e }
+      if (responseData)
+        callback({
+          status: 200,
+          totalItems: items.length,
+          perPage: 2,
+          data: responseData,
+        });
+      else callback({ status: 500, message: "결과없음" });
+    } catch (e) {
+      console.log(e);
+      return { status: 500, message: "상품조회실패", error: e };
     } finally {
-      if (conn !== null) conn.release()
-    } 
+      if (conn !== null) conn.release();
+    }
   },
 
   // 헤더 검색
   keyword: async (keyword, callback) => {
-    let conn = null
-    try {      
-      conn = await getPool().getConnection()
-      console.log('0', keyword)
-      const [keywordResult] = await conn.query(sql.searchKeyword, [keyword])
-      console.log('1',keywordResult)
-      if(keywordResult) callback({status: 200, data: keywordResult})
-      else callback({status:200, message:'검색 결과없음'})
-    } catch(e) {
-      console.log(e)
-      return { status: 500, message: "검색 실패", error: e }
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      console.log("0", keyword);
+      const [keywordResult] = await conn.query(sql.searchKeyword, [keyword]);
+      console.log("1", keywordResult);
+      if (keywordResult) callback({ status: 200, data: keywordResult });
+      else callback({ status: 200, message: "검색 결과없음" });
+    } catch (e) {
+      console.log(e);
+      return { status: 500, message: "검색 실패", error: e };
     } finally {
-      if (conn !== null) conn.release()
-    } 
+      if (conn !== null) conn.release();
+    }
   },
 };
 
