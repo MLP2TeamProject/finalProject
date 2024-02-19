@@ -1,5 +1,3 @@
-//여기 페이지에서 입찰하기 클릭하면 bidding
-import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useCallback, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom"; //0208
@@ -28,51 +26,32 @@ const Bidding = () => {
     additional: "",
   });
 
-  const getDetail = async () => {
-    const resp = await axios.get(
-      "http://localhost:8000/products/detail/" + product_id
-    );
-
-    setProduct(resp.data.data[0]);
-  };
-  useEffect(() => {
-    getDetail();
+  const changeData = useCallback((e) => {
+    setData((data) => ({ ...data, [e.target.name]: e.target.value }));
   }, []);
 
-  const [countdownData, setCountdownData] = useState({
-    day: 0,
-    hours: 0,
-    minuts: 0,
-    seconds: 0,
-  });
+  // 업로드 파일 상태
+  const [fileName, setFileName] = useState("");
+  const [file, setFile] = useState();
+  const [uploadImage, setUploadImage] = useState();
 
-  const [countDownFinished, setCountDownFinished] = useState(false);
+  // 최종 체크 상태
+  const [isChecked, setIsChecked] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/products/timer/${product_id}`
-        );
-        console.log("11", response.data);
-        const { endtime } = response.data.countdown;
-        console.log("endtime...", endtime);
-        setCountdownData(endtime);
+  // 응답받아온 정보 노출
+  const [bookTitle, setBookTitle] = useState("");
+  const [bookIsbn, setBookIsbn] = useState("");
+  const [bookPrice, setBookPrice] = useState("");
+  const [bookImg, setBookImg] = useState("");
 
-        const currentTime = new Date().getTime();
-        if (currentTime > endtime) {
-          setCountDownFinished(true);
-        }
-      } catch (error) {
-        console.error("타이머 불러들이기 실패", error);
-      }
-    };
-    fetchData();
-  }, [product_id]);
+  //입력 동기화
+  const [finalAuctionPrice, setFinalAuctionPrice] = useState("");
 
-  const handleBiddingButtonClick = () => {
-    if (!loggedInUserEmail) {
-      alert("로그인이 필요합니다.");
+  // 입찰하기 함수
+  const insertBidding = async (e) => {
+    e.preventDefault();
+    if (!isChecked) {
+      alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
       return;
     }
     if (file) {
@@ -217,20 +196,22 @@ const Bidding = () => {
               )}
               <br />
 
-                {/* {loggedInUserEmail === product.email ? (
-                  <button
-                    className="btn_3"
-                    onClick={() => navigate("/products/pay")}
-                  >
-                    즉시구매가 {product.master_price} 원(₩)
-                    <br />
-                  </button>
-                ) : (
-                  <button className="btn_3" disabled>
-                    즉시구매가 {product.master_price} 원(₩)
-                    <br />
-                  </button>
-                )} */}
+              <div className="form-item">
+                <label className="form-label my-3">
+                  상세내용(선택사항)<sup></sup>
+                </label>
+
+                <textarea
+                  className="form-control"
+                  spellCheck="false"
+                  cols="30"
+                  rows="11"
+                  placeholder="제품 상세 내용"
+                  name="additional"
+                  id="additional"
+                  value={data.additional}
+                  onChange={changeData}
+                ></textarea>
               </div>
             </div>
             <div className="col-md-12 col-lg-6 col-xl-5">
@@ -334,19 +315,15 @@ const Bidding = () => {
                 </button>
               </div>
             </div>
-            <div>
-              <Table auctions={product.auctions} />
-            </div>
-            <div className="d-grid gap-2 d-md-flex justify-content-md-end"></div>
-            <div className="col-lg-4 col-lx-4"></div>
-            <div className="col-lg-4 col-lx-4"></div>
-            <div className="row">
-              <div className="col-lg-12"></div>
-            </div>
           </div>
-        </div>
-      </section>
-      <section className="product_description_area"></section>
+        </form>
+      </div>
+      <a
+        href="#"
+        className="btn btn-primary border-3 border-primary rounded-circle back-to-top"
+      >
+        <i className="fa fa-arrow-up"></i>
+      </a>
     </div>
   );
 };
