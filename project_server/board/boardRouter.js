@@ -20,13 +20,6 @@ router.get('/noticeBoardList', function (req, res, next) {
     })
 })
 
-router.get('/faqBoardList', function (req, res, next) {
-    console.log('faq Board List play... ')
-    boardDAO.faqBoardList((resp) => {
-        res.json(resp)
-    })
-})
-
 // notice board의 게시글을 등록함. 
 //post 방식은 request body 를 통해서 데이터 전달하는 방식.. 
 router.post('/noticeInsert', function (req, res, next) {
