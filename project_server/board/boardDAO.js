@@ -10,7 +10,7 @@ const sql = {
     noticeUpdate: 'UPDATE notice_board SET title = ?, content = ? WHERE notice_id = ?',
 
     // 고객센터 - FAQ에 관련된 sql 
-    faqBoardList: 'SELECT * FROM faqboard',
+    // faqBoardList: 'SELECT * FROM faqboard',
 
     // pagination
     totalBoards: "SELECT COUNT(notice_id) as TOTALCOUNT FROM notice_board",
@@ -125,83 +125,83 @@ const boardDAO = {
     },
 
     // ---------- faq board 관련 ------------------
-    faqBoardList: async (callback) => {
-        let conn = null
-        try {
-            conn = await getPool().getConnection()
-            const [resp] = await conn.query(sql.faqBoardList, [])
-            console.log('faqlist_ss')
-            callback({ status: 200, message: 'OK', data: resp })
-        } catch (error) {
-            return { status: 500, message: 'FAQ 조회 실패', error: error }
-        } finally {
-            if (conn !== null) conn.release()
-        }
-    },
-    faqInsert: async (item, callback) => {
-        let conn = null
-        try {
-            conn = await getPool().getConnection()
+    // faqBoardList: async (callback) => {
+    //     let conn = null
+    //     try {
+    //         conn = await getPool().getConnection()
+    //         const [resp] = await conn.query(sql.faqBoardList, [])
+    //         console.log('faqlist_ss')
+    //         callback({ status: 200, message: 'OK', data: resp })
+    //     } catch (error) {
+    //         return { status: 500, message: 'FAQ 조회 실패', error: error }
+    //     } finally {
+    //         if (conn !== null) conn.release()
+    //     }
+    // },
+    // faqInsert: async (item, callback) => {
+    //     let conn = null
+    //     try {
+    //         conn = await getPool().getConnection()
 
-            const [resp] = await conn.query(sql.faqInsert, [item.name, item.title, item.content])
+    //         const [resp] = await conn.query(sql.faqInsert, [item.name, item.title, item.content])
 
-            console.log('faqinsert_ss')
-            callback({ status: 200, message: 'OK', data: resp })
-        } catch (error) {
-            console.log(error)
-            return { status: 500, message: 'FAQ 입력 실패', error: error }
-        } finally {
-            if (conn !== null) conn.release()
-        }
-    },
-    faqBoard: async (item, callback) => {
-        let conn = null
-        try {
-            conn = await getPool().getConnection()
+    //         console.log('faqinsert_ss')
+    //         callback({ status: 200, message: 'OK', data: resp })
+    //     } catch (error) {
+    //         console.log(error)
+    //         return { status: 500, message: 'FAQ 입력 실패', error: error }
+    //     } finally {
+    //         if (conn !== null) conn.release()
+    //     }
+    // },
+    // faqBoard: async (item, callback) => {
+    //     let conn = null
+    //     try {
+    //         conn = await getPool().getConnection()
 
-            const [resp] = await conn.query(sql.faqBoard, item)
+    //         const [resp] = await conn.query(sql.faqBoard, item)
 
-            console.log('faqdetail_ss')
-            callback({ status: 200, message: 'OK', data: resp[0] })
-        } catch (error) {
-            console.log(error)
-            return { status: 500, message: 'FAQ 자세히 보기 실패', error: error }
-        } finally {
-            if (conn !== null) conn.release()
-        }
-    },
-    faqDelete: async (item, callback) => {
-        let conn = null
-        try {
-            conn = await getPool().getConnection()
+    //         console.log('faqdetail_ss')
+    //         callback({ status: 200, message: 'OK', data: resp[0] })
+    //     } catch (error) {
+    //         console.log(error)
+    //         return { status: 500, message: 'FAQ 자세히 보기 실패', error: error }
+    //     } finally {
+    //         if (conn !== null) conn.release()
+    //     }
+    // },
+    // faqDelete: async (item, callback) => {
+    //     let conn = null
+    //     try {
+    //         conn = await getPool().getConnection()
 
-            const [resp] = await conn.query(sql.faqDelete, item)//item - id
+    //         const [resp] = await conn.query(sql.faqDelete, item)//item - id
 
-            console.log('faqdelete_ss')
-            callback({ status: 200, message: 'OK' })
-        } catch (error) {
-            console.log(error)
-            return { status: 500, message: 'FAQ 삭제 실패', error: error }
-        } finally {
-            if (conn !== null) conn.release()
-        }
-    },
-    faqUpdate: async (item, callback) => {
-        let conn = null
-        try {
-            conn = await getPool().getConnection()
+    //         console.log('faqdelete_ss')
+    //         callback({ status: 200, message: 'OK' })
+    //     } catch (error) {
+    //         console.log(error)
+    //         return { status: 500, message: 'FAQ 삭제 실패', error: error }
+    //     } finally {
+    //         if (conn !== null) conn.release()
+    //     }
+    // },
+    // faqUpdate: async (item, callback) => {
+    //     let conn = null
+    //     try {
+    //         conn = await getPool().getConnection()
 
-            const [resp] = await conn.query(sql.faqUpdate, [item.title, item.content, item.id])
+    //         const [resp] = await conn.query(sql.faqUpdate, [item.title, item.content, item.id])
 
-            console.log('faqupdate_ss')
-            callback({ status: 200, message: 'OK' })
-        } catch (error) {
-            console.log(error)
-            return { status: 500, message: 'FAQ 수정 실패', error: error }
-        } finally {
-            if (conn !== null) conn.release()
-        }
-    },
+    //         console.log('faqupdate_ss')
+    //         callback({ status: 200, message: 'OK' })
+    //     } catch (error) {
+    //         console.log(error)
+    //         return { status: 500, message: 'FAQ 수정 실패', error: error }
+    //     } finally {
+    //         if (conn !== null) conn.release()
+    //     }
+    // },
 
 }
 module.exports = boardDAO
