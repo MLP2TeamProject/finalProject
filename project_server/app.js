@@ -57,7 +57,7 @@ app.use(express.urlencoded({ extended: true })); //http요청의 body parser(즉
 
 // 개발자가 각 파일로 분리시킨 라우터 등록
 app.use("/static", express.static(path.join(__dirname, "public")));
-app.use("/", homeRouter);
+app.use("/home", homeRouter);
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/auction", auctionRouter);
@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 // error handler middleware
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
-  res.locals.error = process.env.NODE_ENV != "production" ? err : {};
+  res.locals.error = process.env.NODE_ENV != "production" ? err : {}; // 개발환경이면 err를 출력하고 아니면 출력안하는 설정
   res.status(err.status || 500);
   res.render("error"); //error.html
 });

@@ -16,7 +16,7 @@ const Footer = () => {
 			<footer className="footer_part">
 				<div className="container">
 					<div className="row justify-content-around">
-						<div className="col-sm-6 col-lg-5">
+						<div className="col-sm-6 col-lg-6">
 							<div className="single_footer_part">
 								<ul className="list-unstyled">
 									<h4>CS CENTER INFO</h4>
@@ -24,22 +24,31 @@ const Footer = () => {
 									<li>LUNCH 12:00 ~ 13:00</li>
 									<li>토, 일, 공휴일은 휴무</li>
 									<br></br>
-									<li>대표자 최아별 book-mimic@daum.net</li>
+									<li>대표자 최아별 bmic@bmic.com</li>
 									<li>사업자등록번호 : 402-86-03809</li>
-									<li>통신판매업신고번호 제 2024-경기구리C-0001</li>
-									<br></br>
-									<li>반품 주소 : 경기도 구리시 이이구 삼삼대로111 사사주</li>
-								</ul>
-								<div className="footer-add-info">
 									<li>
-										<Link href="">가입사실확인</Link>
+										통신판매업신고번호 제
+										2024-경기구리C-0001
 									</li>
-									<li>공정거래위원회</li>
-									<li>현금영수증가맹점</li>
+									<br></br>
 									<li>
+										반품 주소 : 경기도 구리시 이이구
+										삼삼대로111 사사주
+									</li>
+									<li>
+										<Link href="https://www.ftc.go.kr/bizCommPopView.do">
+											가입사실확인
+										</Link>
+										&nbsp; &nbsp;
+										<Link href="https://www.ftc.go.kr/bizCommPopView.do">
+											공정거래위원회
+										</Link>
+										&nbsp; &nbsp; 현금영수증가맹점&nbsp;
+										&nbsp;
 										<Link href="">개인정보처리방침</Link>
 									</li>
-								</div>
+								</ul>
+								<ul className="footer-add-info"></ul>
 							</div>
 						</div>
 						<div className="col-sm-6 col-lg-3">
@@ -50,11 +59,11 @@ const Footer = () => {
 									<li>국민 22222-22222</li>
 									<li>우체국 33333-33-333333</li>
 									<li>우리 4444-444-444444</li>
-									<li>예금주: ㈜북믹</li>
+									<li>예금주: ㈜BMIC</li>
 								</ul>
 							</div>
 						</div>
-						<div className="col-sm-6 col-lg-4">
+						<div className="col-sm-6 col-lg-3">
 							<div className="single_footer_part">
 								<h4>RETURN</h4>
 								<ul className="list-unstyled">
@@ -63,13 +72,11 @@ const Footer = () => {
 									</li>
 									<br />
 									<li>
-										<Link href="">
-											경기도 구리시 이이구 삼삼대로111 사사주 우체국 물류센터
-										</Link>
+										경기도 구리시 이이구 삼삼대로111 사사주
+										우체국 물류센터
 									</li>
-									<li>
-										<Link href="">북믹 앞</Link>
-									</li>
+									<br></br>
+									<li>BMIC 앞</li>
 								</ul>
 							</div>
 						</div>
@@ -82,11 +89,20 @@ const Footer = () => {
 							<div className="col-lg-8">
 								<div className="copyright_text">
 									<p>
-                                        Copyright &copy;{new Date().getFullYear()}{' '}
-										{/* <script>document.write(new Date().getFullYear());</script> */}
-										All rights reserved | This template is made with
-										<i className="ti-heart" aria-hidden="true"></i> by
-										<Link href="https://colorlib.com" target="_blank">
+										Copyright BMIC &copy;{new Date().getFullYear()}{' '}
+										{/* <script>
+											document.write(new
+											Date().getFullYear());
+										</script> */}
+										All rights reserved | This template is
+										made with
+										<i
+											className="ti-heart"
+											aria-hidden="true"></i>{' '}
+										by
+										<Link
+											href="https://colorlib.com"
+											target="_blank">
 											Colorlib
 										</Link>
 									</p>
@@ -96,22 +112,30 @@ const Footer = () => {
 								<div className="footer_icon social_icon">
 									<ul className="list-unstyled">
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fab fa-facebook-f"></i>
 											</Link>
 										</li>
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fab fa-twitter"></i>
 											</Link>
 										</li>
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fas fa-globe"></i>
 											</Link>
 										</li>
 										<li>
-											<Link href="#" className="single_social_icon">
+											<Link
+												href="#"
+												className="single_social_icon">
 												<i className="fab fa-behance"></i>
 											</Link>
 										</li>

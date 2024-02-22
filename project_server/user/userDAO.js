@@ -82,7 +82,7 @@ const userDAO = {
                         console.log('44')
                         callback({
                             status: 200, message: 'OK',
-                            data: { name: users[0].user_name , email: users[0].email }
+                            data: { name: users[0].user_name , email: users[0].email, isadmin: users[0].isadmin }
                         })
                     } else {
                         callback({ status: 500, message: '아이디, 패스워드를 확인해 주세요' })
@@ -136,7 +136,7 @@ const userDAO = {
                         // 암호화 성공시 비밀번호 업데이트  
                         else if(hash) {
                             const [newPassword] = await conn.query(sql.updatePw, [hash, item.email])
-                            if(newPassword) callback({status: 200, message: '비밀번호 수정 성공'})
+                            if(newPassword) callback({status: 200, message: '비밀번호가 수정되었습니다.'})
                             else callback({status: 500, message: '비밀번호 수정 실패'})
                         }
                     })
