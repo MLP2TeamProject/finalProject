@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
@@ -9,13 +9,13 @@ const ProductList = () => {
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호 (0부터 시작)
     const [pageCount, setPageCount] = useState(0); // 총 페이지 수
 
-    const productsPerPage = 5; // 한 페이지당 상품 수
+    const productsPerPage = 6; // 한 페이지당 상품 수
     const [itemsCount, setItemsCount] = useState(0) // 총 상품 수
 
     const getProductList = useCallback(async () => {
         try {
             const resp = await axios.get(`http://localhost:8000/products/listpage1/${currentPage + 1}/${productsPerPage}`);
-            console.log("데이터 확인", resp.data);
+            // console.log("데이터 확인", resp.data);
             setProductList(resp.data);
             setItemsCount(resp.data.totalCount); // 총 상품 수 업데이트
             setPageCount(Math.ceil(resp.data.totalCount / productsPerPage)); // 총 페이지 수 계산 및 설정
@@ -23,7 +23,6 @@ const ProductList = () => {
             console.error("데이터 가져오기 실패", error);
         }
     }, [currentPage, productsPerPage]); // productsPerPage도 의존성 배열에 추가
-
 
     useEffect(() => {
         getProductList();
@@ -63,7 +62,7 @@ const ProductList = () => {
                 {/* <!-- breadcrumb start--> */}
 
                 {/* <!--================Category Product Area =================--> */}
-                <section className="cat_product_area section_padding">
+                <section className="cat_product_area mt-5">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12">
@@ -76,7 +75,6 @@ const ProductList = () => {
                                         <div className="top_pageniation">
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -85,10 +83,10 @@ const ProductList = () => {
                                 <div className="col-lg-4 col-sm-6" key={index}>
                                     <div className="single_product_item">
                                         <div className="single_product_text">
-                                            {product.picture ? <img src={`http://localhost:8000/upload/${product.picture}`} alt="" style={{ height: '180px' }} /> :
-                                                <img src='/img/default-image.png' alt="" style={{ height: '180px' }} />}
+                                            {product.picture ? <img src={`http://localhost:8000/upload/${product.picture}`} alt="" style={{height:'180px'}} /> : 
+                                            <img src='/img/default-image.png' alt="" style={{height:'180px'}} />}
                                         </div>
-
+                                        
                                         <div className="single_product_text">
                                             <h4>{product.title}</h4>
                                             <h3>즉시구매가: {product.master_price} 원</h3>
@@ -99,13 +97,13 @@ const ProductList = () => {
                             ))}
                         </div>
 
-                        <div className="col-lg-12">
+                        <div className="col-lg-12 mb-5">
                             <div className="pagination justify-content-center">
                                 <ReactPaginate
                                     breakLabel="..."
                                     nextLabel="다음 >"
                                     onPageChange={handlePageClick}
-                                    pageRangeDisplayed={5}
+                                    pageRangeDisplayed={6}
                                     pageCount={pageCount}
                                     previousLabel="< 이전"
                                     renderOnZeroPageCount={null}

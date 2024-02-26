@@ -1,7 +1,7 @@
 import { useCallback, useState, useContext } from "react"
 import { useNavigate } from 'react-router'
 import axios from 'axios'
-import UserContext from "../../userContext"
+import UserContext from "../../UserContext"
 
 const MyInfo = () => {
 
@@ -11,6 +11,7 @@ const MyInfo = () => {
     // 회원정보 get
     const userEmail = context.state.userData.email 
     const userName = context.state.userData.user_name
+    // console.log(userEmail)
 
     // contextAPI를 안쓰면 사용 
     // const [userName, setUserName] = useState('')
@@ -27,25 +28,28 @@ const MyInfo = () => {
 
     // 비밀번호 변경
     const navigate = useNavigate()
-    const [data, setData] = useState({email:userEmail, originPw:'', changePw:'', changePwConfirm:''})
+    const [data, setData] = useState({originPw:'', changePw:'', changePwConfirm:''})
     const changeData = useCallback((e) => {
         setData((data)=> ({...data, [e.target.name]: e.target.value}))
     }, [])
 
     const changePassword = useCallback(async (e) => {
         e.preventDefault()
-        // console.log(data)
-        if (data.changePw === data.changePwConfirm) {
-            const resp = await axios.post('http://localhost:8000/users/changePw/', {email: data.email, originPw:data.originPw, changePw:data.changePw})
-            if(resp.data.status === 500) window.alert(resp.data.message)
-            else {
-                window.alert(resp.data.message)
-                navigate('/login') 
+        if (data.originPw !== '' && data.changePw !== '' && data.changePwConfirm !== '') {
+            if (data.changePw === data.changePwConfirm) {
+                const resp = await axios.post('http://localhost:8000/users/changePw/', {email: userEmail, originPw:data.originPw, changePw:data.changePw})
+                if(resp.data.status === 500) window.alert(resp.data.message)
+                else {
+                    window.alert(resp.data.message)
+                    setData({email:userEmail, originPw:'', changePw:'', changePwConfirm:''})
+                }
+            } else {
+                alert("변경 비밀번호가 맞지않습니다.")
             }
         } else {
-            alert("변경 비밀번호가 맞지않습니다.")
+            window.alert('항목이 입력되지 않았습니다.')
         }
-    }, [data, navigate])
+    }, [data, userEmail])
 
     // 회원탈퇴
     const deleteAccout = useCallback(async () => {
@@ -88,17 +92,17 @@ const MyInfo = () => {
                         <h3>비밀번호 수정</h3>
                         <form className="row contact_form">
                             <div className="col-md-12 form-group p_star">
-                                <label htmlFor="originPw" className="form-label">기존 비밀번호</label>
+                                <label htmlFor="originPw">기존 비밀번호</label>
                                 <input type="password" className="form-control" id="originPw" name="originPw" 
                                 value={data.originPw} onChange={changeData} placeholder="기존 비밀번호" />
                             </div>
                             <div className="col-md-12 form-group p_star">
-                                <label htmlFor="changePw" className="form-label">변경 비밀번호</label>
+                                <label htmlFor="changePw">변경 비밀번호</label>
                                 <input type="password" className="form-control" id="changePw" name="changePw" 
                                 value={data.changePw} onChange={changeData} placeholder="변경 비밀번호" />
                             </div>
                             <div className="col-md-12 form-group p_star">
-                                <label htmlFor="changePwConfirm" className="form-label">변경 비밀번호 확인</label>
+                                <label htmlFor="changePwConfirm">변경 비밀번호 확인</label>
                                 <input type="password" className="form-control" id="changePwConfirm" name="changePwConfirm" 
                                 value={data.changePwConfirm} onChange={changeData} placeholder="변경 비밀번호 확인" />
                             </div>
@@ -110,7 +114,7 @@ const MyInfo = () => {
                         </form>                        
                     </div>
                     <hr className="mt-5 mb-5" />
-                    <div className="col-lg-6 col-md-6">
+                    <div className="col-lg-6 col-md-6 mb-5">
                         <h3>회원탈퇴</h3>
                         <button type="button" className="btn_3 genric-btn danger-border circle" onClick={deleteAccout}>
                             탈퇴
