@@ -80,7 +80,7 @@ const Detail = () => {
       return;
     }
     navigate("/products/bidding/" + product_id);
-  };  
+  };
 
   const goUpdate = () => {
     navigate("/products/update", {
